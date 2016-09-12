@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="ng.com.calabarpages.pluslist"
+    tools:showIn="@layout/activity_pluslist">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainCard">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description"
+                    android:textStyle="bold"
+                    android:id="@+id/descrip"
+                    android:layout_margin="@dimen/text_margin"
+                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_margin"
+                    android:id="@+id/description"
+                    android:layout_below="@+id/descrip"
+                    android:text="@string/large_text"/>
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:layout_marginTop="16dp"
+            android:layout_below="@+id/mainCard"
+            android:id="@+id/gallery">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gallery"
+                    android:textStyle="bold"
+                    android:id="@+id/gal"
+                    android:layout_margin="@dimen/text_margin"
+                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/gal"
+                    android:id="@+id/recycler"/>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="6dp"
+            android:layout_below="@+id/gallery"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16dp"
+                    android:id="@+id/title"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="6dp"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Details"
+
+                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/title"
+                    android:layout_marginTop="16dp">
+                    <ImageView
+                        android:id="@+id/home_icon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/house"
+                        />
+
+                    <ImageView
+                        android:id="@+id/work_days"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/work"
+                        android:layout_below="@+id/home_icon"
+                        />
+
+                    <ImageView
+                        android:id="@+id/phone_icon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/phone"
+                        android:layout_below="@+id/work_days"
+                        />
+                    <ImageView
+                        android:id="@+id/unit_icon"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/special"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/phone_icon"
+                        />
+                    <ImageView
+                        android:id="@+id/web"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/web"
+                        android:layout_marginBottom="8dp"
+                        android:layout_below="@+id/unit_icon"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/address"
+                        android:gravity="center_vertical|start"
+                        android:text="calabar"
+                        android:textAlignment="viewStart"
+                        android:paddingBottom="8dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_alignBottom="@+id/home_icon"
+                        android:layout_toRightOf="@+id/home_icon"
+                        android:layout_toEndOf="@+id/home_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:id="@+id/workingDays"
+                        android:gravity="center_vertical|start"
+                        android:text="Mon - Sat 8-5"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_alignBottom="@+id/work_days"
+                        android:layout_toRightOf="@+id/work_days"
+                        android:layout_toEndOf="@+id/work_days" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:gravity="center_vertical|start"
+                        android:text="07033383068"
+                        android:id="@+id/contact"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_alignBottom="@+id/phone_icon"
+                        android:layout_toRightOf="@+id/phone_icon"
+                        android:layout_toEndOf="@+id/phone_icon" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/specialisation"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center_vertical|start"
+                        android:text="Tiling"
+                        android:textAlignment="viewStart"
+                        android:paddingBottom="8dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_alignBottom="@+id/unit_icon"
+                        android:layout_toRightOf="@+id/unit_icon"
+                        android:layout_toEndOf="@+id/unit_icon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/website"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center_vertical|start"
+                        android:text="http://past3.com.ng"
+                        android:textAlignment="viewStart"
+                        android:paddingBottom="8dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_alignBottom="@+id/web"
+                        android:layout_toRightOf="@+id/web"
+                        android:layout_toEndOf="@+id/web" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

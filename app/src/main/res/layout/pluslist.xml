@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="284dp"
+        app:cardElevation="6dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.android.volley.toolbox.NetworkImageView
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:id="@+id/profile_image"
+                android:layout_marginLeft="6dp"
+               />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16dp"
+                android:id="@+id/title"
+                android:layout_toRightOf="@+id/profile_image"
+                android:paddingLeft="12dp"
+                android:paddingTop="6dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="CLUBS, ASSOCIATIONS  NON-GOVERNMENTAL ORGANIZATIONS"
+
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:layout_marginTop="16dp">
+                <ImageView
+                    android:id="@+id/home_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/house"
+                    />
+
+                <ImageView
+                    android:id="@+id/work_days"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/work"
+                    android:layout_below="@+id/home_icon"
+                    />
+
+                <ImageView
+                    android:id="@+id/phone_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/phone"
+                    android:layout_below="@+id/work_days"
+                    />
+                <ImageView
+                    android:id="@+id/unit_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/special"
+                    android:layout_below="@+id/phone_icon"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:id="@+id/address"
+                    android:gravity="center_vertical|right"
+                    android:text="calabar"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/home_icon"
+                    android:layout_toEndOf="@+id/home_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:id="@+id/workingDays"
+                    android:gravity="center_vertical|right"
+                    android:text="Mon - Sat 8-5"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_alignBottom="@+id/work_days"
+                    android:layout_toRightOf="@+id/work_days"
+                    android:layout_toEndOf="@+id/work_days" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical|right"
+                    android:text="07033383068"
+                    android:id="@+id/contact"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_alignBottom="@+id/phone_icon"
+                    android:layout_toRightOf="@+id/phone_icon"
+                    android:layout_toEndOf="@+id/phone_icon" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:id="@+id/specialisation"
+                    android:gravity="center_vertical|right"
+                    android:text="Tiling"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_alignBottom="@+id/unit_icon"
+                    android:layout_toRightOf="@+id/unit_icon"
+                    android:layout_toEndOf="@+id/unit_icon" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_below="@+id/specialisation"
+                    android:layout_centerHorizontal="true"
+                    android:text="Click for more info"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>
