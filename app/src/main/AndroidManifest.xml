@@ -12,33 +12,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".Search" />
-        </activity>
-        <activity
             android:name=".Category"
             android:label="@string/title_activity_category"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".tabbed"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="ng.com.calabarpages.MainActivity" />
+                android:value="ng.com.calabarpages.tabbed" />
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".Search" />
         </activity>
         <activity
             android:name=".Search"
+            android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -51,7 +38,25 @@
         <activity
             android:name=".pluslist"
             android:label="@string/title_activity_pluslist"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ng.com.calabarpages.Category" />
+        </activity>
+        <activity
+            android:name=".tabbed"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".Search" />
+        </activity>
     </application>
 
 </manifest>

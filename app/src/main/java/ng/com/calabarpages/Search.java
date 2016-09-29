@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -37,7 +38,10 @@ public class Search extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
+        setContentView(R.layout.main_search);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryDark));
         Intent intent = getIntent();
         bar = (ProgressBar) findViewById(R.id.progress);
         rv = (RecyclerView) findViewById(R.id.rv);
@@ -52,6 +56,7 @@ public class Search extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
+            toolbar.setTitle(query);
             performSearch(query, "1");
         }
 
@@ -94,12 +99,12 @@ public class Search extends AppCompatActivity {
                             cat.setSpecialisation(json.getString("Specialisation"));
                             try{
                                 cat.setPhone(json.getString("Hotline"));
-                            }catch (NullPointerException e){
+                            }catch (Exception e){
                                 e.printStackTrace();
                             }
                             try{
                                 cat.setWork_days(json.getString("Dhr"));
-                            }catch (NullPointerException e){
+                            }catch (Exception e){
                                 e.printStackTrace();
                             }
 

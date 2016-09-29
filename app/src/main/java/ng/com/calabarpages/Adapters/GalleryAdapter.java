@@ -1,6 +1,7 @@
 package ng.com.calabarpages.Adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     @Override
     public int getItemCount() {
+        Log.d("GalleryAdapter", Integer.toString(model.size()));
         return model.size();
     }
 }

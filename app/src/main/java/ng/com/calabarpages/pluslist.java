@@ -1,11 +1,15 @@
 package ng.com.calabarpages;
 
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +31,7 @@ public class pluslist extends AppCompatActivity {
     ng.com.calabarpages.Model.Category data;
     volleySingleton volleySingleton;
     RequestQueue requestQueue;
+    CollapsingToolbarLayout col;
     ImageView imageView;
     TextView special, title, phone, address, work_days, web, description;
 
@@ -36,12 +41,15 @@ public class pluslist extends AppCompatActivity {
         setContentView(R.layout.activity_pluslist);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        col = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         Typeface items = Typeface.createFromAsset(getAssets(),
                 "fonts/RobotoCondensed-Light.ttf");
         Typeface desc = Typeface.createFromAsset(getAssets(),
                 "fonts/Roboto-Thin.ttf");
         data = (Category) getIntent().getSerializableExtra("data");
         getSupportActionBar().setTitle(data.getTitle());
+        model = new ArrayList<>();
         imageView = (ImageView) findViewById(R.id.image);
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.yellowpages));
         web = (TextView) findViewById(R.id.website);
@@ -65,14 +73,16 @@ public class pluslist extends AppCompatActivity {
         rv = (RecyclerView) findViewById(R.id.recycler);
         try{
             for(int i=0; i<data.getImages().length; i++){
+                Log.d("pluslist", Integer.toString(data.getImages().length));
                 Category mode = new Category();
                 mode.setImage(data.getImages()[i]);
+                Log.d("pluslist", data.getImages()[i]);
+                Log.d("pluslist", mode.getImage().toString());
                 model.add(mode);
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        model = new ArrayList<>();
         mAdapter = new GalleryAdapter(model);
         manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rv.setHasFixedSize(true);
@@ -82,7 +92,15 @@ public class pluslist extends AppCompatActivity {
         imageLoader.get(data.getImage(), new ImageLoader.ImageListener() {
             @Override
             public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                imageView.setImageBitmap(imageContainer.getBitmap());
+                Bitmap bit = imageContainer.getBitmap();
+                imageView.setImageBitmap(bit);
+                /*Palette.from(bit).generate(new Palette.PaletteAsyncListener() {
+                    @Override
+                    public void onGenerated(Palette palette) {
+                        applyPalette(palette);
+
+                    }
+                });*/
             }
 
             @Override
@@ -99,4 +117,13 @@ public class pluslist extends AppCompatActivity {
             }
         });*/
     }
+
+    private void applyPalette(Palette palette){
+        int primaryDark = getResources().getColor(R.color.colorPrimaryDark);
+        int primary = getResources().getColor(R.color.colorPrimary);
+        col.setContentScrimColor(palette.getMutedColor(primary));
+        col.setStatusBarScrimColor(palette.getDarkMutedColor(primaryDark));
+        supportStartPostponedEnterTransition();
+    }
+
 }

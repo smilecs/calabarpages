@@ -26,6 +26,7 @@
                 android:textSize="16dp"
                 android:id="@+id/title"
                 android:layout_toRightOf="@+id/profile_image"
+                android:layout_marginTop="12dp"
                 android:paddingLeft="12dp"
                 android:paddingTop="6dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -39,51 +40,55 @@
                 android:layout_marginTop="16dp">
                 <ImageView
                     android:id="@+id/home_icon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:src="@drawable/house"
                     />
 
                 <ImageView
                     android:id="@+id/work_days"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:src="@drawable/work"
-                    android:layout_below="@+id/home_icon"
+                    android:layout_below="@+id/address"
                     />
 
                 <ImageView
                     android:id="@+id/phone_icon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:src="@drawable/phone"
-                    android:layout_below="@+id/work_days"
+                    android:layout_below="@+id/workingDays"
                     />
                 <ImageView
                     android:id="@+id/unit_icon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:src="@drawable/special"
-                    android:layout_below="@+id/phone_icon"
+                    android:layout_marginBottom="8dp"
+                    android:layout_below="@+id/contact"
                     />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/address"
-                    android:gravity="center_vertical|right"
-                    android:text="calabar"
+                    android:gravity="center_vertical|start"
+                    android:text="calabarjjjjjj njnjnkjgy gyujyvjy ftftyuft ftfytdt dtyddr
+                fttftytygg"
+                    android:textAlignment="viewStart"
+                    android:paddingBottom="8dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/home_icon"
                     android:layout_toEndOf="@+id/home_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/workingDays"
-                    android:gravity="center_vertical|right"
+                    android:gravity="center_vertical|start"
                     android:text="Mon - Sat 8-5"
+                    android:paddingBottom="8dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_alignBottom="@+id/work_days"
                     android:layout_toRightOf="@+id/work_days"
@@ -91,20 +96,23 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:gravity="center_vertical|right"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|start"
                     android:text="07033383068"
                     android:id="@+id/contact"
+                    android:paddingBottom="8dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_alignBottom="@+id/phone_icon"
                     android:layout_toRightOf="@+id/phone_icon"
                     android:layout_toEndOf="@+id/phone_icon" />
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
                     android:id="@+id/specialisation"
-                    android:gravity="center_vertical|right"
+                    android:gravity="center_vertical|start"
                     android:text="Tiling"
+                    android:textAlignment="viewStart"
+                    android:paddingBottom="8dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_alignBottom="@+id/unit_icon"
                     android:layout_toRightOf="@+id/unit_icon"
@@ -114,7 +122,8 @@
                     android:layout_height="48dp"
                     android:layout_below="@+id/specialisation"
                     android:layout_centerHorizontal="true"
-                    android:text="Click for more info"/>
+                    android:text="Click for more info"
+                    />
 
             </RelativeLayout>
 
@@ -123,3 +132,5 @@
 
 
 </RelativeLayout>
+
+
