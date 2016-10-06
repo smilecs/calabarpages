@@ -44,23 +44,14 @@
             android:layout_marginTop="16dp"
             android:layout_below="@+id/mainCard"
             android:id="@+id/gallery">
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:id="@+id/gal"
-                    android:layout_margin="@dimen/text_margin"
-                    android:textAppearance="?android:attr/textAppearanceLarge"/>
+
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_below="@+id/gal"
                     android:layout_marginBottom="16dp"
                     android:id="@+id/recycler"/>
-            </RelativeLayout>
+
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
@@ -73,18 +64,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16dp"
-                    android:id="@+id/title"
-                    android:paddingLeft="12dp"
-                    android:paddingTop="6dp"
-                    android:textStyle="bold"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Details"
-
-                    />
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

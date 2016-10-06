@@ -40,30 +40,30 @@
                 android:layout_marginTop="16dp">
                 <ImageView
                     android:id="@+id/home_icon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/house"
                     />
 
                 <ImageView
                     android:id="@+id/work_days"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/work"
                     android:layout_below="@+id/address"
                     />
 
                 <ImageView
                     android:id="@+id/phone_icon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/phone"
                     android:layout_below="@+id/workingDays"
                     />
                 <ImageView
                     android:id="@+id/unit_icon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:src="@drawable/special"
                     android:layout_marginBottom="8dp"
                     android:layout_below="@+id/contact"

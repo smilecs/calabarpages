@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -40,9 +41,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         TextView special, title, phone, address, work_days;
         ProgressBar bar;
         NetworkImageView image;
+        ImageView homeicon, unit, phonIcon, work;
         public ViewHolder(final View itemView, int type) {
             super(itemView);
-
+            homeicon = (ImageView) itemView.findViewById(R.id.home_icon);
+            unit = (ImageView) itemView.findViewById(R.id.unit_icon);
+            work = (ImageView) itemView.findViewById(R.id.work_days);
+            phonIcon = (ImageView) itemView.findViewById(R.id.phone_icon);
             switch (type){
                 case LISTING:
                     title = (TextView) itemView.findViewById(R.id.title);
@@ -124,12 +129,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         Typeface robotBold = Typeface.createFromAsset(c.getAssets(),
                 "fonts/Roboto-Black.ttf");
         Typeface robotLight = Typeface.createFromAsset(c.getAssets(),
-                "fonts/Roboto-Light.ttf");
+                "fonts/Roboto-Thin.ttf");
+        Typeface robot = Typeface.createFromAsset(c.getAssets(),
+                "fonts/Roboto-Regular.ttf");
         switch (type){
             case LISTING:
                 holder.title.setTypeface(robotMedium);
                 holder.address.setTypeface(robotLight);
-                holder.special.setTypeface(robotLight);
+                holder.special.setTypeface(robot);
                 holder.phone.setTypeface(robotLight);
                 holder.work_days.setTypeface(robotLight);
                 holder.title.setText(mode.getTitle());
@@ -141,10 +148,26 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
             case PLUSLIST:
                 holder.title.setTypeface(robotMedium);
                 holder.address.setTypeface(robotLight);
-                holder.special.setTypeface(robotLight);
+                holder.special.setTypeface(robot);
                 holder.phone.setTypeface(robotLight);
                 holder.work_days.setTypeface(robotLight);
                 ImageLoader imageLoader = volleySingleton.getsInstance().getImageLoader();
+                /*imageLoader.get(mode.getImage(), new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                        Image image = new Image(c);
+                        byte[] base64 = image.bitmapToByteArray(imageContainer.getBitmap());
+                        String base64String = Base64.encodeToString(base64, Base64.CRLF);
+                        holder.image.setTag(base64String);
+                        holder
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        volleyError.printStackTrace();
+
+                    }
+                });*/
                 holder.image.setImageUrl(mode.getImage(), imageLoader);
                 holder.title.setText(mode.getTitle());
                 holder.address.setText(mode.getAddress());

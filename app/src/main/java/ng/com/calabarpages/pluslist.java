@@ -92,15 +92,20 @@ public class pluslist extends AppCompatActivity {
         imageLoader.get(data.getImage(), new ImageLoader.ImageListener() {
             @Override
             public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                Bitmap bit = imageContainer.getBitmap();
+               final Bitmap bit = imageContainer.getBitmap();
                 imageView.setImageBitmap(bit);
-                /*Palette.from(bit).generate(new Palette.PaletteAsyncListener() {
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onGenerated(Palette palette) {
-                        applyPalette(palette);
+                    public void run() {
+                        Palette.from(bit).generate(new Palette.PaletteAsyncListener() {
+                            @Override
+                            public void onGenerated(Palette palette) {
+                                applyPalette(palette);
 
+                            }
+                        });
                     }
-                });*/
+                });
             }
 
             @Override

@@ -1,5 +1,6 @@
 package ng.com.calabarpages;
 
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -8,10 +9,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -48,6 +47,9 @@ public class tabbed extends AppCompatActivity {
     volleySingleton volley;
     RequestQueue requestQueue;
     CoordinatorLayout view;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+    String message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +67,10 @@ public class tabbed extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        preferences = getSharedPreferences("app", MODE_PRIVATE);
+        editor = preferences.edit();
         new LoadData().execute();
     }
 
@@ -77,9 +80,7 @@ public class tabbed extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         MenuItem searchItem = menu.findItem(R.id.search);
         //SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        //searchView.setSearchableInfo(searchManager.getSearchableInfo());
-        searchView.setSubmitButtonEnabled(true);
+
         //searchView.setSearchableInfo();
         return true;
     }
@@ -166,41 +167,50 @@ public class tabbed extends AppCompatActivity {
     private class LoadData extends AsyncTask<Void, Void, Void>{
         @Override
         protected Void doInBackground(Void... params) {
-            db.Delete();
+            Refresh();
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Refresh();
+            Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
+
         }
     }
 
     private void Refresh(){
-
+        Log.d("tabbed", "refresh");
         JsonArrayRequest json = new JsonArrayRequest(volleySingleton.URL + "api/getcat", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
-                for(int i=0; i < jsonArray.length(); i++){
-                    ng.com.calabarpages.Model.Category mode = new ng.com.calabarpages.Model.Category();
-                    try{
-                        JSONObject tmpData = jsonArray.getJSONObject(i);
-                        mode.setSlug(tmpData.getString("Slug"));
-                        mode.setTitle(tmpData.getString("Category"));
-                        final ng.com.calabarpages.Model.Category md = mode;
-                        Thread bk = new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                db.addCategory(md);
-                            }
-                        });
-                        bk.start();
-
-                    }catch (Exception e){
-                        e.printStackTrace();
+                if(jsonArray.length() > preferences.getInt("Number", 0)){
+                    message = "New Categories Loaded";
+                    db.Delete();
+                    Log.d("tabbed", "deleting");
+                    for(int i=0; i < jsonArray.length(); i++){
+                        ng.com.calabarpages.Model.Category mode = new ng.com.calabarpages.Model.Category();
+                        try{
+                            JSONObject tmpData = jsonArray.getJSONObject(i);
+                            mode.setSlug(tmpData.getString("Slug"));
+                            mode.setTitle(tmpData.getString("Category"));
+                            final ng.com.calabarpages.Model.Category md = mode;
+                            Thread bk = new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Log.d("tabbed", "runnable");
+                                    db.addCategory(md);
+                                }
+                            });
+                            bk.start();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
                 }
+                message = "Refresh";
+                editor.putInt("Number", jsonArray.length());
+                editor.commit();
             }
         }, new Response.ErrorListener() {
             @Override

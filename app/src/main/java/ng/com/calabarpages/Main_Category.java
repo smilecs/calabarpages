@@ -128,8 +128,8 @@ public class Main_Category extends Fragment {
         protected void onPostExecute(ArrayList<Category> categories) {
             ref.setVisibility(View.GONE);
             if(categories.isEmpty()){
+                Log.d("Main_Category", "Refresh");
                 Refresh();
-                Log.d("Main_Category", "here");
             }
             else {
                 bar.setVisibility(View.GONE);

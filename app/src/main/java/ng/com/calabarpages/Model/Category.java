@@ -16,6 +16,7 @@ public class Category implements Serializable{
     public String[] images;
     public String description;
     public String web;
+    public String passing;
 
     public String[] getImages() {
         return images;

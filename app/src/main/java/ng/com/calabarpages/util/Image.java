@@ -24,7 +24,12 @@ public class Image {
 		mContext = context;
 		mUri = uri;
 	}
-	
+
+	public Image(Context context){
+		mContext = context;
+	}
+
+
 	//Retrieve the bitmap from its Uri (in sample size calculated)
 	public Bitmap getBitmapFromUri() {
 		Log.v(TAG, "Decode image to bitmap");
