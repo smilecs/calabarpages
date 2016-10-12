@@ -1,6 +1,5 @@
 package ng.com.calabarpages;
 
-import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -40,6 +39,12 @@ public class pluslist extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pluslist);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        try{
+            toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         col = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
@@ -92,20 +97,8 @@ public class pluslist extends AppCompatActivity {
         imageLoader.get(data.getImage(), new ImageLoader.ImageListener() {
             @Override
             public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-               final Bitmap bit = imageContainer.getBitmap();
-                imageView.setImageBitmap(bit);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Palette.from(bit).generate(new Palette.PaletteAsyncListener() {
-                            @Override
-                            public void onGenerated(Palette palette) {
-                                applyPalette(palette);
+                imageView.setImageBitmap(imageContainer.getBitmap());
 
-                            }
-                        });
-                    }
-                });
             }
 
             @Override

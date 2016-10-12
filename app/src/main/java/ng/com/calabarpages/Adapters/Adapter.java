@@ -8,8 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -41,13 +41,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         TextView special, title, phone, address, work_days;
         ProgressBar bar;
         NetworkImageView image;
-        ImageView homeicon, unit, phonIcon, work;
+        RelativeLayout homeicon, unit, phonIcon, work;
         public ViewHolder(final View itemView, int type) {
             super(itemView);
-            homeicon = (ImageView) itemView.findViewById(R.id.home_icon);
-            unit = (ImageView) itemView.findViewById(R.id.unit_icon);
-            work = (ImageView) itemView.findViewById(R.id.work_days);
-            phonIcon = (ImageView) itemView.findViewById(R.id.phone_icon);
+            homeicon = (RelativeLayout) itemView.findViewById(R.id.addressRel);
+            unit = (RelativeLayout) itemView.findViewById(R.id.specialRel);
+            work = (RelativeLayout) itemView.findViewById(R.id.workRel);
+            phonIcon = (RelativeLayout) itemView.findViewById(R.id.phoneRel);
             switch (type){
                 case LISTING:
                     title = (TextView) itemView.findViewById(R.id.title);
@@ -135,22 +135,34 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         switch (type){
             case LISTING:
                 holder.title.setTypeface(robotMedium);
-                holder.address.setTypeface(robotLight);
+                holder.address.setTypeface(robot);
                 holder.special.setTypeface(robot);
-                holder.phone.setTypeface(robotLight);
-                holder.work_days.setTypeface(robotLight);
+                holder.phone.setTypeface(robot);
+                holder.work_days.setTypeface(robot);
                 holder.title.setText(mode.getTitle());
+                if(mode.getAddress().isEmpty()){
+                    holder.homeicon.setVisibility(View.GONE);
+                }
                 holder.address.setText(mode.getAddress());
+                if(mode.getSpecialisation().isEmpty()){
+                    holder.unit.setVisibility(View.GONE);
+                }
                 holder.special.setText(mode.getSpecialisation());
+                if(mode.getPhone().isEmpty() || mode.getPhone().length() < 2){
+                    holder.phonIcon.setVisibility(View.GONE);
+                }
                 holder.phone.setText(mode.getPhone());
+                if(mode.getWork_days().isEmpty() || mode.getWork_days().length() < 2){
+                    holder.work.setVisibility(View.GONE);
+                }
                 holder.work_days.setText(mode.getWork_days());
                 break;
             case PLUSLIST:
                 holder.title.setTypeface(robotMedium);
-                holder.address.setTypeface(robotLight);
+                holder.address.setTypeface(robot);
                 holder.special.setTypeface(robot);
-                holder.phone.setTypeface(robotLight);
-                holder.work_days.setTypeface(robotLight);
+                holder.phone.setTypeface(robot);
+                holder.work_days.setTypeface(robot);
                 ImageLoader imageLoader = volleySingleton.getsInstance().getImageLoader();
                 /*imageLoader.get(mode.getImage(), new ImageLoader.ImageListener() {
                     @Override

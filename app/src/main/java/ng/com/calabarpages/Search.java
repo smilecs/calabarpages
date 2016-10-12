@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -103,17 +104,19 @@ public class Search extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             try{
-                                cat.setWork_days(json.getString("Dhr"));
+                                Log.d("Search", json.getString("DHr"));
+                                cat.setWork_days(json.getString("DHr"));
                             }catch (Exception e){
                                 e.printStackTrace();
                             }
 
                         model.add(cat);
-                        mAdapter.notifyDataSetChanged();
                     }
-                }catch (Exception e){
+
+                }catch (JSONException e){
                     e.printStackTrace();
                 }
+                mAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
