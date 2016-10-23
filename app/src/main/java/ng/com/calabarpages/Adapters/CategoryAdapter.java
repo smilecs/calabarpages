@@ -57,7 +57,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         Category mode = model.get(position);
         Typeface robot = Typeface.createFromAsset(c.getAssets(),
-                "fonts/Roboto-Medium.ttf");
+                "fonts/Roboto-Thin.ttf");
         holder.title.setTypeface(robot);
         holder.title.setText(mode.getTitle());
         holder.title.setTag(mode);

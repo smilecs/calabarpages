@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Calabar YellowPages</string>
+    <string name="app_name">Calabar Yellow Pages</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="search_hint">Carpenter</string>
     <string name="description">Description</string>
