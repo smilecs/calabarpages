@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ng.com.calabarpages.pluslist"
     tools:showIn="@layout/activity_pluslist">
@@ -31,6 +32,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_margin"
+                    android:elegantTextHeight="true"
                     android:id="@+id/description"
                     android:layout_below="@+id/descrip"
                    />
@@ -42,8 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_below="@+id/mainCard"
+            android:layout_below="@+id/details"
             android:id="@+id/gallery">
 
                 <android.support.v7.widget.RecyclerView
@@ -59,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="6dp"
-            android:layout_below="@+id/gallery"
+            android:id="@+id/details"
+            android:layout_below="@+id/mainCard"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
             <RelativeLayout
@@ -165,8 +167,8 @@
                         android:layout_marginBottom="8dp"
                         android:gravity="center_vertical|start"
                         android:text="http://past3.com.ng"
-                        android:textColor="#0000FF"
                         android:textAlignment="viewStart"
+                        android:linksClickable="true"
                         android:paddingBottom="8dp"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:layout_alignBottom="@+id/web"

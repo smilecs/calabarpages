@@ -3,6 +3,7 @@ package ng.com.calabarpages.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,6 +42,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         TextView special, title, phone, address, work_days;
         ProgressBar bar;
         NetworkImageView image;
+        FloatingActionButton fab;
         RelativeLayout homeicon, unit, phonIcon, work;
         public ViewHolder(final View itemView, int type) {
             super(itemView);
@@ -48,6 +50,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
             unit = (RelativeLayout) itemView.findViewById(R.id.specialRel);
             work = (RelativeLayout) itemView.findViewById(R.id.workRel);
             phonIcon = (RelativeLayout) itemView.findViewById(R.id.phoneRel);
+
             switch (type){
                 case LISTING:
                     title = (TextView) itemView.findViewById(R.id.title);
@@ -55,6 +58,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     address = (TextView) itemView.findViewById(R.id.address);
                     special = (TextView) itemView.findViewById(R.id.specialisation);
                     work_days = (TextView) itemView.findViewById(R.id.workingDays);
+                    fab = (FloatingActionButton) itemView.findViewById(R.id.callbutton);
                     break;
                 case PLUSLIST:
                     image = (NetworkImageView) itemView.findViewById(R.id.profile_image);
@@ -63,6 +67,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     address = (TextView) itemView.findViewById(R.id.address);
                     special = (TextView) itemView.findViewById(R.id.specialisation);
                     work_days = (TextView) itemView.findViewById(R.id.workingDays);
+                    fab = (FloatingActionButton) itemView.findViewById(R.id.callbutton);
                     itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -77,7 +82,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     bar = (ProgressBar) itemView.findViewById(R.id.progress);
                     break;
             }
-        }
+                  }
     }
 
     @Override
@@ -131,7 +136,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         Typeface robotLight = Typeface.createFromAsset(c.getAssets(),
                 "fonts/Roboto-Thin.ttf");
         Typeface robot = Typeface.createFromAsset(c.getAssets(),
-                "fonts/Roboto-Regular.ttf");
+                "fonts/Roboto-Thin.ttf");
         switch (type){
             case LISTING:
                 holder.title.setTypeface(robotMedium);
@@ -140,6 +145,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 holder.phone.setTypeface(robot);
                 holder.work_days.setTypeface(robot);
                 holder.title.setText(mode.getTitle());
+                holder.title.setTag(mode);
                 if(mode.getAddress().isEmpty()){
                     holder.homeicon.setVisibility(View.GONE);
                 }
@@ -182,11 +188,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 });*/
                 holder.image.setImageUrl(mode.getImage(), imageLoader);
                 holder.title.setText(mode.getTitle());
+                holder.title.setTag(mode);
                 holder.address.setText(mode.getAddress());
                 holder.special.setText(mode.getSpecialisation());
                 holder.phone.setText(mode.getPhone());
                 holder.work_days.setText(mode.getWork_days());
-                holder.title.setTag(mode);
                 break;
             case ADVERT:
                 ImageLoader imageLoader2 = volleySingleton.getsInstance().getImageLoader();

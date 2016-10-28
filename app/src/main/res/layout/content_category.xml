@@ -10,13 +10,6 @@
     android:id="@+id/recycler"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/progress"
-        android:indeterminate="true"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -28,4 +21,13 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="68dp" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progress"
+        android:indeterminate="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="160dp" />
 </RelativeLayout>
