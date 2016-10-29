@@ -18,8 +18,8 @@ public class volleySingleton {
     private static volleySingleton sInstance = null;
     private RequestQueue mRequestQueue;
     private ImageLoader imageLoader;
-    public static final String URL = "http://192.168.43.126:8080/";
-    //public static final String URL = "http://calabarpages.com/";
+    //public static final String URL = "http://192.168.43.126:8080/";
+    public static final String URL = "http://calabarpages.com/";
 
     private volleySingleton(){
         mRequestQueue = Volley.newRequestQueue(Application.getAppContext());

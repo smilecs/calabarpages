@@ -2,6 +2,7 @@ package ng.com.calabarpages;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -9,7 +10,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -22,7 +26,7 @@ import ng.com.calabarpages.Adapters.GalleryAdapter;
 import ng.com.calabarpages.Model.Category;
 import ng.com.calabarpages.util.volleySingleton;
 
-public class pluslist extends AppCompatActivity {
+public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener{
     ArrayList<ng.com.calabarpages.Model.Category> model;
     RecyclerView rv;
     RecyclerView.LayoutManager manager;
@@ -31,29 +35,44 @@ public class pluslist extends AppCompatActivity {
     volleySingleton volleySingleton;
     RequestQueue requestQueue;
     CollapsingToolbarLayout col;
+    TextView title1, title2;
+    LinearLayout mTitleContainer;
+    de.hdodenhof.circleimageview.CircleImageView rounded;
     ImageView imageView;
     TextView special, title, phone, address, work_days, web, description;
+    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
+    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
+    private static final int ALPHA_ANIMATIONS_DURATION              = 200;
+
+    private boolean mIsTheTitleVisible          = false;
+    private boolean mIsTheTitleContainerVisible = true;
+    private AppBarLayout mAppBarLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pluslist);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        mAppBarLayout.addOnOffsetChangedListener(this);
         try{
             toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryDark));
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         col = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         Typeface items = Typeface.createFromAsset(getAssets(),
                 "fonts/RobotoCondensed-Light.ttf");
         Typeface desc = Typeface.createFromAsset(getAssets(),
                 "fonts/Roboto-Thin.ttf");
         data = (Category) getIntent().getSerializableExtra("data");
-        getSupportActionBar().setTitle(data.getTitle());
+        title1 = (TextView) findViewById(R.id.title1);
+        title2 = (TextView) findViewById(R.id.title2);
+        mTitleContainer = (LinearLayout) findViewById(R.id.main_linearlayout_title);
+        startAlphaAnimation(title2, 0, View.INVISIBLE);
+        rounded = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.roundimage);
         model = new ArrayList<>();
         imageView = (ImageView) findViewById(R.id.image);
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.yellowpages));
@@ -63,6 +82,8 @@ public class pluslist extends AppCompatActivity {
         description.setTypeface(desc);
         description.setText(data.getDescription());
         //title = (TextView) findViewById(R.id.title);
+        title1.setText(data.getTitle());
+        title2.setText(data.getTitle());
         phone = (TextView) findViewById(R.id.contact);
         phone.setTypeface(items);
         phone.setText(data.getPhone());
@@ -88,6 +109,20 @@ public class pluslist extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+       if(data.getImages().length > 0){
+            ImageLoader imageLoader = volleySingleton.getsInstance().getImageLoader();
+            imageLoader.get(data.getImages()[0], new ImageLoader.ImageListener() {
+                @Override
+                public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                    imageView.setImageBitmap(imageContainer.getBitmap());
+                }
+
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                }
+            });
+        }
         mAdapter = new GalleryAdapter(model);
         manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rv.setHasFixedSize(true);
@@ -97,7 +132,8 @@ public class pluslist extends AppCompatActivity {
         imageLoader.get(data.getImage(), new ImageLoader.ImageListener() {
             @Override
             public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                imageView.setImageBitmap(imageContainer.getBitmap());
+                //imageView.setImageBitmap(imageContainer.getBitmap());
+                rounded.setImageBitmap(imageContainer.getBitmap());
 
             }
 
@@ -124,4 +160,55 @@ public class pluslist extends AppCompatActivity {
         supportStartPostponedEnterTransition();
     }
 
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        int maxScroll = appBarLayout.getTotalScrollRange();
+        float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
+
+        handleAlphaOnTitle(percentage);
+        handleToolbarTitleVisibility(percentage);
+    }
+
+    private void handleToolbarTitleVisibility(float percentage) {
+        if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
+
+            if(!mIsTheTitleVisible) {
+                startAlphaAnimation(title2, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
+                mIsTheTitleVisible = true;
+            }
+
+        } else {
+
+            if (mIsTheTitleVisible) {
+                startAlphaAnimation(title2, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
+                mIsTheTitleVisible = false;
+            }
+        }
+    }
+
+    private void handleAlphaOnTitle(float percentage) {
+        if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
+            if(mIsTheTitleContainerVisible) {
+                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
+                mIsTheTitleContainerVisible = false;
+            }
+
+        } else {
+
+            if (!mIsTheTitleContainerVisible) {
+                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
+                mIsTheTitleContainerVisible = true;
+            }
+        }
+    }
+
+    public static void startAlphaAnimation (View v, long duration, int visibility) {
+        AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
+                ? new AlphaAnimation(0f, 1f)
+                : new AlphaAnimation(1f, 0f);
+
+        alphaAnimation.setDuration(duration);
+        alphaAnimation.setFillAfter(true);
+        v.startAnimation(alphaAnimation);
+    }
 }

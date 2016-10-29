@@ -68,6 +68,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     special = (TextView) itemView.findViewById(R.id.specialisation);
                     work_days = (TextView) itemView.findViewById(R.id.workingDays);
                     fab = (FloatingActionButton) itemView.findViewById(R.id.callbutton);
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    });
                     itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

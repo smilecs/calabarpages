@@ -38,7 +38,7 @@
         <activity
             android:name=".pluslist"
             android:label="@string/title_activity_pluslist"
-            android:theme="@style/AppTheme.NoActionBar">
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ng.com.calabarpages.Category" />
