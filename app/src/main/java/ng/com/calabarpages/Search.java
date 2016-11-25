@@ -2,6 +2,7 @@ package ng.com.calabarpages;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import ng.com.calabarpages.Adapters.Adapter;
@@ -33,6 +36,7 @@ public class Search extends AppCompatActivity {
     LinearLayoutManager manager;
     volleySingleton volleySingle;
     RequestQueue requestQueue;
+    TextView networkError;
     ProgressBar bar;
     String query;
 
@@ -46,6 +50,7 @@ public class Search extends AppCompatActivity {
         Intent intent = getIntent();
         bar = (ProgressBar) findViewById(R.id.progress);
         rv = (RecyclerView) findViewById(R.id.rv);
+        networkError = (TextView) findViewById(R.id.network);
         manager = new LinearLayoutManager(this);
         model = new ArrayList<>();
         mAdapter = new Adapter(model, this);
@@ -57,7 +62,7 @@ public class Search extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         if (intent.ACTION_SEARCH.equals(intent.getAction())) {
             query = intent.getStringExtra(SearchManager.QUERY);
-            toolbar.setTitle(query);
+            getSupportActionBar().setTitle(query.toUpperCase());
             performSearch(query, "1");
         }
 
@@ -66,9 +71,9 @@ public class Search extends AppCompatActivity {
             public void onLoadMore(int page, int totalItemsCount) {
                 Log.d("Category", "page no" + Integer.toString(page));
                 String pg = Integer.toString(page);
-
-                    performSearch(query, pg);
-
+                    if(totalItemsCount > 49){
+                        performSearch(query, pg);
+                    }
 
             }
         });
@@ -80,11 +85,22 @@ public class Search extends AppCompatActivity {
             model.clear();
             mAdapter.notifyDataSetChanged();
         }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.POST, volleySingleton.URL + "api/result?page=" + page + "&q=" + query, null, new Response.Listener<JSONObject>() {
+        bar.setVisibility(View.VISIBLE);
+        networkError.setVisibility(View.GONE);
+        query = query.trim();
+        Uri uri = Uri.parse(query);
+        try{
+            query = URLEncoder.encode(query, "UTF-8");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + "api/result?page=" + page + "&q=" +query , null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try{
                     bar.setVisibility(View.GONE);
+                    networkError.setVisibility(View.GONE);
                     JSONObject json;
                     JSONArray jsonArray = jsonObject.getJSONArray("Data");
                     for(int i=0; i<jsonArray.length(); i++){
@@ -115,6 +131,9 @@ public class Search extends AppCompatActivity {
 
                 }catch (JSONException e){
                     e.printStackTrace();
+                    networkError.setVisibility(View.VISIBLE);
+                    bar.setVisibility(View.GONE);
+
                 }
                 mAdapter.notifyDataSetChanged();
             }
@@ -122,6 +141,8 @@ public class Search extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
+                networkError.setVisibility(View.VISIBLE);
+                bar.setVisibility(View.GONE);
             }
         });
         requestQueue.add(jsonObjectRequest);

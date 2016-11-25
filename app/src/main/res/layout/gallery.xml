@@ -4,7 +4,7 @@
 <com.android.volley.toolbox.NetworkImageView
     android:layout_width="wrap_content"
     android:layout_height="140dp"
-    android:scaleType="centerCrop"
+    android:scaleType="centerInside"
     android:id="@+id/gallery"
     android:layout_marginRight="16dp"/>
 </RelativeLayout>

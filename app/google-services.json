@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "110934577974",
+    "firebase_url": "https://calabarpages-f7cf5.firebaseio.com",
+    "project_id": "calabarpages-f7cf5",
+    "storage_bucket": "calabarpages-f7cf5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110934577974:android:99c09ce3622a83bd",
+        "android_client_info": {
+          "package_name": "ng.com.calabarpages"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110934577974-9cdrom3gs21bk9164qndps0p6hhebe39.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE-DOfcnczOpyvExqQqhjFyDJM6ttWezI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

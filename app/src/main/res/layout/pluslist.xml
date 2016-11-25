@@ -6,17 +6,18 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="4dp"
+        android:layout_height="284dp"
+        app:cardElevation="6dp"
+        android:foreground="?android:selectableItemBackground"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
             <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="46dp"
                 android:layout_height="46dp"
-                android:layout_marginTop="12dp"
                 android:id="@+id/profile_image"
                 android:layout_marginLeft="6dp"
                />
@@ -87,7 +88,7 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/specialRel"
+                android:layout_below="@+id/workRel"
                 android:layout_marginBottom="8dp"
                 android:id="@+id/phoneRel">
                 <ImageView
@@ -103,30 +104,18 @@
                     android:text="07033383068"
                     android:id="@+id/contact"
                     android:paddingRight="6dp"
+                    android:linksClickable="true"
+                    android:autoLink="phone"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_toRightOf="@+id/phone_icon"
                     android:layout_toEndOf="@+id/phone_icon" />
-                <android.support.design.widget.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/floatingcall"
-                    android:id="@+id/callbutton"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="12dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="48dp"
-                    android:layout_below="@+id/contact"
-                    android:layout_centerHorizontal="true"
-                    android:text="Click for more info"
-                    />
 
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/specialRel"
-                android:layout_below="@+id/workRel"
+                android:layout_below="@+id/phoneRel"
                 android:layout_marginBottom="8dp">
                 <ImageView
                     android:id="@+id/unit_icon"
@@ -143,9 +132,20 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_toRightOf="@+id/unit_icon"
                     android:layout_toEndOf="@+id/unit_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_below="@+id/specialisation"
+                    android:layout_centerHorizontal="true"
+                    android:text="Click for more info"
+                    />
+
             </RelativeLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
+
+
 </RelativeLayout>
 
 

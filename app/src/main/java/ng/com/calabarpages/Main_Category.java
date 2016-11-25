@@ -173,4 +173,6 @@ public class Main_Category extends Fragment {
     public void load(){
         new LoadData().execute();
     }
+
+
 }

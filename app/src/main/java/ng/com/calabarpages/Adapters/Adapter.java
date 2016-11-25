@@ -3,12 +3,12 @@ package ng.com.calabarpages.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,7 +42,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         TextView special, title, phone, address, work_days;
         ProgressBar bar;
         NetworkImageView image;
-        FloatingActionButton fab;
+        ImageView phoneIcon;
         RelativeLayout homeicon, unit, phonIcon, work;
         public ViewHolder(final View itemView, int type) {
             super(itemView);
@@ -58,7 +58,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     address = (TextView) itemView.findViewById(R.id.address);
                     special = (TextView) itemView.findViewById(R.id.specialisation);
                     work_days = (TextView) itemView.findViewById(R.id.workingDays);
-                    fab = (FloatingActionButton) itemView.findViewById(R.id.callbutton);
+                    phoneIcon = (ImageView) itemView.findViewById(R.id.phone_icon);
                     break;
                 case PLUSLIST:
                     image = (NetworkImageView) itemView.findViewById(R.id.profile_image);
@@ -66,14 +66,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     phone = (TextView) itemView.findViewById(R.id.contact);
                     address = (TextView) itemView.findViewById(R.id.address);
                     special = (TextView) itemView.findViewById(R.id.specialisation);
+                    phoneIcon = (ImageView) itemView.findViewById(R.id.phone_icon);
                     work_days = (TextView) itemView.findViewById(R.id.workingDays);
-                    fab = (FloatingActionButton) itemView.findViewById(R.id.callbutton);
-                    fab.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                        }
-                    });
                     itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -143,12 +137,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 "fonts/Roboto-Thin.ttf");
         Typeface robot = Typeface.createFromAsset(c.getAssets(),
                 "fonts/Roboto-Thin.ttf");
+
         switch (type){
             case LISTING:
                 holder.title.setTypeface(robotMedium);
                 holder.address.setTypeface(robot);
                 holder.special.setTypeface(robot);
-                holder.phone.setTypeface(robot);
+               // holder.phone.setTypeface(robot);
                 holder.work_days.setTypeface(robot);
                 holder.title.setText(mode.getTitle());
                 holder.title.setTag(mode);
@@ -163,7 +158,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 if(mode.getPhone().isEmpty() || mode.getPhone().length() < 2){
                     holder.phonIcon.setVisibility(View.GONE);
                 }
-                holder.phone.setText(mode.getPhone());
+               holder.phone.setText(mode.getPhone());
                 if(mode.getWork_days().isEmpty() || mode.getWork_days().length() < 2){
                     holder.work.setVisibility(View.GONE);
                 }
@@ -192,13 +187,25 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
                     }
                 });*/
+                if(mode.getAddress().isEmpty()){
+                    holder.homeicon.setVisibility(View.GONE);
+                }
+                holder.address.setText(mode.getAddress());
+                if(mode.getSpecialisation().isEmpty()){
+                    holder.unit.setVisibility(View.GONE);
+                }
+                holder.special.setText(mode.getSpecialisation());
+                if(mode.getPhone().isEmpty() || mode.getPhone().length() < 2){
+                    holder.phonIcon.setVisibility(View.GONE);
+                }
+                holder.phone.setText(mode.getPhone());
+                if(mode.getWork_days().isEmpty() || mode.getWork_days().length() < 2){
+                    holder.work.setVisibility(View.GONE);
+                }
+                holder.work_days.setText(mode.getWork_days());
                 holder.image.setImageUrl(mode.getImage(), imageLoader);
                 holder.title.setText(mode.getTitle());
                 holder.title.setTag(mode);
-                holder.address.setText(mode.getAddress());
-                holder.special.setText(mode.getSpecialisation());
-                holder.phone.setText(mode.getPhone());
-                holder.work_days.setText(mode.getWork_days());
                 break;
             case ADVERT:
                 ImageLoader imageLoader2 = volleySingleton.getsInstance().getImageLoader();

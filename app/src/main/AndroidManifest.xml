@@ -5,16 +5,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".util.Application"
+        android:name="ng.com.calabarpages.util.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Category"
+            android:name="ng.com.calabarpages.Category"
             android:label="@string/title_activity_category"
-            android:parentActivityName=".tabbed"
+            android:parentActivityName="ng.com.calabarpages.tabbed"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -24,19 +24,21 @@
                 android:value=".Search" />
         </activity>
         <activity
-            android:name=".Search"
+            android:name="ng.com.calabarpages.Search"
             android:theme="@style/AppTheme.NoActionBar"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="ng.com.calabarpages.tabbed" />
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".pluslist"
+            android:name="ng.com.calabarpages.pluslist"
             android:label="@string/title_activity_pluslist"
             >
             <meta-data
@@ -44,7 +46,7 @@
                 android:value="ng.com.calabarpages.Category" />
         </activity>
         <activity
-            android:name=".tabbed"
+            android:name="ng.com.calabarpages.tabbed"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

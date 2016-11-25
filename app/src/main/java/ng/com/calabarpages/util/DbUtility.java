@@ -39,7 +39,7 @@ public class DbUtility {
         Log.d("Dbutility", "here");
         String [] selectionAgs = {};
         ArrayList<Category> list = new ArrayList<>();
-        Cursor cursor = Rdb.query(DataContract.Data.TABLE_NAME, projection, null, selectionAgs, null, null,  null);
+        Cursor cursor = Rdb.query(DataContract.Data.TABLE_NAME, projection, null, selectionAgs, DataContract.Data.CATEGORY, null,  null);
         if(cursor != null  && cursor.moveToFirst()) {
             do {
                 Category model = new Category();
