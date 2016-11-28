@@ -5,16 +5,20 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="ng.com.calabarpages.util.Application"
+        android:name=".util.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
         <activity
-            android:name="ng.com.calabarpages.Category"
+            android:name=".Category"
             android:label="@string/title_activity_category"
-            android:parentActivityName="ng.com.calabarpages.tabbed"
+            android:parentActivityName=".tabbed"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -24,12 +28,13 @@
                 android:value=".Search" />
         </activity>
         <activity
-            android:name="ng.com.calabarpages.Search"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTop">
+            android:name=".Search"
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ng.com.calabarpages.tabbed" />
@@ -38,15 +43,14 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name="ng.com.calabarpages.pluslist"
-            android:label="@string/title_activity_pluslist"
-            >
+            android:name=".pluslist"
+            android:label="@string/title_activity_pluslist">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ng.com.calabarpages.Category" />
         </activity>
         <activity
-            android:name="ng.com.calabarpages.tabbed"
+            android:name=".tabbed"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -59,6 +63,26 @@
                 android:name="android.app.default_searchable"
                 android:value=".Search" />
         </activity>
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".FacebookActivity"
+            android:label="@string/title_activity_facebook"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

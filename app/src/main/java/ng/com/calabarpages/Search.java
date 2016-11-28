@@ -120,8 +120,8 @@ public class Search extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             try{
-                                Log.d("Search", json.getString("DHr"));
-                                cat.setWork_days(json.getString("DHr"));
+                                Log.d("Search", json.getString("Dhr"));
+                                cat.setWork_days(json.getString("Dhr"));
                             }catch (Exception e){
                                 e.printStackTrace();
                             }

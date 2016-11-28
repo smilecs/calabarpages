@@ -1,5 +1,6 @@
 package ng.com.calabarpages;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +21,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -55,6 +59,10 @@ public class tabbed extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed);
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-9472469694308804~3139834173");
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         db = new DbUtility(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -71,6 +79,10 @@ public class tabbed extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
         preferences = getSharedPreferences("app", MODE_PRIVATE);
         editor = preferences.edit();
+        if(preferences.getBoolean("notlogged", true)){
+            Intent intent = new Intent(this, FacebookActivity.class);
+            startActivity(intent);
+        }
         new LoadData().execute();
     }
 
