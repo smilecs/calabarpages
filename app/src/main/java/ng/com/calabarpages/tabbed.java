@@ -112,6 +112,8 @@ public class tabbed extends AppCompatActivity {
         new LoadData().execute();
         content = new ShareLinkContent.Builder()
                 .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=ng.com.calabarpages"))
+                .setContentDescription("CalabarPages or CalabarYellowPages is an online business directory which lists and advertises businesses in Cross River State. Calabar, the capital of Cross River State is the first capital of Nigeria and the tourism capital of South Eastern Nigeria.If you are a resident or visitor,this app will guide you to products and services and will keep you updated with new listings and additions to the directory!")
+                .setContentTitle("CalabarPages - Online directory of businesses in Cross River State")
                 .build();
     }
 

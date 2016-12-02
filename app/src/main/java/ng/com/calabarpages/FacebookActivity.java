@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,7 @@ public class FacebookActivity extends AppCompatActivity implements
     Context c;
     RequestQueue requestQueue;
     SharedPreferences preferences;
+    ProgressBar bar;
     SharedPreferences.Editor editor;
     int RC_SIGN_IN = 300;
     Button gmail;
@@ -68,6 +70,7 @@ public class FacebookActivity extends AppCompatActivity implements
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         c = this;
+        bar = (ProgressBar) findViewById(R.id.progressGmail);
 
         volley = volleySingleton.getsInstance();
         requestQueue = volley.getmRequestQueue();
@@ -78,11 +81,56 @@ public class FacebookActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 errorMsg.setVisibility(View.GONE);
+                bar.setVisibility(View.VISIBLE);
                 signIn();
             }
         });
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("email"));
+
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d("facebookActivity", loginResult.toString());
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(
+                                    JSONObject object,
+                                    GraphResponse response) {
+                                //object.remove("id");
+                                SendToServer(object);
+                                //object.getString("email");
+
+                            }
+                        });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "name,link, email, gender, birthday, location");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+            }
+
+            @Override
+            public void onCancel() {
+                errorMsg.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                error.printStackTrace();
+                //editor.putBoolean("notlogged", false);
+                //editor.commit();
+                errorMsg.setVisibility(View.VISIBLE);
+
+
+            }
+        });
+
+
         //loginButton.setFragment(this);
         preferences = getSharedPreferences("app", MODE_PRIVATE);
         editor = preferences.edit();
@@ -129,45 +177,6 @@ public class FacebookActivity extends AppCompatActivity implements
         //google sign in
 
 
-        callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.d("facebookActivity", loginResult.toString());
-                GraphRequest request = GraphRequest.newMeRequest(
-                        loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(
-                                    JSONObject object,
-                                    GraphResponse response) {
-                                SendToServer(object);
-
-                            }
-                        });
-
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id, name,link, email, gender, birthday, location, phone");
-                request.setParameters(parameters);
-                request.executeAsync();
-
-            }
-
-            @Override
-            public void onCancel() {
-                errorMsg.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                error.printStackTrace();
-                //editor.putBoolean("notlogged", false);
-                //editor.commit();
-                errorMsg.setVisibility(View.VISIBLE);
-
-
-            }
-        });
 
 
 
@@ -184,9 +193,12 @@ public class FacebookActivity extends AppCompatActivity implements
                 GoogleSignInAccount account = result.getSignInAccount();
                 firebaseAuthWithGoogle(account);
             }
-        callbackManager.onActivityResult(requestCode, resultCode, data);
 
-    }
+    }else{
+            bar.setVisibility(View.VISIBLE);
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d("FacebookActivity", "firebaseAuthWithGoogle:" + acct.getId());
@@ -229,8 +241,8 @@ public class FacebookActivity extends AppCompatActivity implements
     }
 
     public void SendToServer(JSONObject object){
-        JsonObjectRequest objectRequest = null;
-        Log.d("Facebook", object.toString());
+       JsonObjectRequest objectRequest = null;
+        //Log.d("Facebook", object.toString());
         try{
             objectRequest = new JsonObjectRequest(Request.Method.POST, volleySingleton.URL + "facebookLogin", object, new Response.Listener<JSONObject>() {
                 @Override
