@@ -15,6 +15,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,6 +48,10 @@ public class Category extends AppCompatActivity {
         slug = getIntent().getStringExtra("slug");
         page = "1";
         model = new ArrayList<>();
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-9472469694308804~3139834173");
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         volleySingle = volleySingleton.getsInstance();
         requestQueue = volleySingle.getmRequestQueue();
         bar = (ProgressBar) findViewById(R.id.progress);

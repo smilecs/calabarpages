@@ -17,6 +17,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +51,10 @@ public class Search extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryDark));
         Intent intent = getIntent();
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-9472469694308804~3139834173");
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
         bar = (ProgressBar) findViewById(R.id.progress);
         rv = (RecyclerView) findViewById(R.id.rv);
         networkError = (TextView) findViewById(R.id.network);

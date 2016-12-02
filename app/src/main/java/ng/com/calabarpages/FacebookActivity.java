@@ -77,6 +77,7 @@ public class FacebookActivity extends AppCompatActivity implements
         gmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                errorMsg.setVisibility(View.GONE);
                 signIn();
             }
         });
@@ -103,6 +104,7 @@ public class FacebookActivity extends AppCompatActivity implements
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
+                    errorMsg.setVisibility(View.GONE);
                     // User is signed in
                     Log.d("FacebookActivity", "onAuthStateChanged:signed_in:" + user.getUid());
                     try{
@@ -201,6 +203,7 @@ public class FacebookActivity extends AppCompatActivity implements
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
                             Log.w("FAcebookActivity", "signInWithCredential", task.getException());
+                            errorMsg.setVisibility(View.VISIBLE);
                             Toast.makeText(FacebookActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -221,6 +224,7 @@ public class FacebookActivity extends AppCompatActivity implements
 
         Log.d("FaceBookActivity", "onConnectionFailed:" + connectionResult);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
+        errorMsg.setVisibility(View.VISIBLE);
 
     }
 
@@ -232,7 +236,7 @@ public class FacebookActivity extends AppCompatActivity implements
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     //preferences.getBoolean("notlogged", true)
-                    editor.putBoolean("notlogged", false);
+                    editor.putBoolean("isnotlogged", false);
                     editor.commit();
                     Intent i = new Intent(c, tabbed.class);
                     startActivity(i);
@@ -241,7 +245,7 @@ public class FacebookActivity extends AppCompatActivity implements
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    editor.putBoolean("notlogged", false);
+                    editor.putBoolean("isnotlogged", false);
                     editor.commit();
                     Intent i = new Intent(c, tabbed.class);
                     startActivity(i);

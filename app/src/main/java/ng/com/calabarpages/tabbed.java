@@ -68,11 +68,11 @@ public class tabbed extends AppCompatActivity {
         setContentView(R.layout.activity_tabbed);
         preferences = getSharedPreferences("app", MODE_PRIVATE);
         editor = preferences.edit();
-
+        if(preferences.getBoolean("isnotlogged", true)){
             Intent intent = new Intent(this, FacebookActivity.class);
             startActivity(intent);
             finish();
-
+        }
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-9472469694308804~3139834173");
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
