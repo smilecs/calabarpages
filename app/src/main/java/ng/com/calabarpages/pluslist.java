@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -152,13 +151,7 @@ public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffset
         });*/
     }
 
-    private void applyPalette(Palette palette){
-        int primaryDark = getResources().getColor(R.color.colorPrimaryDark);
-        int primary = getResources().getColor(R.color.colorPrimary);
-        col.setContentScrimColor(palette.getMutedColor(primary));
-        col.setStatusBarScrimColor(palette.getDarkMutedColor(primaryDark));
-        supportStartPostponedEnterTransition();
-    }
+
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {

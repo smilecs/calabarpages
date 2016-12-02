@@ -2,6 +2,7 @@ package ng.com.calabarpages;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -21,6 +22,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.facebook.CallbackManager;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -53,12 +57,22 @@ public class tabbed extends AppCompatActivity {
     CoordinatorLayout view;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    CallbackManager callbackManager;
+    ShareDialog shareDialog;
     String message;
+    ShareLinkContent content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed);
+        preferences = getSharedPreferences("app", MODE_PRIVATE);
+        editor = preferences.edit();
+
+            Intent intent = new Intent(this, FacebookActivity.class);
+            startActivity(intent);
+            finish();
+
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-9472469694308804~3139834173");
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -77,13 +91,28 @@ public class tabbed extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        preferences = getSharedPreferences("app", MODE_PRIVATE);
-        editor = preferences.edit();
-        if(preferences.getBoolean("notlogged", true)){
-            Intent intent = new Intent(this, FacebookActivity.class);
-            startActivity(intent);
-        }
+       /* callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
+        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+            @Override
+            public void onSuccess(Sharer.Result result) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });*/
         new LoadData().execute();
+        content = new ShareLinkContent.Builder()
+                .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=ng.com.calabarpages"))
+                .build();
     }
 
     @Override
@@ -105,7 +134,8 @@ public class tabbed extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.share) {
+            ShareDialog.show(this, content);
             return true;
         }
         if(id == R.id.search){

@@ -95,11 +95,18 @@ public class Special extends Fragment {
         rv.setLayoutManager(manager);
         rv.setAdapter(mAdapter);
         Refresh2(mParam1, "1");
+        ref.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Refresh2(mParam1, "1");
+            }
+        });
         return v;
     }
 
     private void Refresh2(final String url, String page){
         ref.setVisibility(View.GONE);
+        bar.setVisibility(View.VISIBLE);
         Log.d("Category", "Refresh" + " " + Integer.toString(model.size()));
         if(page.equals("1")){
             model.clear();
@@ -162,6 +169,8 @@ public class Special extends Fragment {
 
                 }catch (Exception e){
                     e.printStackTrace();
+                    bar.setVisibility(View.GONE);
+                    ref.setVisibility(View.VISIBLE);
                 }
             }
         }, new Response.ErrorListener() {

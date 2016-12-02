@@ -1,27 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
-    tools:context="ng.com.calabarpages.FacebookActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    tools:context="ng.com.calabarpages.FacebookActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+    <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/login_button"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginTop="24dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Note* this is a one time sign up you will not be required to do so again and your info is not by any means been used to post to your social accounts"/>
 
-    </android.support.design.widget.AppBarLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAlignment="center"
+        android:text="Calabar YellowPages"
+        android:id="@+id/title"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp" />
 
-    <include layout="@layout/content_facebook" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Unable to authenticate please continue by using another login option"
+        android:id="@+id/errorMsg"
+        android:layout_above="@+id/login_button"
+        android:layout_alignParentLeft="true"
+        android:visibility="gone"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:text="Log in with gmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="17dp"
+        android:id="@+id/gmail"
+        android:layout_above="@+id/login_button"
+        android:layout_alignRight="@+id/login_button"
+        android:layout_alignEnd="@+id/login_button"
+        android:layout_alignLeft="@+id/login_button"
+        android:layout_alignStart="@+id/login_button"
+        android:background="@android:color/holo_red_dark"
+        android:textColor="@color/backgroundColor" />
 
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>
+
