@@ -1,4 +1,4 @@
-package ng.com.calabarpages.util;
+package ng.com.calabaryellowpages.util;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import ng.com.calabarpages.R;
+import ng.com.calabaryellowpages.R;
 
 @SuppressWarnings("unused")
 public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageView> {

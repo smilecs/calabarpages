@@ -1,4 +1,4 @@
-package ng.com.calabarpages;
+package ng.com.calabaryellowpages;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package ng.com.calabarpages;
+package ng.com.calabaryellowpages;
 
 
 import android.os.AsyncTask;
@@ -23,10 +23,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import ng.com.calabarpages.Adapters.CategoryAdapter;
-import ng.com.calabarpages.Model.Category;
-import ng.com.calabarpages.util.DbUtility;
-import ng.com.calabarpages.util.volleySingleton;
+import ng.com.calabaryellowpages.Adapters.CategoryAdapter;
+import ng.com.calabaryellowpages.Model.Category;
+import ng.com.calabaryellowpages.util.DbUtility;
+import ng.com.calabaryellowpages.util.volleySingleton;
 
 /**
  * A simple {@link Fragment} subclass.

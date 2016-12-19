@@ -1,4 +1,4 @@
-package ng.com.calabarpages;
+package ng.com.calabaryellowpages;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -28,12 +28,12 @@ import org.json.JSONObject;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import ng.com.calabarpages.Adapters.Adapter;
-import ng.com.calabarpages.util.EndlessRecyclerViewScrollListener;
-import ng.com.calabarpages.util.volleySingleton;
+import ng.com.calabaryellowpages.Adapters.Adapter;
+import ng.com.calabaryellowpages.util.EndlessRecyclerViewScrollListener;
+import ng.com.calabaryellowpages.util.volleySingleton;
 
 public class Search extends AppCompatActivity {
-    ArrayList<ng.com.calabarpages.Model.Category> model;
+    ArrayList<ng.com.calabaryellowpages.Model.Category> model;
     Adapter mAdapter;
     RecyclerView rv;
     LinearLayoutManager manager;
@@ -112,10 +112,19 @@ public class Search extends AppCompatActivity {
                     JSONArray jsonArray = jsonObject.getJSONArray("Data");
                     for(int i=0; i<jsonArray.length(); i++){
                         json = jsonArray.getJSONObject(i);
-                        ng.com.calabarpages.Model.Category cat = new ng.com.calabarpages.Model.Category();
+                        ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
                         cat.setType(json.getString("Plus"));
-                        if(cat.getType().equals("true")){
+                        if(cat.getType().equals("advert") || cat.getType().equals("true")){
                             cat.setImage(json.getString("Image"));
+                            try{
+                                String[] tmp = {};
+                                for(int k = 0; k <json.getJSONArray("Images").length(); k++){
+                                    tmp[k] = json.getJSONArray("Images").getString(k);
+                                }
+                                cat.setImages(tmp);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                             cat.setTitle(json.getString("CompanyName"));
                             cat.setSlug(json.getString("Slug"));

@@ -1,4 +1,4 @@
-package ng.com.calabarpages;
+package ng.com.calabaryellowpages;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -32,8 +32,8 @@ import com.google.android.gms.ads.MobileAds;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import ng.com.calabarpages.util.DbUtility;
-import ng.com.calabarpages.util.volleySingleton;
+import ng.com.calabaryellowpages.util.DbUtility;
+import ng.com.calabaryellowpages.util.volleySingleton;
 
 public class tabbed extends AppCompatActivity {
 
@@ -73,7 +73,7 @@ public class tabbed extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-9472469694308804~3139834173");
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-9472469694308804~6150882570");
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -111,7 +111,8 @@ public class tabbed extends AppCompatActivity {
         });*/
         new LoadData().execute();
         content = new ShareLinkContent.Builder()
-                .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=ng.com.calabarpages"))
+                .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=ng.com.calabaryellowpages"))
+                .setQuote("CalabarPages or CalabarYellowPages is an online business directory which lists and advertises businesses in Cross River State. Calabar, the capital of Cross River State is the first capital of Nigeria and the tourism capital of South Eastern Nigeria.If you are a resident or visitor,this app will guide you to products and services and will keep you updated with new listings and additions to the directory!")
                 .setContentDescription("CalabarPages or CalabarYellowPages is an online business directory which lists and advertises businesses in Cross River State. Calabar, the capital of Cross River State is the first capital of Nigeria and the tourism capital of South Eastern Nigeria.If you are a resident or visitor,this app will guide you to products and services and will keep you updated with new listings and additions to the directory!")
                 .setContentTitle("CalabarPages - Online directory of businesses in Cross River State")
                 .build();
@@ -178,10 +179,10 @@ public class tabbed extends AppCompatActivity {
                 case 0:
                     return mn;
                 case 1:
-                    sp = Special.newInstance("api/falseview");
+                    sp = Special.newInstance("api/pluslistings");
                     return sp;
                 case 2:
-                    sp = Special.newInstance("advert");
+                    sp = Special.newInstance("api/advert");
                     return sp;
             }
             return null;
@@ -233,12 +234,12 @@ public class tabbed extends AppCompatActivity {
                     db.Delete();
                     Log.d("tabbed", "deleting");
                     for(int i=0; i < jsonArray.length(); i++){
-                        ng.com.calabarpages.Model.Category mode = new ng.com.calabarpages.Model.Category();
+                        ng.com.calabaryellowpages.Model.Category mode = new ng.com.calabaryellowpages.Model.Category();
                         try{
                             JSONObject tmpData = jsonArray.getJSONObject(i);
                             mode.setSlug(tmpData.getString("Slug"));
                             mode.setTitle(tmpData.getString("Category"));
-                            final ng.com.calabarpages.Model.Category md = mode;
+                            final ng.com.calabaryellowpages.Model.Category md = mode;
                             Thread bk = new Thread(new Runnable() {
                                 @Override
                                 public void run() {

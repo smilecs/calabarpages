@@ -1,4 +1,4 @@
-package ng.com.calabarpages.util;
+package ng.com.calabaryellowpages.util;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;

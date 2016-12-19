@@ -1,4 +1,4 @@
-package ng.com.calabarpages;
+package ng.com.calabaryellowpages;
 
 
 import android.os.Bundle;
@@ -22,8 +22,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import ng.com.calabarpages.Adapters.Adapter;
-import ng.com.calabarpages.util.volleySingleton;
+import ng.com.calabaryellowpages.Adapters.Adapter;
+import ng.com.calabaryellowpages.util.volleySingleton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,7 +35,7 @@ public class Special extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    ArrayList<ng.com.calabarpages.Model.Category> model;
+    ArrayList<ng.com.calabaryellowpages.Model.Category> model;
     RecyclerView rv;
     Adapter mAdapter;
     LinearLayoutManager manager;
@@ -112,17 +112,18 @@ public class Special extends Fragment {
             model.clear();
             mAdapter.notifyDataSetChanged();
         }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + url + "?page=" + page , null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + url + "?p=" + page , null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try{
                     bar.setVisibility(View.GONE);
                     JSONObject json;
-                    JSONArray jsonArray = jsonObject.getJSONArray("Data");
+                    JSONArray jsonArray = jsonObject.getJSONArray("Posts");
                     for(int i=0; i<jsonArray.length(); i++){
                         json = jsonArray.getJSONObject(i);
-                        ng.com.calabarpages.Model.Category cat = new ng.com.calabarpages.Model.Category();
-                        cat.setType(json.getString("Type"));
+                        json = json.getJSONObject("Listing");
+                        ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
+                        cat.setType(json.getString("Plus"));
                         if(cat.getType().equals("advert") || cat.getType().equals("true")){
                             cat.setImage(json.getString("Image"));
                             try{
@@ -147,7 +148,7 @@ public class Special extends Fragment {
                                 e.printStackTrace();
                             }
                             try{
-                                cat.setWork_days(json.getString("Dhr"));
+                                cat.setWork_days(json.getString("DHr"));
                             }catch (NullPointerException e){
                                 e.printStackTrace();
                             }

@@ -1,4 +1,4 @@
-package ng.com.calabarpages;
+package ng.com.calabaryellowpages;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,12 +24,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import ng.com.calabarpages.Adapters.Adapter;
-import ng.com.calabarpages.util.EndlessRecyclerViewScrollListener;
-import ng.com.calabarpages.util.volleySingleton;
+import ng.com.calabaryellowpages.Adapters.Adapter;
+import ng.com.calabaryellowpages.util.EndlessRecyclerViewScrollListener;
+import ng.com.calabaryellowpages.util.volleySingleton;
 
 public class Category extends AppCompatActivity {
-    ArrayList<ng.com.calabarpages.Model.Category> model;
+    ArrayList<ng.com.calabaryellowpages.Model.Category> model;
     RecyclerView rv;
     Adapter mAdapter;
     LinearLayoutManager manager;
@@ -48,7 +48,7 @@ public class Category extends AppCompatActivity {
         slug = getIntent().getStringExtra("slug");
         page = "1";
         model = new ArrayList<>();
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-9472469694308804~3139834173");
+        MobileAds.initialize(getApplicationContext(), "a-app-pub-9472469694308804~6150882570");
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
@@ -127,17 +127,19 @@ public class Category extends AppCompatActivity {
             model.clear();
             mAdapter.notifyDataSetChanged();
         }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + "api/newview?page=" + page + "&q=" + query, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + "api/categories/"+ query +"?page=" + page, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try{
                     bar.setVisibility(View.GONE);
                     JSONObject json;
-                    JSONArray jsonArray = jsonObject.getJSONArray("Data");
+                    JSONArray jsonArray = jsonObject.getJSONArray("Posts");
                     for(int i=0; i<jsonArray.length(); i++){
-                        json = jsonArray.getJSONObject(i);
-                        ng.com.calabarpages.Model.Category cat = new ng.com.calabarpages.Model.Category();
-                        cat.setType(json.getString("Type"));
+                        JSONObject jsons = jsonArray.getJSONObject(i);
+                        json = jsons.getJSONObject("Listing");
+                        Log.d("Category", jsons.toString());
+                        ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
+                        cat.setType(json.getString("Plus"));
                         if(cat.getType().equals("advert") || cat.getType().equals("true")){
                             cat.setImage(json.getString("Image"));
                         }
@@ -152,7 +154,7 @@ public class Category extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             try{
-                                cat.setWork_days(json.getString("Dhr"));
+                                cat.setWork_days(json.getString("DHr"));
                             }catch (NullPointerException e){
                                 e.printStackTrace();
                             }
@@ -192,7 +194,7 @@ public class Category extends AppCompatActivity {
                     JSONArray jsonArray = jsonObject.getJSONArray("Data");
                     for(int i=0; i<jsonArray.length(); i++){
                         json = jsonArray.getJSONObject(i);
-                        ng.com.calabarpages.Model.Category cat = new ng.com.calabarpages.Model.Category();
+                        ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
                         cat.setType(json.getString("Type"));
                         if(cat.getType().equals("advert") || cat.getType().equals("true")){
                             cat.setImage(json.getString("Image"));

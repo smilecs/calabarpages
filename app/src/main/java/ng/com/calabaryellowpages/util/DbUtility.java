@@ -1,4 +1,4 @@
-package ng.com.calabarpages.util;
+package ng.com.calabaryellowpages.util;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,7 +8,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import ng.com.calabarpages.Model.Category;
+import ng.com.calabaryellowpages.Model.Category;
 
 /**
  * Created by SMILECS on 9/14/16.

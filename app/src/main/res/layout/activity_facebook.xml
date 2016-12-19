@@ -6,7 +6,7 @@
     android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
 
-    tools:context="ng.com.calabarpages.FacebookActivity"
+    tools:context="ng.com.calabaryellowpages.FacebookActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,26 +16,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dp"
             android:layout_marginRight="32dp"
-            android:layout_gravity="center_horizontal"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/login_button"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_marginTop="24dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Note* this is a one time sign up you will not be required to do so again and your info is not by any means been used to post to your social accounts"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textAlignment="center"
-        android:text="Calabar YellowPages"
+        android:text="Calabar Yellow Pages"
         android:id="@+id/title"
         android:textColor="@color/colorPrimaryDark"
         android:layout_alignParentTop="true"
@@ -57,7 +47,7 @@
     <Button
         android:text="Log in with gmail"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="28dp"
         android:layout_marginBottom="17dp"
         android:id="@+id/gmail"
         android:layout_above="@+id/login_button"

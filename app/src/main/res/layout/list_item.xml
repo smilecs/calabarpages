@@ -23,6 +23,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="16dp"
                         android:id="@+id/category"
+                        android:textStyle="bold"
                         android:layout_centerInParent="true"
                         android:layout_marginLeft="12dp"
                         android:textAppearance="?android:attr/textAppearanceLarge"

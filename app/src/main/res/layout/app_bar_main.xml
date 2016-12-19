@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="ng.com.calabarpages.MainActivity">
+    tools:context="ng.com.calabaryellowpages.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         android:background="@color/backgroundColor"
         android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="ng.com.calabarpages.MainActivity"
+        tools:context="ng.com.calabaryellowpages.MainActivity"
         >
 
     </RelativeLayout>

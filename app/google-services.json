@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "110934577974-ulfdkm0o99emeh826qbfteob0899t5bt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ng.com.calabarpages",
+            "certificate_hash": "B438DA344F90509C2CCB2FCEB0DFAE17FFB59087"
+          }
+        },
+        {
           "client_id": "110934577974-9cdrom3gs21bk9164qndps0p6hhebe39.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -31,6 +39,57 @@
         "appinvite_service": {
           "status": 1,
           "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110934577974:android:8eedd39a97c1642d",
+        "android_client_info": {
+          "package_name": "ng.com.calabaryellowpages"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "110934577974-7tmaqor78lqe2vfh2190c5uearb41uch.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ng.com.calabaryellowpages",
+            "certificate_hash": "B438DA344F90509C2CCB2FCEB0DFAE17FFB59087"
+          }
+        },
+        {
+          "client_id": "110934577974-9cdrom3gs21bk9164qndps0p6hhebe39.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE-DOfcnczOpyvExqQqhjFyDJM6ttWezI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110934577974-9cdrom3gs21bk9164qndps0p6hhebe39.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "110934577974-4h3u8h52diildv88gnup9i0up2fbv07e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.calabarpages.CalabarYellowPages"
+              }
+            }
+          ]
         },
         "ads_service": {
           "status": 2

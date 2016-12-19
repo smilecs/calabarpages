@@ -1,4 +1,4 @@
-package ng.com.calabarpages.Model;
+package ng.com.calabaryellowpages.Model;
 
 import java.io.Serializable;
 

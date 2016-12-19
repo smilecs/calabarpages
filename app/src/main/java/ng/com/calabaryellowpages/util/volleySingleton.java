@@ -1,4 +1,4 @@
-package ng.com.calabarpages.util;
+package ng.com.calabaryellowpages.util;
 
 /**
  * Created by smile on 1/12/16.

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ng.com.calabarpages.Search"
+    tools:context="ng.com.calabaryellowpages.Search"
     tools:showIn="@layout/main_search">
 
     <android.support.v7.widget.RecyclerView

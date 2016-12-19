@@ -1,9 +1,12 @@
-package ng.com.calabarpages;
+package ng.com.calabaryellowpages;
 
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,21 +24,23 @@ import com.android.volley.toolbox.ImageLoader;
 
 import java.util.ArrayList;
 
-import ng.com.calabarpages.Adapters.GalleryAdapter;
-import ng.com.calabarpages.Model.Category;
-import ng.com.calabarpages.util.volleySingleton;
+import ng.com.calabaryellowpages.Adapters.GalleryAdapter;
+import ng.com.calabaryellowpages.Model.Category;
+import ng.com.calabaryellowpages.util.Parse;
+import ng.com.calabaryellowpages.util.volleySingleton;
 
 public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener{
-    ArrayList<ng.com.calabarpages.Model.Category> model;
+    ArrayList<ng.com.calabaryellowpages.Model.Category> model;
     RecyclerView rv;
     RecyclerView.LayoutManager manager;
     GalleryAdapter mAdapter;
-    ng.com.calabarpages.Model.Category data;
+    ng.com.calabaryellowpages.Model.Category data;
     volleySingleton volleySingleton;
     RequestQueue requestQueue;
     CollapsingToolbarLayout col;
     TextView title1, title2;
     LinearLayout mTitleContainer;
+    FloatingActionButton callButton;
     de.hdodenhof.circleimageview.CircleImageView rounded;
     ImageView imageView;
     TextView special, title, phone, address, work_days, web, description;
@@ -60,6 +65,9 @@ public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffset
         }catch (Exception e){
             e.printStackTrace();
         }
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         col = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         Typeface items = Typeface.createFromAsset(getAssets(),
@@ -75,6 +83,15 @@ public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffset
         model = new ArrayList<>();
         imageView = (ImageView) findViewById(R.id.image);
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.yellowpages));
+        callButton = (FloatingActionButton) findViewById(R.id.callButton);
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:" + Parse.Parse(data.getPhone())[0]));
+                startActivity(callIntent);
+            }
+        });
         web = (TextView) findViewById(R.id.website);
         web.setText(data.getWeb());
         description = (TextView) findViewById(R.id.description);

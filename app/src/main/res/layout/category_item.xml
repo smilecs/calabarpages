@@ -8,9 +8,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         app:cardElevation="6dp"
 
-       >
+        android:id="@+id/cardView">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -125,7 +127,19 @@
                 android:layout_toEndOf="@+id/unit_icon" />
 
 
+
         </RelativeLayout>
+            <Button
+                android:text="Call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/call"
+                android:elevation="8dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_below="@+id/specialRel"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="12dp"
+                android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

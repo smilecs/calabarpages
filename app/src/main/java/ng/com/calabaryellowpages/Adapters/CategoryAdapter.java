@@ -1,4 +1,4 @@
-package ng.com.calabarpages.Adapters;
+package ng.com.calabaryellowpages.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import ng.com.calabarpages.Model.Category;
-import ng.com.calabarpages.R;
+import ng.com.calabaryellowpages.Model.Category;
+import ng.com.calabaryellowpages.R;
 
 /**
  * Created by SMILECS on 8/27/16.
@@ -37,7 +37,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     Category category = (Category) title.getTag();
-                    Intent i = new Intent(context, ng.com.calabarpages.Category.class);
+                    Intent i = new Intent(context, ng.com.calabaryellowpages.Category.class);
                     i.putExtra("slug", category.getSlug());
                     i.putExtra("title", category.getTitle());
                     context.startActivity(i);

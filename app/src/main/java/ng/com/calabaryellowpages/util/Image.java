@@ -1,4 +1,4 @@
-package ng.com.calabarpages.util;
+package ng.com.calabaryellowpages.util;
 
 import android.content.Context;
 import android.database.Cursor;

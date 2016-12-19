@@ -1,4 +1,4 @@
-package ng.com.calabarpages.Adapters;
+package ng.com.calabaryellowpages.Adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,9 +11,9 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 
-import ng.com.calabarpages.Model.Category;
-import ng.com.calabarpages.R;
-import ng.com.calabarpages.util.volleySingleton;
+import ng.com.calabaryellowpages.Model.Category;
+import ng.com.calabaryellowpages.R;
+import ng.com.calabaryellowpages.util.volleySingleton;
 
 /**
  * Created by SMILECS on 9/10/16.

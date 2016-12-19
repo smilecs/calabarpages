@@ -1,13 +1,15 @@
-package ng.com.calabarpages.Adapters;
+package ng.com.calabaryellowpages.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -19,10 +21,11 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.ArrayList;
 
-import ng.com.calabarpages.Model.Category;
-import ng.com.calabarpages.R;
-import ng.com.calabarpages.pluslist;
-import ng.com.calabarpages.util.volleySingleton;
+import ng.com.calabaryellowpages.Model.Category;
+import ng.com.calabaryellowpages.R;
+import ng.com.calabaryellowpages.pluslist;
+import ng.com.calabaryellowpages.util.Parse;
+import ng.com.calabaryellowpages.util.volleySingleton;
 
 /**
  * Created by SMILECS on 8/27/16.
@@ -43,6 +46,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         ProgressBar bar;
         NetworkImageView image;
         ImageView phoneIcon;
+        Button callButton;
         RelativeLayout homeicon, unit, phonIcon, work;
         public ViewHolder(final View itemView, int type) {
             super(itemView);
@@ -50,6 +54,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
             unit = (RelativeLayout) itemView.findViewById(R.id.specialRel);
             work = (RelativeLayout) itemView.findViewById(R.id.workRel);
             phonIcon = (RelativeLayout) itemView.findViewById(R.id.phoneRel);
+            callButton = (Button) itemView.findViewById(R.id.call);
 
             switch (type){
                 case LISTING:
@@ -59,6 +64,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     special = (TextView) itemView.findViewById(R.id.specialisation);
                     work_days = (TextView) itemView.findViewById(R.id.workingDays);
                     phoneIcon = (ImageView) itemView.findViewById(R.id.phone_icon);
+                    callButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Category cat = (Category) title.getTag();
+                            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                            callIntent.setData(Uri.parse("tel:" + Parse.Parse(cat.getPhone())[0]));
+                            itemView.getContext().startActivity(callIntent);
+                        }
+                    });
                     break;
                 case PLUSLIST:
                     image = (NetworkImageView) itemView.findViewById(R.id.profile_image);
@@ -68,6 +82,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     special = (TextView) itemView.findViewById(R.id.specialisation);
                     phoneIcon = (ImageView) itemView.findViewById(R.id.phone_icon);
                     work_days = (TextView) itemView.findViewById(R.id.workingDays);
+                    callButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Category cat = (Category) title.getTag();
+                            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                            callIntent.setData(Uri.parse("tel:" + Parse.Parse(cat.getPhone())[0]));
+                            itemView.getContext().startActivity(callIntent);
+                        }
+                    });
                     itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -157,6 +180,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 holder.special.setText(mode.getSpecialisation());
                 if(mode.getPhone().isEmpty() || mode.getPhone().length() < 2){
                     holder.phonIcon.setVisibility(View.GONE);
+                    holder.callButton.setVisibility(View.GONE);
                 }
                holder.phone.setText(mode.getPhone());
                 if(mode.getWork_days().isEmpty() || mode.getWork_days().length() < 2){
@@ -197,6 +221,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 holder.special.setText(mode.getSpecialisation());
                 if(mode.getPhone().isEmpty() || mode.getPhone().length() < 2){
                     holder.phonIcon.setVisibility(View.GONE);
+                    holder.callButton.setVisibility(View.GONE);
                 }
                 holder.phone.setText(mode.getPhone());
                 if(mode.getWork_days().isEmpty() || mode.getWork_days().length() < 2){
@@ -228,6 +253,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
 
     }
+
+
+
 
     @Override
     public int getItemCount() {

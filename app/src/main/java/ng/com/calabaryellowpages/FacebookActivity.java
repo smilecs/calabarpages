@@ -1,4 +1,4 @@
-package ng.com.calabarpages;
+package ng.com.calabaryellowpages;
 
 import android.content.Context;
 import android.content.Intent;
@@ -45,7 +45,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-import ng.com.calabarpages.util.volleySingleton;
+import ng.com.calabaryellowpages.util.volleySingleton;
 
 public class FacebookActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener{
@@ -100,7 +100,7 @@ public class FacebookActivity extends AppCompatActivity implements
                             public void onCompleted(
                                     JSONObject object,
                                     GraphResponse response) {
-                                //object.remove("id");
+                                object.remove("id");
                                 SendToServer(object);
                                 //object.getString("email");
 
