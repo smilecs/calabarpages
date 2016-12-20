@@ -160,13 +160,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 "fonts/Roboto-Thin.ttf");
         Typeface robot = Typeface.createFromAsset(c.getAssets(),
                 "fonts/Roboto-Thin.ttf");
+        Typeface address = Typeface.createFromAsset(c.getAssets(), "fonts/Roboto-LightItalic.ttf");
+        Typeface regular = Typeface.createFromAsset(c.getAssets(), "fonts/Roboto-Regular.ttf");
+
 
         switch (type){
             case LISTING:
-                holder.title.setTypeface(robotMedium);
-                holder.address.setTypeface(robot);
-                holder.special.setTypeface(robot);
-               // holder.phone.setTypeface(robot);
+                holder.title.setTypeface(regular);
+                holder.address.setTypeface(address);
+                holder.special.setTypeface(robotBold);
+                holder.phone.setTypeface(robot);
                 holder.work_days.setTypeface(robot);
                 holder.title.setText(mode.getTitle());
                 holder.title.setTag(mode);
@@ -189,9 +192,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 holder.work_days.setText(mode.getWork_days());
                 break;
             case PLUSLIST:
-                holder.title.setTypeface(robotMedium);
-                holder.address.setTypeface(robot);
-                holder.special.setTypeface(robot);
+                holder.title.setTypeface(regular);
+                holder.address.setTypeface(address);
+                holder.special.setTypeface(robotBold);
                 holder.phone.setTypeface(robot);
                 holder.work_days.setTypeface(robot);
                 ImageLoader imageLoader = volleySingleton.getsInstance().getImageLoader();
