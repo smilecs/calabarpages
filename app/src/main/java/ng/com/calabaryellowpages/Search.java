@@ -109,40 +109,36 @@ public class Search extends AppCompatActivity {
                     bar.setVisibility(View.GONE);
                     networkError.setVisibility(View.GONE);
                     JSONObject json;
-                    JSONArray jsonArray = jsonObject.getJSONArray("Data");
+                    JSONArray jsonArray = jsonObject.getJSONArray("Posts");
                     for(int i=0; i<jsonArray.length(); i++){
-                        json = jsonArray.getJSONObject(i);
+                        JSONObject jsons = jsonArray.getJSONObject(i);
+                        json = jsons.getJSONObject("Listing");
+                        Log.d("Category", jsons.toString());
                         ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
                         cat.setType(json.getString("Plus"));
                         if(cat.getType().equals("advert") || cat.getType().equals("true")){
                             cat.setImage(json.getString("Image"));
-                            try{
-                                String[] tmp = {};
-                                for(int k = 0; k <json.getJSONArray("Images").length(); k++){
-                                    tmp[k] = json.getJSONArray("Images").getString(k);
-                                }
-                                cat.setImages(tmp);
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
                         }
+                        if(!cat.getType().equals("advert")){
                             cat.setTitle(json.getString("CompanyName"));
                             cat.setSlug(json.getString("Slug"));
                             cat.setAddress(json.getString("Address"));
                             cat.setSpecialisation(json.getString("Specialisation"));
                             try{
                                 cat.setPhone(json.getString("Hotline"));
-                            }catch (Exception e){
+                            }catch (NullPointerException e){
                                 e.printStackTrace();
                             }
                             try{
-                                Log.d("Search", json.getString("Dhr"));
-                                cat.setWork_days(json.getString("Dhr"));
-                            }catch (Exception e){
+                                cat.setWork_days(json.getString("DHr"));
+                            }catch (NullPointerException e){
                                 e.printStackTrace();
                             }
 
+                        }
                         model.add(cat);
+                        mAdapter.notifyDataSetChanged();
+
                     }
 
                 }catch (JSONException e){
