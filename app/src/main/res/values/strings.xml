@@ -13,8 +13,11 @@
     <string name="title_activity_category">Category</string>
     <string name="title_activity_pluslist">pluslist</string>
     <string name="banner_ad_unit_id">ca-app-pub-9472469694308804/7627615776</string>
+    <string name="banner_ad_unit_id2">ca-app-pub-9472469694308804/4616567373</string>
     <string name="facebook_app_id">1035586836549797</string>
     <string name="fb_login_protocol_scheme">fb1035586836549797</string>
+    <string name="calabaryellowpages">ca-app-pub-9472469694308804~6150882570</string>
+    <string name="calabarpages">ca-app-pub-9472469694308804~3139834173</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

@@ -73,7 +73,8 @@ public class tabbed extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-9472469694308804~6150882570");
+        //app id
+        MobileAds.initialize(getApplicationContext(), getResources().getString(R.string.calabaryellowpages));
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
