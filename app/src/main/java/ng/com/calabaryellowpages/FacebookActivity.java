@@ -100,7 +100,14 @@ public class FacebookActivity extends AppCompatActivity implements
                             public void onCompleted(
                                     JSONObject object,
                                     GraphResponse response) {
-                                object.remove("id");
+                                try{
+                                    object.remove("id");
+                                    object.put("ID", object.get("id"));
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+
+
                                 SendToServer(object);
                                 //object.getString("email");
 
@@ -157,6 +164,7 @@ public class FacebookActivity extends AppCompatActivity implements
                     Log.d("FacebookActivity", "onAuthStateChanged:signed_in:" + user.getUid());
                     try{
                         JSONObject json = new JSONObject();
+                        json.put("ID", user.getUid());
                         json.put("name", user.getDisplayName());
                         json.put("link", user.getProviderId());
                         json.put("email", user.getEmail());
@@ -244,7 +252,7 @@ public class FacebookActivity extends AppCompatActivity implements
        JsonObjectRequest objectRequest = null;
         //Log.d("Facebook", object.toString());
         try{
-            objectRequest = new JsonObjectRequest(Request.Method.POST, volleySingleton.URL + "facebookLogin", object, new Response.Listener<JSONObject>() {
+            objectRequest = new JsonObjectRequest(Request.Method.POST, volleySingleton.URL + "api/login/facebook", object, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     //preferences.getBoolean("notlogged", true)
