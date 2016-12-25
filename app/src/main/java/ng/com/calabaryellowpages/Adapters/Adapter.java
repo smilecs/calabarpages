@@ -141,11 +141,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         Category mode = model.get(position);
         int type = 0;
         try{
-            if(mode.getType().equals("true")){
-                type =  PLUSLIST;
-            }else if(mode.getType().equals("false")){
-                type = LISTING;
-            }else {
+            if(mode.getListing().equals("listing")){
+                if(mode.getType().equals("true")){
+                    type =  PLUSLIST;
+                }else{
+                    type = LISTING;
+                }
+            }
+            else {
                 type = ADVERT;
             }
         }catch (Exception e){
@@ -165,32 +168,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
 
         switch (type){
-            case LISTING:
-                holder.title.setTypeface(regular);
-                holder.address.setTypeface(address);
-                holder.special.setTypeface(robotBold);
-                holder.phone.setTypeface(robot);
-                holder.work_days.setTypeface(robot);
-                holder.title.setText(mode.getTitle());
-                holder.title.setTag(mode);
-                if(mode.getAddress().isEmpty()){
-                    holder.homeicon.setVisibility(View.GONE);
-                }
-                holder.address.setText(mode.getAddress());
-                if(mode.getSpecialisation().isEmpty()){
-                    holder.unit.setVisibility(View.GONE);
-                }
-                holder.special.setText(mode.getSpecialisation());
-                if(mode.getPhone().isEmpty() || mode.getPhone().length() < 2){
-                    holder.phonIcon.setVisibility(View.GONE);
-                    holder.callButton.setVisibility(View.GONE);
-                }
-               holder.phone.setText(mode.getPhone());
-                if(mode.getWork_days().isEmpty() || mode.getWork_days().length() < 2){
-                    holder.work.setVisibility(View.GONE);
-                }
-                holder.work_days.setText(mode.getWork_days());
-                break;
             case PLUSLIST:
                 holder.title.setTypeface(regular);
                 holder.address.setTypeface(address);
@@ -237,7 +214,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 break;
             case ADVERT:
                 ImageLoader imageLoader2 = volleySingleton.getsInstance().getImageLoader();
-                imageLoader2.get(mode.getImage(), new ImageLoader.ImageListener() {
+             imageLoader2.get(mode.getImage(), new ImageLoader.ImageListener() {
                     @Override
                     public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
                         holder.image.setImageBitmap(imageContainer.getBitmap());
@@ -250,6 +227,32 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     }
                 });
 
+                break;
+            default:
+                holder.title.setTypeface(regular);
+                holder.address.setTypeface(address);
+                holder.special.setTypeface(robotBold);
+                holder.phone.setTypeface(robot);
+                holder.work_days.setTypeface(robot);
+                holder.title.setText(mode.getTitle());
+                holder.title.setTag(mode);
+                if(mode.getAddress().isEmpty()){
+                    holder.homeicon.setVisibility(View.GONE);
+                }
+                holder.address.setText(mode.getAddress());
+                if(mode.getSpecialisation().isEmpty()){
+                    holder.unit.setVisibility(View.GONE);
+                }
+                holder.special.setText(mode.getSpecialisation());
+                if(mode.getPhone().isEmpty() || mode.getPhone().length() < 2){
+                    holder.phonIcon.setVisibility(View.GONE);
+                    holder.callButton.setVisibility(View.GONE);
+                }
+                holder.phone.setText(mode.getPhone());
+                if(mode.getWork_days().isEmpty() || mode.getWork_days().length() < 2){
+                    holder.work.setVisibility(View.GONE);
+                }
+                holder.work_days.setText(mode.getWork_days());
                 break;
         }
 
@@ -272,19 +275,24 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
             Log.d("Adapter", "position   " + String.valueOf(position));
             return LOADING;
         }
+        Log.d("Adapter", mode.getListing()+ "   " + mode.getType());
         try{
-            if(mode.getType().equals("true")){
-                return PLUSLIST;
-            }else if(mode.getType().equals("false")){
-                return LISTING;
-            }else {
-                return ADVERT;
+            if(mode.getListing().equals("listing")){
+                if(mode.getType().equals("true")){
+                    return PLUSLIST;
+                }
+                else{
+                    return LISTING;
+                }
+            }
+            else {
+                //return ADVERT;
             }
         }catch (Exception e){
             e.printStackTrace();
             return LISTING;
         }
 
-        //return super.getItemViewType(position);
+        return super.getItemViewType(position);
     }
 }

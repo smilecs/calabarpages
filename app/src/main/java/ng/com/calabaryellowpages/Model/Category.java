@@ -13,6 +13,16 @@ public class Category implements Serializable{
     public String specialisation;
     public String type;
     public String image;
+    public String listing;
+
+    public String getListing() {
+        return listing;
+    }
+
+    public void setListing(String listing) {
+        this.listing = listing;
+    }
+
     public String[] images;
     public String description;
     public String web;

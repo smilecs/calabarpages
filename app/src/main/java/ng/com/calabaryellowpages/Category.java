@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -36,7 +37,9 @@ public class Category extends AppCompatActivity {
     volleySingleton volleySingle;
     RequestQueue requestQueue;
     String slug, page, url;
+    TextView txt;
     ProgressBar bar;
+    private EndlessRecyclerViewScrollListener scrollListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,7 @@ public class Category extends AppCompatActivity {
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        txt = (TextView) findViewById(R.id.error);
         volleySingle = volleySingleton.getsInstance();
         requestQueue = volleySingle.getmRequestQueue();
         bar = (ProgressBar) findViewById(R.id.progress);
@@ -61,12 +65,12 @@ public class Category extends AppCompatActivity {
         rv.setHasFixedSize(true);
         rv.setLayoutManager(manager);
         rv.setAdapter(mAdapter);
-        rv.addOnScrollListener(new EndlessRecyclerViewScrollListener(manager) {
+        scrollListener = new EndlessRecyclerViewScrollListener(manager) {
             @Override
-            public void onLoadMore(int page, int totalItemsCount) {
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Log.d("Category", "page no" + Integer.toString(page) + "   " + Integer.toString(totalItemsCount));
                 String pg = Integer.toString(page);
-                if(totalItemsCount > 49) {
+                if(totalItemsCount > 8){
                     if (slug != null) {
                         Refresh(slug, pg);
                     } else {
@@ -76,9 +80,12 @@ public class Category extends AppCompatActivity {
                 }
 
             }
-        });
+        };
+
+        rv.addOnScrollListener(scrollListener);
+
         if(slug != null){
-            Refresh(slug, page);
+            Refresh(slug, "");
         }else{
             url = getIntent().getStringExtra("url");
             Refresh2(getIntent().getStringExtra("url"), page);
@@ -124,10 +131,14 @@ public class Category extends AppCompatActivity {
     private void Refresh(String query, String page){
         Log.d("Category", "Refresh" + " " + Integer.toString(model.size()));
         if(page.equals("1")){
+            Log.d("Category", "clean");
             model.clear();
             mAdapter.notifyDataSetChanged();
+            scrollListener.resetState();
         }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + "api/categories/"+ query +"?page=" + page, null, new Response.Listener<JSONObject>() {
+        txt.setVisibility(View.GONE);
+        bar.setVisibility(View.VISIBLE);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + "api/categories/"+ query +"?p="+page, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try{
@@ -135,10 +146,12 @@ public class Category extends AppCompatActivity {
                     JSONObject json;
                     JSONArray jsonArray = jsonObject.getJSONArray("Posts");
                     for(int i=0; i<jsonArray.length(); i++){
+                        Log.d("category", jsonArray.toString());
                         JSONObject jsons = jsonArray.getJSONObject(i);
                         json = jsons.getJSONObject("Listing");
-                        Log.d("Category", jsons.toString());
+                       // Log.d("Category", jsons.toString());
                         ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
+                        cat.setListing(jsonArray.getJSONObject(i).getString("Type"));
                         cat.setType(json.getString("Plus"));
                         if(cat.getType().equals("advert") || cat.getType().equals("true")){
                             cat.setImage(json.getString("Image"));
@@ -164,7 +177,8 @@ public class Category extends AppCompatActivity {
                         mAdapter.notifyDataSetChanged();
 
                     }
-                    Log.d("Category", "Refresh" + " " + Integer.toString(model.size()));
+
+                    Log.d("Category", "Refresh" + " " + model.get(model.size() - 1).getTitle());
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -173,6 +187,8 @@ public class Category extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
+                bar.setVisibility(View.GONE);
+                txt.setVisibility(View.VISIBLE);
             }
         });
 
@@ -185,7 +201,7 @@ public class Category extends AppCompatActivity {
             model.clear();
             mAdapter.notifyDataSetChanged();
         }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + url + "?page=" + page , null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try{

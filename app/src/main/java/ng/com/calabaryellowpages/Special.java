@@ -123,6 +123,7 @@ public class Special extends Fragment {
                         json = jsonArray.getJSONObject(i);
                         json = json.getJSONObject("Listing");
                         ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
+                        cat.setListing(jsonArray.getJSONObject(i).getString("Type"));
                         cat.setType(json.getString("Plus"));
                         if(cat.getType().equals("advert") || cat.getType().equals("true")){
                             cat.setImage(json.getString("Image"));

@@ -75,7 +75,7 @@ public class Search extends AppCompatActivity {
 
         rv.addOnScrollListener(new EndlessRecyclerViewScrollListener(manager) {
             @Override
-            public void onLoadMore(int page, int totalItemsCount) {
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Log.d("Category", "page no" + Integer.toString(page));
                 String pg = Integer.toString(page);
                     if(totalItemsCount > 49){
