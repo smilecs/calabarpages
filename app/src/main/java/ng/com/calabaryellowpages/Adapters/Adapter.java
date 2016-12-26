@@ -286,13 +286,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 }
             }
             else {
-                //return ADVERT;
+                return ADVERT;
             }
         }catch (Exception e){
             e.printStackTrace();
             return LISTING;
         }
 
-        return super.getItemViewType(position);
+       // return super.getItemViewType(position);
     }
 }

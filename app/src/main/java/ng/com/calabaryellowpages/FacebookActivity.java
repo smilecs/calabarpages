@@ -101,16 +101,12 @@ public class FacebookActivity extends AppCompatActivity implements
                                     JSONObject object,
                                     GraphResponse response) {
                                 try{
-                                    object.remove("id");
                                     object.put("ID", object.get("id"));
+                                    object.remove("id");
                                 }catch (Exception e){
                                     e.printStackTrace();
                                 }
-
-
                                 SendToServer(object);
-                                //object.getString("email");
-
                             }
                         });
 
@@ -165,10 +161,10 @@ public class FacebookActivity extends AppCompatActivity implements
                     try{
                         JSONObject json = new JSONObject();
                         json.put("ID", user.getUid());
-                        json.put("name", user.getDisplayName());
-                        json.put("link", user.getProviderId());
-                        json.put("email", user.getEmail());
-                        json.put("gender", "");
+                        json.put("Name", user.getDisplayName());
+                        json.put("Link", user.getProviderId());
+                        json.put("Email", user.getEmail());
+
                         SendToServer(json);
 
                     }catch (Exception e){
