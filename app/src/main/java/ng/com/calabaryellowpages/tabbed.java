@@ -28,6 +28,7 @@ import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -66,6 +67,8 @@ public class tabbed extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabbed);
+        FirebaseMessaging.getInstance().subscribeToTopic("news");
+        FirebaseMessaging.getInstance().subscribeToTopic("update");
         preferences = getSharedPreferences("app", MODE_PRIVATE);
         editor = preferences.edit();
         if(preferences.getBoolean("isnotlogged", true)){
