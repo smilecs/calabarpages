@@ -102,6 +102,7 @@ public class FacebookActivity extends AppCompatActivity implements
                                     GraphResponse response) {
                                 try{
                                     object.put("ID", object.get("id"));
+                                    object.put("Type", "facebook");
                                     object.remove("id");
                                 }catch (Exception e){
                                     e.printStackTrace();
@@ -164,6 +165,7 @@ public class FacebookActivity extends AppCompatActivity implements
                         json.put("Name", user.getDisplayName());
                         json.put("Link", user.getProviderId());
                         json.put("Email", user.getEmail());
+                        json.put("Type", "google");
 
                         SendToServer(json);
 
@@ -248,7 +250,7 @@ public class FacebookActivity extends AppCompatActivity implements
        JsonObjectRequest objectRequest = null;
         //Log.d("Facebook", object.toString());
         try{
-            objectRequest = new JsonObjectRequest(Request.Method.POST, volleySingleton.URL + "api/login/facebook", object, new Response.Listener<JSONObject>() {
+            objectRequest = new JsonObjectRequest(Request.Method.POST, volleySingleton.URL + "api/social_login", object, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     //preferences.getBoolean("notlogged", true)
