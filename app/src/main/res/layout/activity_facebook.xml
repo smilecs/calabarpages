@@ -10,27 +10,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.facebook.login.widget.LoginButton
-            android:id="@+id/login_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textAlignment="center"
-        android:text="Calabar Yellow Pages"
-        android:id="@+id/title"
-        android:textColor="@color/colorPrimaryDark"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,6 +46,39 @@
         android:layout_marginBottom="13dp"
         android:layout_above="@+id/gmail"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="21dp"
+        android:id="@+id/button2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/login_button"
+        android:layout_alignEnd="@+id/login_button" />
+
+    <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        android:layout_above="@+id/button2"
+        android:layout_marginLeft="32dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="97dp" />
+
+    <ImageView
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="16dp"
+        android:id="@+id/splash"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/splash"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/splash_text"/>
 
 
 </RelativeLayout>

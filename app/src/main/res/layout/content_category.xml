@@ -9,6 +9,7 @@
     >
 <android.support.v7.widget.RecyclerView
     android:id="@+id/recycler"
+    android:layout_above="@+id/adView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
@@ -48,6 +49,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         ads:adSize="BANNER"
+        android:visibility="gone"
         ads:adUnitId="@string/banner_ad_unit_id">
     </com.google.android.gms.ads.AdView>
 

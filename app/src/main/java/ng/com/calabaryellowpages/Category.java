@@ -1,5 +1,6 @@
 package ng.com.calabaryellowpages;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -38,6 +40,8 @@ public class Category extends AppCompatActivity {
     RequestQueue requestQueue;
     String slug, page, url;
     TextView txt;
+    Context c;
+    Boolean load;
     ProgressBar bar;
     private EndlessRecyclerViewScrollListener scrollListener;
     @Override
@@ -45,6 +49,7 @@ public class Category extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        c = this;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
@@ -70,7 +75,7 @@ public class Category extends AppCompatActivity {
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Log.d("Category", "page no" + Integer.toString(page) + "   " + Integer.toString(totalItemsCount));
                 String pg = Integer.toString(page);
-                if(totalItemsCount > 8){
+                if(load){
                     if (slug != null) {
                         Refresh(slug, pg);
                     } else {
@@ -145,6 +150,7 @@ public class Category extends AppCompatActivity {
                     bar.setVisibility(View.GONE);
                     JSONObject json;
                     JSONArray jsonArray = jsonObject.getJSONArray("Posts");
+                    load = jsonObject.getJSONObject("Page").getBoolean("Next");
                     for(int i=0; i<jsonArray.length(); i++){
                         Log.d("category", jsonArray.toString());
                         JSONObject jsons = jsonArray.getJSONObject(i);
@@ -178,7 +184,7 @@ public class Category extends AppCompatActivity {
 
                     }
 
-                    Log.d("Category", "Refresh" + " " + model.get(model.size() - 1).getTitle());
+                    Log.d("Category", "check" + " " + model.size());
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -188,7 +194,7 @@ public class Category extends AppCompatActivity {
             public void onErrorResponse(VolleyError volleyError) {
                 volleyError.printStackTrace();
                 bar.setVisibility(View.GONE);
-                txt.setVisibility(View.VISIBLE);
+                Toast.makeText(c, "network error", Toast.LENGTH_LONG);
             }
         });
 

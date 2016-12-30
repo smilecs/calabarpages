@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,9 +61,11 @@ public class FacebookActivity extends AppCompatActivity implements
     int RC_SIGN_IN = 300;
     Button gmail;
     private GoogleApiClient mGoogleApiClient;
-    TextView errorMsg;
+    TextView errorMsg, splash_text;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
+    ImageView image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +74,9 @@ public class FacebookActivity extends AppCompatActivity implements
         setSupportActionBar(toolbar);
         c = this;
         bar = (ProgressBar) findViewById(R.id.progressGmail);
-
+        splash_text = (TextView) findViewById(R.id.splash_text);
+        image = (ImageView) findViewById(R.id.splash);
+        //image.setBackgroundResource();
         volley = volleySingleton.getsInstance();
         requestQueue = volley.getmRequestQueue();
         errorMsg = (TextView) findViewById(R.id.errorMsg);

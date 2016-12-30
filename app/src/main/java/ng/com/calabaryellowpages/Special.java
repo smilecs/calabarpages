@@ -119,6 +119,7 @@ public class Special extends Fragment {
                     bar.setVisibility(View.GONE);
                     JSONObject json;
                     JSONArray jsonArray = jsonObject.getJSONArray("Posts");
+                    Log.d("Special", jsonArray.toString());
                     for(int i=0; i<jsonArray.length(); i++){
                         json = jsonArray.getJSONObject(i);
                         json = json.getJSONObject("Listing");

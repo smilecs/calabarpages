@@ -275,7 +275,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
             Log.d("Adapter", "position   " + String.valueOf(position));
             return LOADING;
         }
-        Log.d("Adapter", mode.getListing()+ "   " + mode.getType());
         try{
             if(mode.getListing().equals("listing")){
                 if(mode.getType().equals("true")){
