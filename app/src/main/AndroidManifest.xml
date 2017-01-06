@@ -116,7 +116,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Splash"></activity>
+        <activity android:name=".Splash" />
+        <activity android:name=".IntroAcitvity" />
+        <activity android:name=".intro"></activity>
     </application>
 
 </manifest>

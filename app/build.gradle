@@ -11,8 +11,9 @@ android {
         applicationId "ng.com.calabaryellowpages"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 10
-        versionName "1.1.5"
+        versionCode 11
+        versionName "1.1.6"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -37,6 +38,7 @@ dependencies {
     compile 'com.google.firebase:firebase-ads:10.0.1'
     compile 'com.google.firebase:firebase-messaging:10.0.1'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.github.paolorotolo:appintro:4.1.0'
 
 
 }

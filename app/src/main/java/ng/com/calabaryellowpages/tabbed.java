@@ -72,7 +72,7 @@ public class tabbed extends AppCompatActivity {
         preferences = getSharedPreferences("app", MODE_PRIVATE);
         editor = preferences.edit();
         if(preferences.getBoolean("isnotlogged", true)){
-            Intent intent = new Intent(this, FacebookActivity.class);
+            Intent intent = new Intent(this, intro.class);
             startActivity(intent);
             finish();
         }

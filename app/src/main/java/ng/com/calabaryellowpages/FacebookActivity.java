@@ -76,6 +76,8 @@ public class FacebookActivity extends AppCompatActivity implements
         bar = (ProgressBar) findViewById(R.id.progressGmail);
         splash_text = (TextView) findViewById(R.id.splash_text);
         image = (ImageView) findViewById(R.id.splash);
+        preferences = getSharedPreferences("app", MODE_PRIVATE);
+        editor = preferences.edit();
         //image.setBackgroundResource();
         volley = volleySingleton.getsInstance();
         requestQueue = volley.getmRequestQueue();
@@ -141,8 +143,7 @@ public class FacebookActivity extends AppCompatActivity implements
 
 
         //loginButton.setFragment(this);
-        preferences = getSharedPreferences("app", MODE_PRIVATE);
-        editor = preferences.edit();
+
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("110934577974-9cdrom3gs21bk9164qndps0p6hhebe39.apps.googleusercontent.com")
