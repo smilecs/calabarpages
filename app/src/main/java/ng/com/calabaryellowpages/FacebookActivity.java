@@ -59,7 +59,7 @@ public class FacebookActivity extends AppCompatActivity implements
     ProgressBar bar;
     SharedPreferences.Editor editor;
     int RC_SIGN_IN = 300;
-    Button gmail;
+    Button gmail, skip;
     private GoogleApiClient mGoogleApiClient;
     TextView errorMsg, splash_text;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -94,6 +94,17 @@ public class FacebookActivity extends AppCompatActivity implements
         });
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("email"));
+        skip = (Button) findViewById(R.id.button2);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.putBoolean("isnotlogged", false);
+                editor.commit();
+                Intent i = new Intent(c, tabbed.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
