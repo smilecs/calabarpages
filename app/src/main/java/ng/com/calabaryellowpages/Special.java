@@ -130,6 +130,7 @@ public class Special extends Fragment {
                             cat.setImage(json.getString("Image"));
                             try{
                                 String[] tmp = new String[json.getJSONArray("Images").length()];
+                                Log.d("Special", json.getJSONArray("Images").toString());
                                 for(int k = 0; k < json.getJSONArray("Images").length(); k++){
                                     tmp[k] = json.getJSONArray("Images").getString(k);
                                     Log.d("special", tmp[k]);

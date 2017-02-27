@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 
@@ -36,7 +35,6 @@ public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffset
     GalleryAdapter mAdapter;
     ng.com.calabaryellowpages.Model.Category data;
     volleySingleton volleySingleton;
-    RequestQueue requestQueue;
     CollapsingToolbarLayout col;
     TextView title1, title2;
     LinearLayout mTitleContainer;
@@ -66,8 +64,6 @@ public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffset
             e.printStackTrace();
         }
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         col = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         Typeface items = Typeface.createFromAsset(getAssets(),
@@ -148,7 +144,6 @@ public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffset
         imageLoader.get(data.getImage(), new ImageLoader.ImageListener() {
             @Override
             public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                //imageView.setImageBitmap(imageContainer.getBitmap());
                 rounded.setImageBitmap(imageContainer.getBitmap());
 
             }

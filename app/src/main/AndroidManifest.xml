@@ -117,7 +117,6 @@
         </service>
 
         <activity android:name=".Splash" />
-        <activity android:name=".IntroAcitvity" />
         <activity android:name=".intro"></activity>
     </application>
 
