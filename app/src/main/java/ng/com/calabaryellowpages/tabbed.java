@@ -17,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -62,6 +64,8 @@ public class tabbed extends AppCompatActivity {
     ShareDialog shareDialog;
     String message;
     ShareLinkContent content;
+    Button addButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +81,15 @@ public class tabbed extends AppCompatActivity {
             finish();
         }
         //app id
+        addButton = (Button) findViewById(R.id.add);
         MobileAds.initialize(getApplicationContext(), getResources().getString(R.string.calabaryellowpages));
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        if(preferences.getBoolean("hasValue", false)){
+            mAdView.setVisibility(View.GONE);
+            addButton.setVisibility(View.VISIBLE);
+        }
         db = new DbUtility(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

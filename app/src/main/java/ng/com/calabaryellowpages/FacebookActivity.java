@@ -119,8 +119,10 @@ public class FacebookActivity extends AppCompatActivity implements
                                     JSONObject object,
                                     GraphResponse response) {
                                 try{
+                                    editor.putBoolean("hasValue", true);
                                     object.put("ID", object.get("id"));
                                     object.put("Type", "facebook");
+                                    object.put("Name", object.get("name"));
                                     object.remove("id");
                                 }catch (Exception e){
                                     e.printStackTrace();
@@ -177,6 +179,7 @@ public class FacebookActivity extends AppCompatActivity implements
                     // User is signed in
                     Log.d("FacebookActivity", "onAuthStateChanged:signed_in:" + user.getUid());
                     try{
+                        editor.putBoolean("hasValue", true);
                         JSONObject json = new JSONObject();
                         json.put("ID", user.getUid());
                         json.put("Name", user.getDisplayName());
@@ -263,7 +266,7 @@ public class FacebookActivity extends AppCompatActivity implements
 
     }
 
-    public void SendToServer(JSONObject object){
+    public void SendToServer(final JSONObject object){
        JsonObjectRequest objectRequest = null;
         //Log.d("Facebook", object.toString());
         try{
@@ -271,7 +274,13 @@ public class FacebookActivity extends AppCompatActivity implements
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     //preferences.getBoolean("notlogged", true)
-                    editor.putBoolean("isnotlogged", false);
+
+                    try{
+                        editor.putString("id", object.getString("ID"));
+                        editor.putString("name", object.getString("Name"));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }editor.putBoolean("isnotlogged", false);
                     editor.commit();
                     Intent i = new Intent(c, tabbed.class);
                     startActivity(i);

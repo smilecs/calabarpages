@@ -159,8 +159,19 @@ public class Category extends AppCompatActivity {
                         ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
                         cat.setListing(jsonArray.getJSONObject(i).getString("Type"));
                         cat.setType(json.getString("Plus"));
-                        if(cat.getType().equals("advert") || cat.getType().equals("true")){
+                        if(cat.getType().equals("true")){
                             cat.setImage(json.getString("Image"));
+                                try{
+                                    String[] tmp = new String[json.getJSONArray("Images").length()];
+                                    Log.d("Special", json.getJSONArray("Images").toString());
+                                    for(int k = 0; k < json.getJSONArray("Images").length(); k++){
+                                        tmp[k] = json.getJSONArray("Images").getString(k);
+                                        Log.d("special", tmp[k]);
+                                    }
+                                    cat.setImages(tmp);
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
                         }
                         if(!cat.getType().equals("advert")){
                             cat.setTitle(json.getString("CompanyName"));
