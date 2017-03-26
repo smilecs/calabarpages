@@ -280,7 +280,8 @@ public class FacebookActivity extends AppCompatActivity implements
                         editor.putString("name", object.getString("Name"));
                     }catch (Exception e){
                         e.printStackTrace();
-                    }editor.putBoolean("isnotlogged", false);
+                    }
+                    editor.putBoolean("isnotlogged", false);
                     editor.commit();
                     Intent i = new Intent(c, tabbed.class);
                     startActivity(i);

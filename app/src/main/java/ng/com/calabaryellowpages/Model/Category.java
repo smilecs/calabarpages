@@ -14,6 +14,24 @@ public class Category implements Serializable{
     public String type;
     public String image;
     public String listing;
+    public float rating;
+    int total;
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
 
     public String getListing() {
         return listing;

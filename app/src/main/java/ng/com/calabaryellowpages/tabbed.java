@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -18,7 +19,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -64,7 +64,7 @@ public class tabbed extends AppCompatActivity {
     ShareDialog shareDialog;
     String message;
     ShareLinkContent content;
-    Button addButton;
+    FloatingActionButton addButton;
 
 
     @Override
@@ -81,7 +81,7 @@ public class tabbed extends AppCompatActivity {
             finish();
         }
         //app id
-        addButton = (Button) findViewById(R.id.add);
+        addButton = (FloatingActionButton) findViewById(R.id.add);
         MobileAds.initialize(getApplicationContext(), getResources().getString(R.string.calabaryellowpages));
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();

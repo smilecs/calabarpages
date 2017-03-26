@@ -246,6 +246,8 @@ public class Category extends AppCompatActivity {
                             cat.setSlug(json.getString("Slug"));
                             cat.setAddress(json.getString("Address"));
                             cat.setSpecialisation(json.getString("Specialisation"));
+                            cat.setRating((float) json.getLong("rating"));
+                            cat.setTotal(json.getInt("TotalReview"));
                             try{
                                 cat.setPhone(json.getString("Hotline"));
                             }catch (NullPointerException e){

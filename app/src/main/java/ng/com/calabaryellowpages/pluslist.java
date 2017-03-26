@@ -8,27 +8,35 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import ng.com.calabaryellowpages.Adapters.GalleryAdapter;
 import ng.com.calabaryellowpages.Model.Category;
+import ng.com.calabaryellowpages.Model.Review;
 import ng.com.calabaryellowpages.util.Parse;
 import ng.com.calabaryellowpages.util.volleySingleton;
 
-public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener{
+public class pluslist extends AppCompatActivity{
     ArrayList<ng.com.calabaryellowpages.Model.Category> model;
     RecyclerView rv;
     RecyclerView.LayoutManager manager;
@@ -36,19 +44,16 @@ public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffset
     ng.com.calabaryellowpages.Model.Category data;
     volleySingleton volleySingleton;
     CollapsingToolbarLayout col;
-    TextView title1, title2;
-    LinearLayout mTitleContainer;
     FloatingActionButton callButton;
-    de.hdodenhof.circleimageview.CircleImageView rounded;
     ImageView imageView;
     TextView special, title, phone, address, work_days, web, description;
-    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
-    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
-    private static final int ALPHA_ANIMATIONS_DURATION              = 200;
-
-    private boolean mIsTheTitleVisible          = false;
-    private boolean mIsTheTitleContainerVisible = true;
     private AppBarLayout mAppBarLayout;
+    RequestQueue queue;
+    volleySingleton volleySin;
+    RatingBar ratingBar;
+    TextView baseScore;
+    ArrayList<Review> reviewArrayList;
+    CardView ReviewA;
 
 
     @Override
@@ -56,8 +61,9 @@ public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffset
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pluslist);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        volleySin = ng.com.calabaryellowpages.util.volleySingleton.getsInstance();
+        queue = volleySin.getmRequestQueue();
         mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
-        mAppBarLayout.addOnOffsetChangedListener(this);
         try{
             toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryDark));
         }catch (Exception e){
@@ -71,13 +77,29 @@ public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffset
         Typeface desc = Typeface.createFromAsset(getAssets(),
                 "fonts/Roboto-Thin.ttf");
         data = (Category) getIntent().getSerializableExtra("data");
-        title1 = (TextView) findViewById(R.id.title1);
-        title2 = (TextView) findViewById(R.id.title2);
-        mTitleContainer = (LinearLayout) findViewById(R.id.main_linearlayout_title);
-        startAlphaAnimation(title2, 0, View.INVISIBLE);
-        rounded = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.roundimage);
+        getSupportActionBar().setTitle(data.getTitle());
+        reviewArrayList = new ArrayList<>();
         model = new ArrayList<>();
         imageView = (ImageView) findViewById(R.id.image);
+        try{
+            if(!data.getImage().isEmpty()){
+                ImageLoader imageLoader = volleySingleton.getsInstance().getImageLoader();
+                imageLoader.get(data.getImage(), new ImageLoader.ImageListener() {
+                    @Override
+                    public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                        imageView.setImageBitmap(imageContainer.getBitmap());
+                    }
+
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                    }
+                });
+            }
+        }catch (NullPointerException npe){
+            npe.printStackTrace();
+        }
+
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.yellowpages));
         callButton = (FloatingActionButton) findViewById(R.id.callButton);
         callButton.setOnClickListener(new View.OnClickListener() {
@@ -94,8 +116,6 @@ public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffset
         description.setTypeface(desc);
         description.setText(data.getDescription());
         //title = (TextView) findViewById(R.id.title);
-        title1.setText(data.getTitle());
-        title2.setText(data.getTitle());
         phone = (TextView) findViewById(R.id.contact);
         phone.setTypeface(items);
         phone.setText(data.getPhone());
@@ -108,6 +128,8 @@ public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffset
         work_days = (TextView) findViewById(R.id.workingDays);
         work_days.setTypeface(items);
         work_days.setText(data.getWork_days());
+        ratingBar = (RatingBar) findViewById(R.id.ratingBar2);
+        baseScore = (TextView) findViewById(R.id.summary);
         rv = (RecyclerView) findViewById(R.id.recycler);
         try{
             for(int i=0; i<data.getImages().length; i++){
@@ -121,7 +143,17 @@ public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffset
         }catch (Exception e){
             e.printStackTrace();
         }
-       if(data.getImages().length > 0){
+        ReviewA = (CardView) findViewById(R.id.content_review);
+        ReviewA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), ReviewActivity.class);
+                intent.putExtra("model", reviewArrayList);
+                intent.putExtra("slug", data.getSlug());
+                startActivity(intent);
+            }
+        });
+      /* if(data.getImages().length > 0){
             ImageLoader imageLoader = volleySingleton.getsInstance().getImageLoader();
             imageLoader.get(data.getImages()[0], new ImageLoader.ImageListener() {
                 @Override
@@ -134,86 +166,39 @@ public class pluslist extends AppCompatActivity implements AppBarLayout.OnOffset
 
                 }
             });
-        }
+        }*/
         mAdapter = new GalleryAdapter(model);
         manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(manager);
         rv.setAdapter(mAdapter);
-        ImageLoader imageLoader = volleySingleton.getsInstance().getImageLoader();
-        imageLoader.get(data.getImage(), new ImageLoader.ImageListener() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ng.com.calabaryellowpages.util.volleySingleton.URL + "/api/get_reviews?p=0&q=" + data.getSlug(), null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                rounded.setImageBitmap(imageContainer.getBitmap());
-
+            public void onResponse(JSONObject jsonObject) {
+                int base = 0;
+                try{
+                    JSONArray jsonArray = jsonObject.getJSONArray("Posts");
+                    for(int i = 0; i < jsonArray.length(); i++){
+                        Review review = new Review();
+                        JSONObject json = jsonArray.getJSONObject(i);
+                        review.setComment(json.getString("Comment"));
+                        review.setName(json.getString("Name"));
+                        review.setScore(json.getInt("Rating"));
+                        base += review.getScore();
+                        reviewArrayList.add(review);
+                    }
+                    ratingBar.setRating(base/jsonArray.length());
+                    baseScore.setText(String.valueOf(jsonArray.length() + "Total Reivews"));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
-
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                volleyError.printStackTrace();
+
             }
         });
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-    }
-
-
-
-    @Override
-    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        int maxScroll = appBarLayout.getTotalScrollRange();
-        float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
-
-        handleAlphaOnTitle(percentage);
-        handleToolbarTitleVisibility(percentage);
-    }
-
-    private void handleToolbarTitleVisibility(float percentage) {
-        if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
-
-            if(!mIsTheTitleVisible) {
-                startAlphaAnimation(title2, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
-                mIsTheTitleVisible = true;
-            }
-
-        } else {
-
-            if (mIsTheTitleVisible) {
-                startAlphaAnimation(title2, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
-                mIsTheTitleVisible = false;
-            }
-        }
-    }
-
-    private void handleAlphaOnTitle(float percentage) {
-        if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
-            if(mIsTheTitleContainerVisible) {
-                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
-                mIsTheTitleContainerVisible = false;
-            }
-
-        } else {
-
-            if (!mIsTheTitleContainerVisible) {
-                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
-                mIsTheTitleContainerVisible = true;
-            }
-        }
-    }
-
-    public static void startAlphaAnimation (View v, long duration, int visibility) {
-        AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
-                ? new AlphaAnimation(0f, 1f)
-                : new AlphaAnimation(1f, 0f);
-
-        alphaAnimation.setDuration(duration);
-        alphaAnimation.setFillAfter(true);
-        v.startAnimation(alphaAnimation);
+        queue.add(jsonObjectRequest);
     }
 }

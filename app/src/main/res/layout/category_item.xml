@@ -30,14 +30,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:id="@+id/addressRel"
                 android:layout_below="@+id/title">
-                <ImageView
-                    android:id="@+id/home_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/house"
-                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -54,15 +50,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:layout_below="@+id/addressRel"
                 android:id="@+id/workRel">
-                <ImageView
-                    android:id="@+id/work_days"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/work"
-                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -78,14 +69,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/workRel"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:layout_marginBottom="8dp"
                 android:id="@+id/phoneRel">
-                <ImageView
-                    android:id="@+id/phone_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/phone"
-                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -104,14 +91,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/specialRel"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="12dp"
             android:layout_below="@+id/phoneRel"
             android:layout_marginBottom="6dp">
-            <ImageView
-                android:id="@+id/unit_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/special"
-                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
