@@ -64,7 +64,6 @@ public class FacebookActivity extends AppCompatActivity implements
     TextView errorMsg, splash_text;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
-    ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +74,6 @@ public class FacebookActivity extends AppCompatActivity implements
         c = this;
         bar = (ProgressBar) findViewById(R.id.progressGmail);
         splash_text = (TextView) findViewById(R.id.splash_text);
-        image = (ImageView) findViewById(R.id.splash);
         preferences = getSharedPreferences("app", MODE_PRIVATE);
         editor = preferences.edit();
         //image.setBackgroundResource();

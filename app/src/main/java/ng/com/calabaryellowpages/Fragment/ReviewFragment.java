@@ -3,6 +3,7 @@ package ng.com.calabaryellowpages.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import android.widget.RatingBar;
 import ng.com.calabaryellowpages.Model.Review;
 import ng.com.calabaryellowpages.R;
 
-public class ReviewFragment extends DialogFragment {
+public class ReviewFragment extends AppCompatDialogFragment {
 
     public ReviewFragment() {
         // Required empty public constructor
@@ -63,7 +64,7 @@ public class ReviewFragment extends DialogFragment {
 
         // This is just a regular method so it can return something or
         // take arguments if you like.
-        public void okButtonClicked(Review value);
+        void okButtonClicked(Review value);
 
 
     }

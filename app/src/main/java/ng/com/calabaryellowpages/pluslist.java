@@ -1,5 +1,6 @@
 package ng.com.calabaryellowpages;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -36,7 +37,7 @@ import ng.com.calabaryellowpages.Model.Review;
 import ng.com.calabaryellowpages.util.Parse;
 import ng.com.calabaryellowpages.util.volleySingleton;
 
-public class pluslist extends AppCompatActivity{
+public class pluslist extends AppCompatActivity {
     ArrayList<ng.com.calabaryellowpages.Model.Category> model;
     RecyclerView rv;
     RecyclerView.LayoutManager manager;
@@ -53,7 +54,7 @@ public class pluslist extends AppCompatActivity{
     RatingBar ratingBar;
     TextView baseScore;
     ArrayList<Review> reviewArrayList;
-    CardView ReviewA;
+    CardView ReviewA, mainCard;
 
 
     @Override
@@ -64,11 +65,7 @@ public class pluslist extends AppCompatActivity{
         volleySin = ng.com.calabaryellowpages.util.volleySingleton.getsInstance();
         queue = volleySin.getmRequestQueue();
         mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
-        try{
-            toolbar.setTitleTextColor(getResources().getColor(R.color.colorPrimaryDark));
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        mainCard = (CardView) findViewById(R.id.mainCard);
         setSupportActionBar(toolbar);
 
         col = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
@@ -99,8 +96,12 @@ public class pluslist extends AppCompatActivity{
         }catch (NullPointerException npe){
             npe.printStackTrace();
         }
-
-        imageView.setImageDrawable(getResources().getDrawable(R.drawable.yellowpages));
+        Typeface robot = Typeface.createFromAsset(getAssets(),
+              "fonts/Roboto-Thin.ttf");
+        Typeface addressType = Typeface.createFromAsset(getAssets(), "fonts/Roboto-LightItalic.ttf");
+        Typeface regular = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Regular.ttf");
+        Typeface robotBold = Typeface.createFromAsset(getAssets(),
+              "fonts/Roboto-Black.ttf");
         callButton = (FloatingActionButton) findViewById(R.id.callButton);
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,19 +115,24 @@ public class pluslist extends AppCompatActivity{
         web.setText(data.getWeb());
         description = (TextView) findViewById(R.id.description);
         description.setTypeface(desc);
-        description.setText(data.getDescription());
-        //title = (TextView) findViewById(R.id.title);
+        try{
+            if(!data.getDescription().isEmpty()){
+                description.setText(data.getDescription());
+            }
+        }catch (Exception e){
+
+        }
         phone = (TextView) findViewById(R.id.contact);
-        phone.setTypeface(items);
+        phone.setTypeface(robot);
         phone.setText(data.getPhone());
         address = (TextView) findViewById(R.id.address);
-        address.setTypeface(items);
+        address.setTypeface(addressType);
         address.setText(data.getAddress());
         special = (TextView) findViewById(R.id.specialisation);
-        special.setTypeface(items);
+        special.setTypeface(robotBold);
         special.setText(data.getSpecialisation());
         work_days = (TextView) findViewById(R.id.workingDays);
-        work_days.setTypeface(items);
+        work_days.setTypeface(robot);
         work_days.setText(data.getWork_days());
         ratingBar = (RatingBar) findViewById(R.id.ratingBar2);
         baseScore = (TextView) findViewById(R.id.summary);
@@ -153,20 +159,7 @@ public class pluslist extends AppCompatActivity{
                 startActivity(intent);
             }
         });
-      /* if(data.getImages().length > 0){
-            ImageLoader imageLoader = volleySingleton.getsInstance().getImageLoader();
-            imageLoader.get(data.getImages()[0], new ImageLoader.ImageListener() {
-                @Override
-                public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
-                    imageView.setImageBitmap(imageContainer.getBitmap());
-                }
 
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-
-                }
-            });
-        }*/
         mAdapter = new GalleryAdapter(model);
         manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rv.setHasFixedSize(true);
@@ -188,7 +181,7 @@ public class pluslist extends AppCompatActivity{
                         reviewArrayList.add(review);
                     }
                     ratingBar.setRating(base/jsonArray.length());
-                    baseScore.setText(String.valueOf(jsonArray.length() + "Total Reivews"));
+                    baseScore.setText(getString(R.string.reviews, String.valueOf(jsonArray.length())));
                 }catch (Exception e){
                     e.printStackTrace();
                 }

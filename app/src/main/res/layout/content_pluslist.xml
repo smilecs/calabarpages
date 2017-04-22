@@ -10,7 +10,10 @@
         android:id="@+id/content_review"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/details"
         android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginRight="12dp">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,7 +31,6 @@
                 android:layout_centerHorizontal="true" />
 
             <TextView
-                android:text="TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/summary"
@@ -47,18 +49,20 @@
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
         android:clickable="true"
-        android:layout_below="@+id/content_review"
+        android:layout_below="@+id/recycler"
         android:id="@+id/mainCard">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:elegantTextHeight="true"
+                android:text="@string/no_description"
+                android:layout_centerHorizontal="true"
                 android:id="@+id/description"
                 />
         </RelativeLayout>
@@ -69,8 +73,7 @@
         <android.support.v7.widget.RecyclerView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_below="@+id/details"
+            android:layout_marginTop="12dp"
             android:layout_marginLeft="8dp"
             android:id="@+id/recycler"/>
 
@@ -90,15 +93,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:id="@+id/addressRel"
                 android:layout_below="@+id/title">
-                <ImageView
-                    android:id="@+id/home_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/house"
-                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -115,20 +113,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:layout_below="@+id/addressRel"
                 android:id="@+id/workRel">
-                <ImageView
-                    android:id="@+id/work_days"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/work"
-                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/workingDays"
                     android:gravity="center_vertical|start"
-                    android:paddingRight="6dp"
                     android:text="Mon - Sat 8-5"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_toRightOf="@+id/work_days"
@@ -139,14 +132,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/workRel"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:layout_marginBottom="8dp"
                 android:id="@+id/phoneRel">
-                <ImageView
-                    android:id="@+id/phone_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/phone"
-                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -165,14 +154,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/specialRel"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="12dp"
                 android:layout_below="@+id/phoneRel"
-                android:layout_marginBottom="8dp">
-                <ImageView
-                    android:id="@+id/unit_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/special"
-                    />
+                android:layout_marginBottom="6dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -183,20 +168,13 @@
                     android:layout_toRightOf="@+id/unit_icon"
                     android:layout_toEndOf="@+id/unit_icon" />
 
-
-
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginBottom="8dp"
                 android:layout_below="@+id/specialRel">
-                <ImageView
-                    android:id="@+id/web"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/web"
-                    android:layout_marginBottom="8dp"
-                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -207,10 +185,8 @@
                     android:textAlignment="viewStart"
                     android:linksClickable="true"
                     android:autoLink="web"
-                    android:paddingBottom="8dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_toRightOf="@+id/web"
-                    android:layout_toEndOf="@+id/web" />
+                    />
             </RelativeLayout>
         </RelativeLayout>
 

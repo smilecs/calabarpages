@@ -37,6 +37,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewFragment.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         c = this;
+        preferences = getSharedPreferences("app", MODE_PRIVATE);
         model = (ArrayList<Review>) getIntent().getSerializableExtra("model");
         reviewAdapter = new ReviewAdapter(model);
         rv = (RecyclerView) findViewById(R.id.recycler);
@@ -52,8 +53,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewFragment.
                     Intent intent = new Intent(view.getContext(), FacebookActivity.class);
                     startActivityForResult(intent, 1001);
                 }
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                new ReviewFragment().show(getSupportFragmentManager(), "Review");
             }
         });
     }

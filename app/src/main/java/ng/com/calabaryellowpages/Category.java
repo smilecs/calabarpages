@@ -23,6 +23,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -179,6 +180,21 @@ public class Category extends AppCompatActivity {
                             cat.setAddress(json.getString("Address"));
                             cat.setSpecialisation(json.getString("Specialisation"));
                             try{
+                                cat.setRating((float) json.getLong("rating"));
+                            }catch (JSONException je){
+                                je.printStackTrace();
+                            }
+                            try{
+                                cat.setTotal(json.getInt("TotalReview"));
+                            }catch (JSONException je){
+                                je.printStackTrace();
+                            }
+                            try{
+                                cat.setDescription(json.getString("Description"));
+                            }catch (JSONException je){
+                                je.printStackTrace();
+                            }
+                            try{
                                 cat.setPhone(json.getString("Hotline"));
                             }catch (NullPointerException e){
                                 e.printStackTrace();
@@ -246,8 +262,21 @@ public class Category extends AppCompatActivity {
                             cat.setSlug(json.getString("Slug"));
                             cat.setAddress(json.getString("Address"));
                             cat.setSpecialisation(json.getString("Specialisation"));
-                            cat.setRating((float) json.getLong("rating"));
-                            cat.setTotal(json.getInt("TotalReview"));
+                            try{
+                                cat.setRating((float) json.getLong("rating"));
+                            }catch (JSONException je){
+                                je.printStackTrace();
+                            }
+                            try{
+                                cat.setTotal(json.getInt("TotalReview"));
+                            }catch (JSONException je){
+                                je.printStackTrace();
+                            }
+                            try{
+                                cat.setDescription(json.getString("Description"));
+                            }catch (JSONException je){
+                                je.printStackTrace();
+                            }
                             try{
                                 cat.setPhone(json.getString("Hotline"));
                             }catch (NullPointerException e){

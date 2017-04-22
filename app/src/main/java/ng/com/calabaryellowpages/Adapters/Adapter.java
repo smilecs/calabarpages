@@ -55,67 +55,34 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
             unit = (RelativeLayout) itemView.findViewById(R.id.specialRel);
             work = (RelativeLayout) itemView.findViewById(R.id.workRel);
             phonIcon = (RelativeLayout) itemView.findViewById(R.id.phoneRel);
-            //callButton = (Button) itemView.findViewById(R.id.call);
 
             switch (type){
-                case LISTING:
-                    title = (TextView) itemView.findViewById(R.id.title);
-                    phone = (TextView) itemView.findViewById(R.id.contact);
-                    address = (TextView) itemView.findViewById(R.id.address);
-                    special = (TextView) itemView.findViewById(R.id.specialisation);
-                    work_days = (TextView) itemView.findViewById(R.id.workingDays);
-                    phoneIcon = (ImageView) itemView.findViewById(R.id.phone_icon);
-                    itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent(itemView.getContext(), pluslist.class);
-                            i.putExtra("data", (Category) title.getTag());
-                            itemView.getContext().startActivity(i);
-                        }
-                    });
-                    /*callButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Category cat = (Category) title.getTag();
-                            Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                            callIntent.setData(Uri.parse("tel:" + Parse.Parse(cat.getPhone())[0]));
-                            itemView.getContext().startActivity(callIntent);
-                        }
-                    });*/
-                    break;
-                case PLUSLIST:
-                    image = (NetworkImageView) itemView.findViewById(R.id.profile_image);
-                    title = (TextView) itemView.findViewById(R.id.title);
-                    phone = (TextView) itemView.findViewById(R.id.contact);
-                    address = (TextView) itemView.findViewById(R.id.address);
-                    special = (TextView) itemView.findViewById(R.id.specialisation);
-                    phoneIcon = (ImageView) itemView.findViewById(R.id.phone_icon);
-                    work_days = (TextView) itemView.findViewById(R.id.workingDays);
-                    /*callButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Category cat = (Category) title.getTag();
-                            Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                            callIntent.setData(Uri.parse("tel:" + Parse.Parse(cat.getPhone())[0]));
-                            itemView.getContext().startActivity(callIntent);
-                        }
-                    });*/
-                    itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent(itemView.getContext(), pluslist.class);
-                            i.putExtra("data", (Category) title.getTag());
-                            itemView.getContext().startActivity(i);
-                        }
-                    });
-                    break;
                 case ADVERT:
                     image = (NetworkImageView) itemView.findViewById(R.id.imageView);
                     bar = (ProgressBar) itemView.findViewById(R.id.progress);
                     return;
+                default:
+                    if(type == PLUSLIST){
+                        image = (NetworkImageView) itemView.findViewById(R.id.profile_image);
+                    }
+                title = (TextView) itemView.findViewById(R.id.title);
+                phone = (TextView) itemView.findViewById(R.id.contact);
+                address = (TextView) itemView.findViewById(R.id.address);
+                special = (TextView) itemView.findViewById(R.id.specialisation);
+                phoneIcon = (ImageView) itemView.findViewById(R.id.phone_icon);
+                work_days = (TextView) itemView.findViewById(R.id.workingDays);
+                ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
+                total = (TextView) itemView.findViewById(R.id.textView4);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(itemView.getContext(), pluslist.class);
+                        i.putExtra("data", (Category) title.getTag());
+                        itemView.getContext().startActivity(i);
+                    }
+                });
+                break;
             }
-            ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
-            total = (TextView) itemView.findViewById(R.id.textView4);
                   }
     }
 
@@ -176,11 +143,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 "fonts/Roboto-Thin.ttf");
         Typeface address = Typeface.createFromAsset(c.getAssets(), "fonts/Roboto-LightItalic.ttf");
         Typeface regular = Typeface.createFromAsset(c.getAssets(), "fonts/Roboto-Regular.ttf");
-        if(type != ADVERT){
-            holder.total.setText(mode.getTotal());
-            holder.ratingBar.setRating(mode.getRating());
-            holder.total.setTypeface(robotBold);
-        }
 
         switch (type){
             case PLUSLIST:
@@ -207,7 +169,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     holder.work.setVisibility(View.GONE);
                 }
                 holder.work_days.setText(mode.getWork_days());
-                holder.image.setImageUrl(mode.getImage(), imageLoader);
+                if(!mode.getImage().isEmpty()){
+                    holder.image.setVisibility(View.VISIBLE);
+                    holder.image.setImageUrl(mode.getImage(), imageLoader);
+                }
                 holder.title.setText(mode.getTitle());
                 holder.title.setTag(mode);
                 break;
