@@ -64,6 +64,7 @@ public class FacebookActivity extends AppCompatActivity implements
     TextView errorMsg, splash_text;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseAuth mAuth;
+    private boolean closeAfter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,10 @@ public class FacebookActivity extends AppCompatActivity implements
         preferences = getSharedPreferences("app", MODE_PRIVATE);
         editor = preferences.edit();
         //image.setBackgroundResource();
+        closeAfter = getIntent().getBooleanExtra("review", false);
+        if(closeAfter){
+            ((TextView) findViewById(R.id.hint)).setVisibility(View.VISIBLE);
+        }
         volley = volleySingleton.getsInstance();
         requestQueue = volley.getmRequestQueue();
         errorMsg = (TextView) findViewById(R.id.errorMsg);
@@ -118,6 +123,7 @@ public class FacebookActivity extends AppCompatActivity implements
                                     GraphResponse response) {
                                 try{
                                     editor.putBoolean("hasValue", true);
+                                    editor.apply();
                                     object.put("ID", object.get("id"));
                                     object.put("Type", "facebook");
                                     object.put("Name", object.get("name"));
@@ -199,11 +205,6 @@ public class FacebookActivity extends AppCompatActivity implements
         };
 
         //google sign in
-
-
-
-
-
     }
 
     @Override
@@ -218,7 +219,7 @@ public class FacebookActivity extends AppCompatActivity implements
                 firebaseAuthWithGoogle(account);
             }
 
-    }else{
+    } else{
             bar.setVisibility(View.VISIBLE);
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
@@ -276,23 +277,32 @@ public class FacebookActivity extends AppCompatActivity implements
                     try{
                         editor.putString("id", object.getString("ID"));
                         editor.putString("name", object.getString("Name"));
+                        editor.commit();
                     }catch (Exception e){
                         e.printStackTrace();
                     }
                     editor.putBoolean("isnotlogged", false);
                     editor.commit();
-                    Intent i = new Intent(c, tabbed.class);
-                    startActivity(i);
-                    finish();
+                    if(!closeAfter) {
+                        Intent i = new Intent(c, tabbed.class);
+                        startActivity(i);
+                        finish();
+                    }else{
+                        finish();
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
                     editor.putBoolean("isnotlogged", false);
                     editor.commit();
-                    Intent i = new Intent(c, tabbed.class);
-                    startActivity(i);
-                    finish();
+                    if(!closeAfter) {
+                        Intent i = new Intent(c, tabbed.class);
+                        startActivity(i);
+                        finish();
+                    }else{
+                        finish();
+                    }
                 }
             });
         }catch (Exception e){

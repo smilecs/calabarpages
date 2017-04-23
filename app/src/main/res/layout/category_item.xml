@@ -108,8 +108,9 @@
         </RelativeLayout>
             <RatingBar
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="1dp"
                 android:id="@+id/ratingBar"
+                android:visibility="invisible"
                 android:layout_below="@+id/specialRel"
                 android:layout_centerHorizontal="true"
                 android:isIndicator="true" />

@@ -10,7 +10,8 @@
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,11 +20,10 @@
             />
     </android.support.design.widget.TextInputLayout>
 
-
-
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
         android:id="@+id/rating"
         />
 
@@ -32,5 +32,6 @@
         android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
         android:id="@+id/submit" />
 </LinearLayout>

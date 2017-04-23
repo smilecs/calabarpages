@@ -1,7 +1,11 @@
 package ng.com.calabaryellowpages;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +19,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +39,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import ng.com.calabaryellowpages.util.DbUtility;
 import ng.com.calabaryellowpages.util.volleySingleton;
@@ -75,6 +83,7 @@ public class tabbed extends AppCompatActivity {
         FirebaseMessaging.getInstance().subscribeToTopic("update");
         preferences = getSharedPreferences("app", MODE_PRIVATE);
         editor = preferences.edit();
+        printKeyHash(this);
         if(preferences.getBoolean("isnotlogged", true)){
             Intent intent = new Intent(this, intro.class);
             startActivity(intent);
@@ -88,7 +97,7 @@ public class tabbed extends AppCompatActivity {
         mAdView.loadAd(adRequest);
         if(preferences.getBoolean("hasValue", false)){
             mAdView.setVisibility(View.GONE);
-            addButton.setVisibility(View.VISIBLE);
+            //addButton.setVisibility(View.VISIBLE);
         }
         db = new DbUtility(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -277,5 +286,37 @@ public class tabbed extends AppCompatActivity {
             }
         });
         requestQueue.add(json);
+    }
+    public static String printKeyHash(Activity context) {
+        PackageInfo packageInfo;
+        String key = null;
+        try {
+            //getting application package name, as defined in manifest
+            String packageName = context.getApplicationContext().getPackageName();
+
+            //Retriving package info
+            packageInfo = context.getPackageManager().getPackageInfo(packageName,
+                  PackageManager.GET_SIGNATURES);
+
+            Log.e("Package Name=", context.getApplicationContext().getPackageName());
+
+            for (Signature signature : packageInfo.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                key = new String(Base64.encode(md.digest(), 0));
+
+                // String key = new String(Base64.encodeBytes(md.digest()));
+                Log.e("Key Hash=", key);
+            }
+        } catch (PackageManager.NameNotFoundException e1) {
+            Log.e("Name not found", e1.toString());
+        }
+        catch (NoSuchAlgorithmException e) {
+            Log.e("No such an algorithm", e.toString());
+        } catch (Exception e) {
+            Log.e("Exception", e.toString());
+        }
+
+        return key;
     }
 }

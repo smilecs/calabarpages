@@ -12,9 +12,13 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="ng.com.calabaryellowpages.ReviewActivity"
     tools:showIn="@layout/activity_review">
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/recycler"/>
-
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/swipeRefresh">
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recycler"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

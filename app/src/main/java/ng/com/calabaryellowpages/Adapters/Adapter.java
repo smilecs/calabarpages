@@ -146,6 +146,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
         switch (type){
             case PLUSLIST:
+
                 holder.title.setTypeface(regular);
                 holder.address.setTypeface(address);
                 holder.special.setTypeface(robotBold);
@@ -175,6 +176,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 }
                 holder.title.setText(mode.getTitle());
                 holder.title.setTag(mode);
+                try{
+                    holder.total.setText(mode.getRating());
+                }catch (Exception e){
+                 e.printStackTrace();
+                }
                 break;
             case ADVERT:
                 ImageLoader imageLoader2 = volleySingleton.getsInstance().getImageLoader();
@@ -200,6 +206,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 holder.work_days.setTypeface(robot);
                 holder.title.setText(mode.getTitle());
                 holder.title.setTag(mode);
+                try{
+                    holder.total.setText(mode.getRating());
+                }catch (Exception e){
+
+                }
                 if(mode.getAddress().isEmpty()){
                     holder.homeicon.setVisibility(View.GONE);
                 }

@@ -7,8 +7,16 @@ import java.io.Serializable;
  */
 
 public class Review implements Serializable {
-    public String Comment, Name, ID, picURL;
+    public String Comment, Name, ID, ImageUrl, Slug;
     public int Score;
+
+    public String getSlug() {
+        return Slug;
+    }
+
+    public void setSlug(String slug) {
+        Slug = slug;
+    }
 
     public int getScore() {
         return Score;
@@ -42,11 +50,11 @@ public class Review implements Serializable {
         this.ID = ID;
     }
 
-    public String getPicURL() {
-        return picURL;
+    public String getImageUrl() {
+        return ImageUrl;
     }
 
-    public void setPicURL(String picURL) {
-        this.picURL = picURL;
+    public void setImageUrl(String imageUrl) {
+        this.ImageUrl = imageUrl;
     }
 }

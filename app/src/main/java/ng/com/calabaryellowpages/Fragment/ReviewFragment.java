@@ -1,5 +1,6 @@
 package ng.com.calabaryellowpages.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -52,12 +53,19 @@ public class ReviewFragment extends AppCompatDialogFragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                model.setScore(rating.getNumStars());
+                model.setScore((int) rating.getRating());
                 model.setComment(review.getText().toString());
                 customDialogInterface.okButtonClicked(model);
+                dismiss();
             }
         });
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        customDialogInterface = (CustomDialogInterface) context;
     }
 
     public interface CustomDialogInterface {
@@ -68,4 +76,6 @@ public class ReviewFragment extends AppCompatDialogFragment {
 
 
     }
+
+
 }

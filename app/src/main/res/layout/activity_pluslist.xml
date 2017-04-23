@@ -17,8 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/yellowpages"
-            app:expandedTitleTextAppearance="?android:textAppearanceMedium"
+            app:expandedTitleTextAppearance="?android:textAppearanceLarge"
             app:contentScrim="@color/colorPrimaryDark"
+            app:titleEnabled="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
             <FrameLayout
                 android:layout_width="match_parent"
@@ -37,7 +38,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:actionBarSize"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark"
+                app:theme="@style/ToolBarStyle2"
+                android:titleTextAppearance="?android:textAppearanceMedium"
                 app:title=""/>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

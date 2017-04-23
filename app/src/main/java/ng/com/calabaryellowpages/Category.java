@@ -2,6 +2,7 @@ package ng.com.calabaryellowpages;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -27,8 +29,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import ng.com.calabaryellowpages.Adapters.Adapter;
+import ng.com.calabaryellowpages.Model.Review;
 import ng.com.calabaryellowpages.util.EndlessRecyclerViewScrollListener;
 import ng.com.calabaryellowpages.util.volleySingleton;
 
@@ -45,6 +49,8 @@ public class Category extends AppCompatActivity {
     Boolean load;
     ProgressBar bar;
     private EndlessRecyclerViewScrollListener scrollListener;
+    SwipeRefreshLayout swipeRefreshLayout;
+    HashMap<String, String> reviewMap = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +60,19 @@ public class Category extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+              android.R.color.holo_green_light,
+              android.R.color.holo_orange_light,
+              android.R.color.holo_red_light
+        );
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                Refresh(slug, "1");
+            }
+        });
         slug = getIntent().getStringExtra("slug");
         page = "1";
         model = new ArrayList<>();
@@ -147,6 +166,7 @@ public class Category extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + "api/categories/"+ query +"?p="+page, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                swipeRefreshLayout.setRefreshing(false);
                 try{
                     bar.setVisibility(View.GONE);
                     JSONObject json;
@@ -180,12 +200,8 @@ public class Category extends AppCompatActivity {
                             cat.setAddress(json.getString("Address"));
                             cat.setSpecialisation(json.getString("Specialisation"));
                             try{
-                                cat.setRating((float) json.getLong("rating"));
-                            }catch (JSONException je){
-                                je.printStackTrace();
-                            }
-                            try{
-                                cat.setTotal(json.getInt("TotalReview"));
+                                if(!json.getString("Reviews").isEmpty())
+                                cat.setRating(json.getString("Reviews"));
                             }catch (JSONException je){
                                 je.printStackTrace();
                             }
@@ -219,6 +235,7 @@ public class Category extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                swipeRefreshLayout.setRefreshing(false);
                 volleyError.printStackTrace();
                 bar.setVisibility(View.GONE);
                 Toast.makeText(c, "network error", Toast.LENGTH_LONG);
@@ -263,12 +280,8 @@ public class Category extends AppCompatActivity {
                             cat.setAddress(json.getString("Address"));
                             cat.setSpecialisation(json.getString("Specialisation"));
                             try{
-                                cat.setRating((float) json.getLong("rating"));
-                            }catch (JSONException je){
-                                je.printStackTrace();
-                            }
-                            try{
-                                cat.setTotal(json.getInt("TotalReview"));
+                                if(!json.getString("Reviews").isEmpty())
+                                    cat.setRating(json.getString("Reviews"));
                             }catch (JSONException je){
                                 je.printStackTrace();
                             }

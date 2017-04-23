@@ -121,7 +121,7 @@
         <activity
             android:name=".ReviewActivity"
             android:label="@string/title_activity_review"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"/>
 
         <service
             android:name=".Services.SaveReview"
