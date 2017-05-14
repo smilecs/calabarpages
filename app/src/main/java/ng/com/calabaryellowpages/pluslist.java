@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -38,6 +39,7 @@ import java.util.List;
 import ng.com.calabaryellowpages.Adapters.GalleryAdapter;
 import ng.com.calabaryellowpages.Model.Category;
 import ng.com.calabaryellowpages.Model.Review;
+import ng.com.calabaryellowpages.util.Application;
 import ng.com.calabaryellowpages.util.Parse;
 import ng.com.calabaryellowpages.util.volleySingleton;
 
@@ -147,11 +149,8 @@ public class pluslist extends AppCompatActivity {
         rv = (RecyclerView) findViewById(R.id.recycler);
         try {
             for (int i = 0; i < data.getImages().length; i++) {
-                Log.d("pluslist", Integer.toString(data.getImages().length));
                 Category mode = new Category();
                 mode.setImage(data.getImages()[i]);
-                Log.d("pluslist", data.getImages()[i]);
-                Log.d("pluslist", mode.getImage().toString());
                 model.add(mode);
             }
         } catch (Exception e) {
@@ -180,6 +179,12 @@ public class pluslist extends AppCompatActivity {
         }
         loadReviews();
         showNativeAd();
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        Application.logViewedContentEvent(data.getTitle() + ": ReviewActivity", data.getSlug());
     }
 
     private void showNativeAd() {

@@ -43,6 +43,7 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import ng.com.calabaryellowpages.util.Application;
 import ng.com.calabaryellowpages.util.DbUtility;
 import ng.com.calabaryellowpages.util.volleySingleton;
 
@@ -113,24 +114,6 @@ public class tabbed extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-       /* callbackManager = CallbackManager.Factory.create();
-        shareDialog = new ShareDialog(this);
-        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
-            @Override
-            public void onSuccess(Sharer.Result result) {
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-            }
-        });*/
         new LoadData().execute();
         content = new ShareLinkContent.Builder()
                 .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=ng.com.calabaryellowpages"))

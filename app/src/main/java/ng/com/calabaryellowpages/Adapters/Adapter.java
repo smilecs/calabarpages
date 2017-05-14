@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import ng.com.calabaryellowpages.Model.Category;
 import ng.com.calabaryellowpages.R;
 import ng.com.calabaryellowpages.pluslist;
+import ng.com.calabaryellowpages.util.Application;
 import ng.com.calabaryellowpages.util.volleySingleton;
 
 /**
@@ -76,8 +77,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Category category = (Category) title.getTag();
                         Intent i = new Intent(itemView.getContext(), pluslist.class);
-                        i.putExtra("data", (Category) title.getTag());
+                        i.putExtra("data", category);
+                        Application.logListingsSelectedEvent(category.getTitle(), category.getSlug());
                         itemView.getContext().startActivity(i);
                     }
                 });

@@ -11,8 +11,8 @@ android {
         applicationId "ng.com.calabaryellowpages"
         minSdkVersion 16
         targetSdkVersion 25
-        versionCode 12
-        versionName "2.0"
+        versionCode 13
+        versionName "2.1"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {

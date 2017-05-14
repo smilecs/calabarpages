@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -29,6 +30,7 @@ import ng.com.calabaryellowpages.Adapters.ReviewAdapter;
 import ng.com.calabaryellowpages.Fragment.ReviewFragment;
 import ng.com.calabaryellowpages.Model.Review;
 import ng.com.calabaryellowpages.Services.SaveReview;
+import ng.com.calabaryellowpages.util.Application;
 import ng.com.calabaryellowpages.util.EndlessRecyclerViewScrollListener;
 import ng.com.calabaryellowpages.util.volleySingleton;
 
@@ -104,6 +106,12 @@ public class ReviewActivity extends AppCompatActivity implements ReviewFragment.
 
             }
         };
+        rv.addOnScrollListener(scrollListener);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
     }
 
     @Override

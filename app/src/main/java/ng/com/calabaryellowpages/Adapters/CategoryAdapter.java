@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import ng.com.calabaryellowpages.Model.Category;
 import ng.com.calabaryellowpages.R;
+import ng.com.calabaryellowpages.util.Application;
 
 /**
  * Created by SMILECS on 8/27/16.
@@ -37,6 +38,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     Category category = (Category) title.getTag();
+                    Application.logCategorySelectedEvent(category.getTitle());
                     Intent i = new Intent(context, ng.com.calabaryellowpages.Category.class);
                     i.putExtra("slug", category.getSlug());
                     i.putExtra("title", category.getTitle());

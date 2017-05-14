@@ -3,6 +3,7 @@ package ng.com.calabaryellowpages;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import ng.com.calabaryellowpages.Adapters.Adapter;
+import ng.com.calabaryellowpages.util.EndlessRecyclerViewScrollListener;
 import ng.com.calabaryellowpages.util.volleySingleton;
 
 /**
@@ -41,8 +43,11 @@ public class Special extends Fragment {
     LinearLayoutManager manager;
     volleySingleton volleySingle;
     Button ref;
+    boolean load;
     RequestQueue requestQueue;
     String slug, page, url;
+    SwipeRefreshLayout swipeRefreshLayout;
+    private EndlessRecyclerViewScrollListener scrollListener;
     ProgressBar bar;
 
     // TODO: Rename and change types of parameters
@@ -78,7 +83,6 @@ public class Special extends Fragment {
         requestQueue = volleySingle.getmRequestQueue();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -89,25 +93,49 @@ public class Special extends Fragment {
         bar = (ProgressBar) v.findViewById(R.id.progress);
         ref = (Button) v.findViewById(R.id.button);
         rv = (RecyclerView) v.findViewById(R.id.recycler);
+        swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+              android.R.color.holo_green_light,
+              android.R.color.holo_orange_light,
+              android.R.color.holo_red_light
+        );
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Refresh(mParam1, "1");
+            }
+        });
         manager = new LinearLayoutManager(getContext());
         mAdapter = new Adapter(model, getContext());
         rv.setHasFixedSize(true);
         rv.setLayoutManager(manager);
         rv.setAdapter(mAdapter);
-        Refresh2(mParam1, "1");
+        Refresh(mParam1, "1");
         ref.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Refresh2(mParam1, "1");
+                Refresh(mParam1, "1");
             }
         });
+        scrollListener = new EndlessRecyclerViewScrollListener(manager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.d("Category", "page no" + Integer.toString(page) + "   " + Integer.toString(totalItemsCount));
+                String pg = Integer.toString(page);
+                if(load){
+                    if (slug != null) {
+                        Refresh(slug, pg);
+                    }
+                }
+            }
+        };
+        rv.addOnScrollListener(scrollListener);
         return v;
     }
 
-    private void Refresh2(final String url, String page){
+    private void Refresh(final String url, String page){
         ref.setVisibility(View.GONE);
-        bar.setVisibility(View.VISIBLE);
-        Log.d("Category", "Refresh" + " " + Integer.toString(model.size()));
+        swipeRefreshLayout.setRefreshing(true);
         if(page.equals("1")){
             model.clear();
             mAdapter.notifyDataSetChanged();
@@ -117,9 +145,10 @@ public class Special extends Fragment {
             public void onResponse(JSONObject jsonObject) {
                 try{
                     bar.setVisibility(View.GONE);
+                    swipeRefreshLayout.setRefreshing(false);
                     JSONObject json;
                     JSONArray jsonArray = jsonObject.getJSONArray("Posts");
-                    Log.d("Special", jsonArray.toString());
+                    load = jsonObject.getJSONObject("Page").getBoolean("Next");
                     for(int i=0; i<jsonArray.length(); i++){
                         json = jsonArray.getJSONObject(i);
                         json = json.getJSONObject("Listing");
@@ -180,6 +209,7 @@ public class Special extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                swipeRefreshLayout.setRefreshing(false);
                 volleyError.printStackTrace();
                 bar.setVisibility(View.GONE);
                 ref.setVisibility(View.VISIBLE);

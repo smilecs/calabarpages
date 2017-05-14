@@ -3,6 +3,7 @@ package ng.com.calabaryellowpages;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 
 import ng.com.calabaryellowpages.Adapters.CategoryAdapter;
 import ng.com.calabaryellowpages.Model.Category;
+import ng.com.calabaryellowpages.util.Application;
 import ng.com.calabaryellowpages.util.DbUtility;
 import ng.com.calabaryellowpages.util.volleySingleton;
 
@@ -110,6 +112,12 @@ public class Main_Category extends Fragment {
         new LoadData().execute();
         //Refresh();
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Application.logViewedContentEvent("Categories", "categories");
     }
 
     @Override

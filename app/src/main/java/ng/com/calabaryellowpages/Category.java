@@ -2,6 +2,7 @@ package ng.com.calabaryellowpages;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +34,7 @@ import java.util.HashMap;
 
 import ng.com.calabaryellowpages.Adapters.Adapter;
 import ng.com.calabaryellowpages.Model.Review;
+import ng.com.calabaryellowpages.util.Application;
 import ng.com.calabaryellowpages.util.EndlessRecyclerViewScrollListener;
 import ng.com.calabaryellowpages.util.volleySingleton;
 
@@ -43,14 +45,13 @@ public class Category extends AppCompatActivity {
     LinearLayoutManager manager;
     volleySingleton volleySingle;
     RequestQueue requestQueue;
-    String slug, page, url;
+    String slug, page, url, title;
     TextView txt;
     Context c;
-    Boolean load;
+    boolean load;
     ProgressBar bar;
     private EndlessRecyclerViewScrollListener scrollListener;
-    SwipeRefreshLayout swipeRefreshLayout;
-    HashMap<String, String> reviewMap = new HashMap<>();
+    private SwipeRefreshLayout swipeRefreshLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,8 @@ public class Category extends AppCompatActivity {
         c = this;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
+        title = getIntent().getStringExtra("title");
+        getSupportActionBar().setTitle(title);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
               android.R.color.holo_green_light,
@@ -117,6 +119,12 @@ public class Category extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        Application.logViewedContentEvent(title, slug);
     }
 
     @Override
