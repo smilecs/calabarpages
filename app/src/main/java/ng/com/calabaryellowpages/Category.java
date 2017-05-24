@@ -184,7 +184,7 @@ public class Category extends AppCompatActivity {
                         Log.d("category", jsonArray.toString());
                         JSONObject jsons = jsonArray.getJSONObject(i);
                         json = jsons.getJSONObject("Listing");
-                       // Log.d("Category", jsons.toString());
+                        Log.d("Category", jsons.toString());
                         ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
                         cat.setListing(jsonArray.getJSONObject(i).getString("Type"));
                         cat.setType(json.getString("Plus"));

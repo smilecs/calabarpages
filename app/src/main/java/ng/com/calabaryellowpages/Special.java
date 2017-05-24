@@ -146,12 +146,14 @@ public class Special extends Fragment {
                 try{
                     bar.setVisibility(View.GONE);
                     swipeRefreshLayout.setRefreshing(false);
+                    Log.d("url", volleySingleton.URL + url);
                     JSONObject json;
                     JSONArray jsonArray = jsonObject.getJSONArray("Posts");
                     load = jsonObject.getJSONObject("Page").getBoolean("Next");
                     for(int i=0; i<jsonArray.length(); i++){
                         json = jsonArray.getJSONObject(i);
                         json = json.getJSONObject("Listing");
+                        //Log.d("data", json.toString());
                         ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
                         cat.setListing(jsonArray.getJSONObject(i).getString("Type"));
                         cat.setType(json.getString("Plus"));
