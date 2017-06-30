@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,13 +45,13 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
-import ng.com.calabaryellowpages.util.volleySingleton;
+import ng.com.calabaryellowpages.util.VolleySingleton;
 
 public class FacebookActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener{
     LoginButton loginButton;
     CallbackManager callbackManager;
-    volleySingleton volley;
+    VolleySingleton volley;
     Context c;
     RequestQueue requestQueue;
     SharedPreferences preferences;
@@ -82,7 +81,7 @@ public class FacebookActivity extends AppCompatActivity implements
         if(closeAfter){
             ((TextView) findViewById(R.id.hint)).setVisibility(View.VISIBLE);
         }
-        volley = volleySingleton.getsInstance();
+        volley = VolleySingleton.getsInstance();
         requestQueue = volley.getmRequestQueue();
         errorMsg = (TextView) findViewById(R.id.errorMsg);
        // Log.d("Facebook", AccessToken.getCurrentAccessToken().getUserId());
@@ -103,7 +102,7 @@ public class FacebookActivity extends AppCompatActivity implements
             public void onClick(View view) {
                 editor.putBoolean("isnotlogged", false);
                 editor.commit();
-                Intent i = new Intent(c, tabbed.class);
+                Intent i = new Intent(c, TabbedActivity.class);
                 startActivity(i);
                 finish();
             }
@@ -269,7 +268,7 @@ public class FacebookActivity extends AppCompatActivity implements
        JsonObjectRequest objectRequest = null;
         //Log.d("Facebook", object.toString());
         try{
-            objectRequest = new JsonObjectRequest(Request.Method.POST, volleySingleton.URL + "api/social_login", object, new Response.Listener<JSONObject>() {
+            objectRequest = new JsonObjectRequest(Request.Method.POST, VolleySingleton.URL + "api/social_login", object, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     //preferences.getBoolean("notlogged", true)
@@ -284,7 +283,7 @@ public class FacebookActivity extends AppCompatActivity implements
                     editor.putBoolean("isnotlogged", false);
                     editor.commit();
                     if(!closeAfter) {
-                        Intent i = new Intent(c, tabbed.class);
+                        Intent i = new Intent(c, TabbedActivity.class);
                         startActivity(i);
                         finish();
                     }else{
@@ -297,7 +296,7 @@ public class FacebookActivity extends AppCompatActivity implements
                     editor.putBoolean("isnotlogged", false);
                     editor.commit();
                     if(!closeAfter) {
-                        Intent i = new Intent(c, tabbed.class);
+                        Intent i = new Intent(c, TabbedActivity.class);
                         startActivity(i);
                         finish();
                     }else{

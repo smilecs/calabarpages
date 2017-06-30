@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -41,23 +42,23 @@ import ng.com.calabaryellowpages.Model.Category;
 import ng.com.calabaryellowpages.Model.Review;
 import ng.com.calabaryellowpages.util.Application;
 import ng.com.calabaryellowpages.util.Parse;
-import ng.com.calabaryellowpages.util.volleySingleton;
+import ng.com.calabaryellowpages.util.VolleySingleton;
 
 import com.facebook.ads.*;
 
-public class pluslist extends AppCompatActivity {
+public class SingleView extends AppCompatActivity {
     ArrayList<ng.com.calabaryellowpages.Model.Category> model;
     RecyclerView rv;
     RecyclerView.LayoutManager manager;
     GalleryAdapter mAdapter;
     ng.com.calabaryellowpages.Model.Category data;
-    volleySingleton volleySingleton;
+    VolleySingleton volleySingleton;
     CollapsingToolbarLayout col;
     FloatingActionButton callButton;
     ImageView imageView;
     TextView special, title, phone, address, work_days, web, description;
     RequestQueue queue;
-    volleySingleton volleySin;
+    VolleySingleton volleySin;
     RatingBar ratingBar;
     TextView baseScore;
     ArrayList<Review> reviewArrayList;
@@ -71,7 +72,7 @@ public class pluslist extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pluslist);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        volleySin = ng.com.calabaryellowpages.util.volleySingleton.getsInstance();
+        volleySin = VolleySingleton.getsInstance();
         queue = volleySin.getmRequestQueue();
         mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         mainCard = (CardView) findViewById(R.id.mainCard);
@@ -187,6 +188,16 @@ public class pluslist extends AppCompatActivity {
         Application.logViewedContentEvent(data.getTitle() + ": ReviewActivity", data.getSlug());
     }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void showNativeAd() {
         nativeAd = new NativeAd(this, "1035586836549797_1183764911731988");
         nativeAd.setAdListener(new AdListener() {
@@ -204,7 +215,7 @@ public class pluslist extends AppCompatActivity {
 
                 // Add the Ad view into the ad container.
                 LinearLayout nativeAdContainer = (LinearLayout) findViewById(R.id.native_ad_container);
-                LayoutInflater inflater = LayoutInflater.from(pluslist.this);
+                LayoutInflater inflater = LayoutInflater.from(SingleView.this);
                 // Inflate the Ad view.  The layout referenced should be the one you created in the last step.
                 View adView = inflater.inflate(R.layout.ad_layout, nativeAdContainer, false);
                 nativeAdContainer.addView(adView);
@@ -232,7 +243,7 @@ public class pluslist extends AppCompatActivity {
 
                 // Add the AdChoices icon
                 LinearLayout adChoicesContainer = (LinearLayout) findViewById(R.id.ad_choices_container);
-                AdChoicesView adChoicesView = new AdChoicesView(pluslist.this, nativeAd, true);
+                AdChoicesView adChoicesView = new AdChoicesView(SingleView.this, nativeAd, true);
                 adChoicesContainer.addView(adChoicesView);
 
                 // Register the Title and CTA button to listen for clicks.
@@ -258,11 +269,12 @@ public class pluslist extends AppCompatActivity {
     }
 
     private void loadReviews() {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ng.com.calabaryellowpages.util.volleySingleton.URL + "/api/get_reviews?p=1&q=" + query, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, VolleySingleton.URL + "/api/get_reviews?p=1&q=" + query, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 int base = 0;
                 try {
+                    Log.d("Reviews", jsonObject.toString());
                     JSONArray jsonArray = jsonObject.getJSONArray("Data");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         Review review = new Review();

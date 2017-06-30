@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 import ng.com.calabaryellowpages.Adapters.Adapter;
 import ng.com.calabaryellowpages.util.EndlessRecyclerViewScrollListener;
-import ng.com.calabaryellowpages.util.volleySingleton;
+import ng.com.calabaryellowpages.util.VolleySingleton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,7 +41,7 @@ public class Special extends Fragment {
     RecyclerView rv;
     Adapter mAdapter;
     LinearLayoutManager manager;
-    volleySingleton volleySingle;
+    VolleySingleton volleySingle;
     Button ref;
     boolean load;
     RequestQueue requestQueue;
@@ -79,7 +79,7 @@ public class Special extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         model = new ArrayList<>();
-        volleySingle = volleySingleton.getsInstance();
+        volleySingle = VolleySingleton.getsInstance();
         requestQueue = volleySingle.getmRequestQueue();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -140,13 +140,13 @@ public class Special extends Fragment {
             model.clear();
             mAdapter.notifyDataSetChanged();
         }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + url + "?p=" + page , null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, VolleySingleton.URL + url + "?p=" + page , null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try{
                     bar.setVisibility(View.GONE);
                     swipeRefreshLayout.setRefreshing(false);
-                    Log.d("url", volleySingleton.URL + url);
+                    Log.d("url", VolleySingleton.URL + url);
                     JSONObject json;
                     JSONArray jsonArray = jsonObject.getJSONArray("Posts");
                     load = jsonObject.getJSONObject("Page").getBoolean("Next");

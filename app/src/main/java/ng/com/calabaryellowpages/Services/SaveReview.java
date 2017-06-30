@@ -8,12 +8,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
 import ng.com.calabaryellowpages.Model.Review;
-import ng.com.calabaryellowpages.util.volleySingleton;
+import ng.com.calabaryellowpages.util.VolleySingleton;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -23,11 +22,11 @@ import ng.com.calabaryellowpages.util.volleySingleton;
  * helper methods.
  */
 public class SaveReview extends IntentService {
-    volleySingleton volley;
+    VolleySingleton volley;
     RequestQueue queue;
     public SaveReview() {
         super("SaveReview");
-        volley = volleySingleton.getsInstance();
+        volley = VolleySingleton.getsInstance();
         queue = volley.getmRequestQueue();
 
     }
@@ -47,7 +46,7 @@ public class SaveReview extends IntentService {
         }catch (Exception e){
             e.printStackTrace();
         }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, volleySingleton.URL + "api/add_review", jsonObject, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, VolleySingleton.URL + "api/add_review", jsonObject, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
 

@@ -43,11 +43,11 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import ng.com.calabaryellowpages.util.Application;
+import ng.com.calabaryellowpages.Fragment.Main_Category;
 import ng.com.calabaryellowpages.util.DbUtility;
-import ng.com.calabaryellowpages.util.volleySingleton;
+import ng.com.calabaryellowpages.util.VolleySingleton;
 
-public class tabbed extends AppCompatActivity {
+public class TabbedActivity extends AppCompatActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -64,7 +64,7 @@ public class tabbed extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     DbUtility db;
-    volleySingleton volley;
+    VolleySingleton volley;
     RequestQueue requestQueue;
     CoordinatorLayout view;
     SharedPreferences preferences;
@@ -107,7 +107,7 @@ public class tabbed extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        volley = volleySingleton.getsInstance();
+        volley = VolleySingleton.getsInstance();
         requestQueue = volley.getmRequestQueue();
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -230,14 +230,14 @@ public class tabbed extends AppCompatActivity {
     }
 
     private void Refresh(){
-        Log.d("tabbed", "refresh");
-        JsonArrayRequest json = new JsonArrayRequest(volleySingleton.URL + "api/getcat", new Response.Listener<JSONArray>() {
+        Log.d("TabbedActivity", "refresh");
+        JsonArrayRequest json = new JsonArrayRequest(VolleySingleton.URL + "api/getcat", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
                 if(jsonArray.length() > preferences.getInt("Number", 0)){
                     message = "New Categories Loaded";
                     db.Delete();
-                    Log.d("tabbed", "deleting");
+                    Log.d("TabbedActivity", "deleting");
                     for(int i=0; i < jsonArray.length(); i++){
                         ng.com.calabaryellowpages.Model.Category mode = new ng.com.calabaryellowpages.Model.Category();
                         try{
@@ -248,7 +248,6 @@ public class tabbed extends AppCompatActivity {
                             Thread bk = new Thread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Log.d("tabbed", "runnable");
                                     db.addCategory(md);
                                 }
                             });

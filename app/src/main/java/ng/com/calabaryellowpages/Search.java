@@ -30,14 +30,14 @@ import java.util.ArrayList;
 
 import ng.com.calabaryellowpages.Adapters.Adapter;
 import ng.com.calabaryellowpages.util.EndlessRecyclerViewScrollListener;
-import ng.com.calabaryellowpages.util.volleySingleton;
+import ng.com.calabaryellowpages.util.VolleySingleton;
 
 public class Search extends AppCompatActivity {
     ArrayList<ng.com.calabaryellowpages.Model.Category> model;
     Adapter mAdapter;
     RecyclerView rv;
     LinearLayoutManager manager;
-    volleySingleton volleySingle;
+    VolleySingleton volleySingle;
     RequestQueue requestQueue;
     TextView networkError;
     ProgressBar bar;
@@ -61,7 +61,7 @@ public class Search extends AppCompatActivity {
         manager = new LinearLayoutManager(this);
         model = new ArrayList<>();
         mAdapter = new Adapter(model, this);
-        volleySingle = volleySingleton.getsInstance();
+        volleySingle = VolleySingleton.getsInstance();
         requestQueue = volleySingle.getmRequestQueue();
         rv.setHasFixedSize(true);
         rv.setLayoutManager(manager);
@@ -102,7 +102,7 @@ public class Search extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + "api/search?p=" + page + "&q=" +query , null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, VolleySingleton.URL + "api/search?p=" + page + "&q=" +query , null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try{

@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,9 +29,8 @@ import ng.com.calabaryellowpages.Adapters.ReviewAdapter;
 import ng.com.calabaryellowpages.Fragment.ReviewFragment;
 import ng.com.calabaryellowpages.Model.Review;
 import ng.com.calabaryellowpages.Services.SaveReview;
-import ng.com.calabaryellowpages.util.Application;
 import ng.com.calabaryellowpages.util.EndlessRecyclerViewScrollListener;
-import ng.com.calabaryellowpages.util.volleySingleton;
+import ng.com.calabaryellowpages.util.VolleySingleton;
 
 public class ReviewActivity extends AppCompatActivity implements ReviewFragment.CustomDialogInterface{
     RecyclerView rv;
@@ -41,7 +39,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewFragment.
     ArrayList<Review> model;
     SharedPreferences preferences;
     Context c;
-    volleySingleton volleySingleton;
+    VolleySingleton volleySingleton;
     RequestQueue queue;
     private EndlessRecyclerViewScrollListener scrollListener;
     boolean load;
@@ -54,7 +52,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewFragment.
         setContentView(R.layout.activity_review);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        volleySingleton = ng.com.calabaryellowpages.util.volleySingleton.getsInstance();
+        volleySingleton = VolleySingleton.getsInstance();
         queue = volleySingleton.getmRequestQueue();
         c = this;
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
@@ -120,8 +118,9 @@ public class ReviewActivity extends AppCompatActivity implements ReviewFragment.
         value.setName(preferences.getString("name", "name"));
         value.setID(preferences.getString("id", "id"));
         value.setSlug(getIntent().getStringExtra("slug"));
+        model.add(value);
+        reviewAdapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(true);
-        loadReviews(slug, "1");
         Intent i = new Intent(c, SaveReview.class);
         i.putExtra("data", value);
         startService(i);
@@ -132,7 +131,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewFragment.
         if(page.equals("1")){
             model.clear();
         }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ng.com.calabaryellowpages.util.volleySingleton.URL + "/api/get_reviews?p="+ page+"&q=" + query, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, VolleySingleton.URL + "/api/get_reviews?p="+ page+"&q=" + query, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 swipeRefreshLayout.setRefreshing(false);

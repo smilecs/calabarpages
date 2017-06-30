@@ -44,7 +44,7 @@ public class intro extends AppIntro {
         super.onSkipPressed(currentFragment);
         editor.putBoolean("isnotlogged", false);
         editor.commit();
-        Intent i = new Intent(this, tabbed.class);
+        Intent i = new Intent(this, TabbedActivity.class);
         startActivity(i);
         finish();
 

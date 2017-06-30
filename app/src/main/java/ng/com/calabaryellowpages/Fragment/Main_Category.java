@@ -1,6 +1,7 @@
-package ng.com.calabaryellowpages;
+package ng.com.calabaryellowpages.Fragment;
 
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,9 +27,10 @@ import java.util.ArrayList;
 
 import ng.com.calabaryellowpages.Adapters.CategoryAdapter;
 import ng.com.calabaryellowpages.Model.Category;
+import ng.com.calabaryellowpages.R;
 import ng.com.calabaryellowpages.util.Application;
 import ng.com.calabaryellowpages.util.DbUtility;
-import ng.com.calabaryellowpages.util.volleySingleton;
+import ng.com.calabaryellowpages.util.VolleySingleton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,7 +45,7 @@ public class Main_Category extends Fragment {
     RecyclerView rv;
     CategoryAdapter mAdapter;
     ArrayList<Category> model;
-    volleySingleton volley;
+    VolleySingleton volley;
     RequestQueue requestQueue;
     Button ref;
     ProgressBar bar;
@@ -91,7 +93,7 @@ public class Main_Category extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.content_main, container, false);
-        volley = volleySingleton.getsInstance();
+        volley = VolleySingleton.getsInstance();
         model = new ArrayList<>();
         bar = (ProgressBar) v.findViewById(R.id.progress);
         rv = (RecyclerView) v.findViewById(R.id.recycler);
@@ -105,6 +107,8 @@ public class Main_Category extends Fragment {
         RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext());
         rv.setHasFixedSize(true);
         rv.setLayoutManager(manager);
+        //editor.putString("name", object.getString("Name"));
+        Log.d(TAG, getContext().getSharedPreferences("app", Context.MODE_PRIVATE).getString("name", "empty"));
         mAdapter = new CategoryAdapter(model, getContext());
         rv.setAdapter(mAdapter);
         requestQueue = volley.getmRequestQueue();
@@ -151,7 +155,7 @@ public class Main_Category extends Fragment {
 
 
     private void Refresh(){
-        JsonArrayRequest json = new JsonArrayRequest(volleySingleton.URL + "api/getcat", new Response.Listener<JSONArray>() {
+        JsonArrayRequest json = new JsonArrayRequest(VolleySingleton.URL + "api/getcat", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
                 bar.setVisibility(View.GONE);

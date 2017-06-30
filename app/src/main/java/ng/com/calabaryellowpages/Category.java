@@ -12,11 +12,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -30,26 +28,23 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import ng.com.calabaryellowpages.Adapters.Adapter;
-import ng.com.calabaryellowpages.Model.Review;
 import ng.com.calabaryellowpages.util.Application;
 import ng.com.calabaryellowpages.util.EndlessRecyclerViewScrollListener;
-import ng.com.calabaryellowpages.util.volleySingleton;
+import ng.com.calabaryellowpages.util.VolleySingleton;
 
 public class Category extends AppCompatActivity {
     ArrayList<ng.com.calabaryellowpages.Model.Category> model;
     RecyclerView rv;
     Adapter mAdapter;
     LinearLayoutManager manager;
-    volleySingleton volleySingle;
+    VolleySingleton volleySingle;
     RequestQueue requestQueue;
     String slug, page, url, title;
     TextView txt;
     Context c;
     boolean load;
-    ProgressBar bar;
     private EndlessRecyclerViewScrollListener scrollListener;
     private SwipeRefreshLayout swipeRefreshLayout;
     @Override
@@ -83,9 +78,8 @@ public class Category extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         txt = (TextView) findViewById(R.id.error);
-        volleySingle = volleySingleton.getsInstance();
+        volleySingle = VolleySingleton.getsInstance();
         requestQueue = volleySingle.getmRequestQueue();
-        bar = (ProgressBar) findViewById(R.id.progress);
         rv = (RecyclerView) findViewById(R.id.recycler);
         manager = new LinearLayoutManager(this);
         mAdapter = new Adapter(model, this);
@@ -170,13 +164,12 @@ public class Category extends AppCompatActivity {
             scrollListener.resetState();
         }
         txt.setVisibility(View.GONE);
-        bar.setVisibility(View.VISIBLE);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + "api/categories/"+ query +"?p="+page, null, new Response.Listener<JSONObject>() {
+        swipeRefreshLayout.setRefreshing(true);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, VolleySingleton.URL + "api/categories/"+ query +"?p="+page, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 swipeRefreshLayout.setRefreshing(false);
                 try{
-                    bar.setVisibility(View.GONE);
                     JSONObject json;
                     JSONArray jsonArray = jsonObject.getJSONArray("Posts");
                     load = jsonObject.getJSONObject("Page").getBoolean("Next");
@@ -245,8 +238,7 @@ public class Category extends AppCompatActivity {
             public void onErrorResponse(VolleyError volleyError) {
                 swipeRefreshLayout.setRefreshing(false);
                 volleyError.printStackTrace();
-                bar.setVisibility(View.GONE);
-                Toast.makeText(c, "network error", Toast.LENGTH_LONG);
+                Toast.makeText(c, "network error", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -259,11 +251,12 @@ public class Category extends AppCompatActivity {
             model.clear();
             mAdapter.notifyDataSetChanged();
         }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, volleySingleton.URL + url, null, new Response.Listener<JSONObject>() {
+        swipeRefreshLayout.setRefreshing(true);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, VolleySingleton.URL + url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try{
-                    bar.setVisibility(View.GONE);
+                    swipeRefreshLayout.setRefreshing(false);
                     JSONObject json;
                     JSONArray jsonArray = jsonObject.getJSONArray("Data");
                     for(int i=0; i<jsonArray.length(); i++){
@@ -331,6 +324,7 @@ public class Category extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
+                swipeRefreshLayout.setRefreshing(true);
                 volleyError.printStackTrace();
             }
         });

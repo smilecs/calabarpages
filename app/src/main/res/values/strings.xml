@@ -51,7 +51,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_review">ReviewActivity</string>
+    <string name="title_activity_review">Reviews</string>
     <string name="no_description">No description available</string>
     <string name="reviews">%1$s! Total Reviews</string>
     <string name="welcome_to_calabar_yellowpages">Welcome to Calabar YellowPages</string>

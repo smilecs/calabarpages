@@ -14,14 +14,14 @@ import com.android.volley.toolbox.Volley;
 /**
  * Created by smilecs on 6/3/15.
  */
-public class volleySingleton {
-    private static volleySingleton sInstance = null;
+public class VolleySingleton {
+    private static VolleySingleton sInstance = null;
     private RequestQueue mRequestQueue;
     private ImageLoader imageLoader;
     //public static final String URL = "http://192.168.43.225:8080/";
     public static final String URL = "http://calabarpages.com/";
 
-    private volleySingleton(){
+    private VolleySingleton(){
         mRequestQueue = Volley.newRequestQueue(Application.getAppContext());
         imageLoader = new ImageLoader(mRequestQueue, new ImageLoader.ImageCache() {
             private final LruCache<String, Bitmap> cache = new LruCache<String, Bitmap>(20);
@@ -42,9 +42,9 @@ public class volleySingleton {
 
 
 
-    public static volleySingleton getsInstance(){
+    public static VolleySingleton getsInstance(){
         if(sInstance == null){
-            sInstance = new volleySingleton();
+            sInstance = new VolleySingleton();
         }
         return sInstance;
     }

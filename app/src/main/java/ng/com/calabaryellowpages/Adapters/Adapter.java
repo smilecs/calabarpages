@@ -23,9 +23,9 @@ import java.util.ArrayList;
 
 import ng.com.calabaryellowpages.Model.Category;
 import ng.com.calabaryellowpages.R;
-import ng.com.calabaryellowpages.pluslist;
+import ng.com.calabaryellowpages.SingleView;
 import ng.com.calabaryellowpages.util.Application;
-import ng.com.calabaryellowpages.util.volleySingleton;
+import ng.com.calabaryellowpages.util.VolleySingleton;
 
 /**
  * Created by SMILECS on 8/27/16.
@@ -78,7 +78,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                     @Override
                     public void onClick(View v) {
                         Category category = (Category) title.getTag();
-                        Intent i = new Intent(itemView.getContext(), pluslist.class);
+                        Intent i = new Intent(itemView.getContext(), SingleView.class);
                         i.putExtra("data", category);
                         Application.logListingsSelectedEvent(category.getTitle(), category.getSlug());
                         itemView.getContext().startActivity(i);
@@ -155,7 +155,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 holder.special.setTypeface(robotBold);
                 holder.phone.setTypeface(robot);
                 holder.work_days.setTypeface(robot);
-                ImageLoader imageLoader = volleySingleton.getsInstance().getImageLoader();
+                ImageLoader imageLoader = VolleySingleton.getsInstance().getImageLoader();
                 if(mode.getAddress().isEmpty()){
                     holder.homeicon.setVisibility(View.GONE);
                 }
@@ -186,7 +186,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 }
                 break;
             case ADVERT:
-                ImageLoader imageLoader2 = volleySingleton.getsInstance().getImageLoader();
+                ImageLoader imageLoader2 = VolleySingleton.getsInstance().getImageLoader();
                 imageLoader2.get(mode.getImage(), new ImageLoader.ImageListener() {
                     @Override
                     public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {

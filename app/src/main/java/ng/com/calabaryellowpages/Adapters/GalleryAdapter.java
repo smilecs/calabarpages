@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import ng.com.calabaryellowpages.Model.Category;
 import ng.com.calabaryellowpages.R;
-import ng.com.calabaryellowpages.util.volleySingleton;
+import ng.com.calabaryellowpages.util.VolleySingleton;
 
 /**
  * Created by SMILECS on 9/10/16.
@@ -43,7 +43,7 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Category mode = model.get(position);
-        ImageLoader imageLoader = volleySingleton.getsInstance().getImageLoader();
+        ImageLoader imageLoader = VolleySingleton.getsInstance().getImageLoader();
         holder.image.setImageUrl(mode.getImage(), imageLoader);
 
 
