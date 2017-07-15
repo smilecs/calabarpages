@@ -16,19 +16,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/review"
-            android:hint="Review"
+            android:hint="@string/review"
             />
     </android.support.design.widget.TextInputLayout>
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/rating"
         />
 
     <Button
-        android:text="Review"
+        android:text="@string/review"
         android:layout_margin="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -34,10 +34,10 @@ import ng.com.calabaryellowpages.util.VolleySingleton;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Main_Category#newInstance} factory method to
+ * Use the {@link MainCategory#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Main_Category extends Fragment {
+public class MainCategory extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -49,14 +49,14 @@ public class Main_Category extends Fragment {
     RequestQueue requestQueue;
     Button ref;
     ProgressBar bar;
-    public String TAG = "Main_Category";
+    public String TAG = "MainCategory";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
 
-    public Main_Category() {
+    public MainCategory() {
         // Required empty public constructor
     }
 
@@ -66,11 +66,11 @@ public class Main_Category extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Main_Category.
+     * @return A new instance of fragment MainCategory.
      */
     // TODO: Rename and change types and number of parameters
-    public static Main_Category newInstance(String param1, String param2) {
-        Main_Category fragment = new Main_Category();
+    public static MainCategory newInstance(String param1, String param2) {
+        MainCategory fragment = new MainCategory();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -140,14 +140,14 @@ public class Main_Category extends Fragment {
         protected void onPostExecute(ArrayList<Category> categories) {
             ref.setVisibility(View.GONE);
             if(categories.isEmpty()){
-                Log.d("Main_Category", "Refresh");
+                Log.d("MainCategory", "Refresh");
                 Refresh();
             }
             else {
                 bar.setVisibility(View.GONE);
                 mAdapter = new CategoryAdapter(categories, getContext());
                 rv.setAdapter(mAdapter);
-                Log.d("Main_Category", String.valueOf(categories.size()));
+                Log.d("MainCategory", String.valueOf(categories.size()));
             }
 
         }

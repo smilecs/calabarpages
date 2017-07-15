@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="6dp">
@@ -85,6 +84,7 @@
         android:id="@+id/recycler_container"
         android:layout_alignEnd="@+id/details"
         android:layout_alignRight="@+id/details"
+        android:visibility="gone"
         android:layout_alignLeft="@+id/details"
         android:layout_alignStart="@+id/details">
         <android.support.v7.widget.RecyclerView
@@ -116,18 +116,15 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="12dp"
                 android:id="@+id/addressRel"
-                android:layout_below="@+id/title">
+                >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/address"
-                    android:gravity="center_vertical|start"
-                    android:text="calabarjjjjjj njnjnkjgy gyujyvjy ftftyuft ftfytdt dtyddr
-                fttftytygg"
-                    android:paddingRight="6dp"
+                    android:gravity="start"
+                    android:textAlignment="viewStart"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_toRightOf="@+id/home_icon"
-                    android:layout_toEndOf="@+id/home_icon" />
+                    />
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -142,10 +139,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/workingDays"
                     android:gravity="center_vertical|start"
-                    android:text="Mon - Sat 8-5"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_toRightOf="@+id/work_days"
-                    android:layout_toEndOf="@+id/work_days" />
+                   />
 
             </RelativeLayout>
             <RelativeLayout
@@ -160,14 +155,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical|start"
-                    android:text="07033383068"
                     android:id="@+id/contact"
-                    android:paddingRight="6dp"
                     android:linksClickable="true"
                     android:autoLink="phone"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_toRightOf="@+id/phone_icon"
-                    android:layout_toEndOf="@+id/phone_icon" />
+                    />
 
             </RelativeLayout>
             <RelativeLayout
@@ -177,16 +169,14 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="12dp"
                 android:layout_below="@+id/phoneRel"
-                android:layout_marginBottom="6dp">
+                android:layout_marginBottom="8dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/specialisation"
                     android:gravity="center_vertical|start"
-                    android:text="Tiling"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_toRightOf="@+id/unit_icon"
-                    android:layout_toEndOf="@+id/unit_icon" />
+                    />
 
             </RelativeLayout>
             <RelativeLayout
@@ -201,7 +191,6 @@
                     android:id="@+id/website"
                     android:layout_marginBottom="8dp"
                     android:gravity="center_vertical|start"
-                    android:text="http://past3.com.ng"
                     android:textAlignment="viewStart"
                     android:linksClickable="true"
                     android:autoLink="web"

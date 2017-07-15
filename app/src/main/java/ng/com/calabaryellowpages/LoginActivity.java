@@ -47,7 +47,7 @@ import java.util.Arrays;
 
 import ng.com.calabaryellowpages.util.VolleySingleton;
 
-public class FacebookActivity extends AppCompatActivity implements
+public class LoginActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener{
     LoginButton loginButton;
     CallbackManager callbackManager;
@@ -130,7 +130,7 @@ public class FacebookActivity extends AppCompatActivity implements
                                 }catch (Exception e){
                                     e.printStackTrace();
                                 }
-                                SendToServer(object);
+                                sendToServer(object);
                             }
                         });
 
@@ -180,7 +180,7 @@ public class FacebookActivity extends AppCompatActivity implements
                 if (user != null) {
                     errorMsg.setVisibility(View.GONE);
                     // User is signed in
-                    Log.d("FacebookActivity", "onAuthStateChanged:signed_in:" + user.getUid());
+                    Log.d("LoginActivity", "onAuthStateChanged:signed_in:" + user.getUid());
                     try{
                         editor.putBoolean("hasValue", true);
                         JSONObject json = new JSONObject();
@@ -190,14 +190,14 @@ public class FacebookActivity extends AppCompatActivity implements
                         json.put("Email", user.getEmail());
                         json.put("Type", "google");
 
-                        SendToServer(json);
+                        sendToServer(json);
 
                     }catch (Exception e){
                         e.printStackTrace();
                     }
                 } else {
                     // User is signed out
-                    Log.d("FacebookActivity", "onAuthStateChanged:signed_out");
+                    Log.d("LoginActivity", "onAuthStateChanged:signed_out");
                 }
                 // ...
             }
@@ -225,22 +225,22 @@ public class FacebookActivity extends AppCompatActivity implements
 
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d("FacebookActivity", "firebaseAuthWithGoogle:" + acct.getId());
+        Log.d("LoginActivity", "firebaseAuthWithGoogle:" + acct.getId());
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("FacebookActivity", "signInWithCredential:onComplete:" + task.isSuccessful());
+                        Log.d("LoginActivity", "signInWithCredential:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
-                            Log.w("FAcebookActivity", "signInWithCredential", task.getException());
+                            Log.w("LoginActivity", "signInWithCredential", task.getException());
                             errorMsg.setVisibility(View.VISIBLE);
-                            Toast.makeText(FacebookActivity.this, "Authentication failed.",
+                            Toast.makeText(LoginActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
                         // ...
@@ -264,7 +264,7 @@ public class FacebookActivity extends AppCompatActivity implements
 
     }
 
-    public void SendToServer(final JSONObject object){
+    private void sendToServer(final JSONObject object){
        JsonObjectRequest objectRequest = null;
         //Log.d("Facebook", object.toString());
         try{

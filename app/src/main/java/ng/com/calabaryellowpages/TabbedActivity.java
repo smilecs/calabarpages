@@ -43,7 +43,8 @@ import org.json.JSONObject;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import ng.com.calabaryellowpages.Fragment.Main_Category;
+import ng.com.calabaryellowpages.Fragment.MainCategory;
+import ng.com.calabaryellowpages.Fragment.Special;
 import ng.com.calabaryellowpages.util.DbUtility;
 import ng.com.calabaryellowpages.util.VolleySingleton;
 
@@ -179,7 +180,7 @@ public class TabbedActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             Log.d("tagged", Integer.toString(position));
             Special sp = null;
-            Main_Category mn = new Main_Category();
+            MainCategory mn = new MainCategory();
             switch (position) {
                 case 0:
                     return mn;

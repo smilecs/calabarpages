@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/login"
     android:fitsSystemWindows="true"
-    tools:context="ng.com.calabaryellowpages.FacebookActivity">
+    tools:context="ng.com.calabaryellowpages.LoginActivity">
 
 
     <TextView

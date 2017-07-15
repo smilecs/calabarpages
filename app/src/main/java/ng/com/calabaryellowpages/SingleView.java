@@ -91,6 +91,7 @@ public class SingleView extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.image);
         try {
             if (!data.getImage().isEmpty()) {
+                findViewById(R.id.recycler_container).setVisibility(View.VISIBLE);
                 ImageLoader imageLoader = volleySingleton.getsInstance().getImageLoader();
                 imageLoader.get(data.getImage(), new ImageLoader.ImageListener() {
                     @Override

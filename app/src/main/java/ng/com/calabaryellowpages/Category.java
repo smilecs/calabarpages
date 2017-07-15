@@ -66,7 +66,6 @@ public class Category extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(true);
                 Refresh(slug, "1");
             }
         });
@@ -94,9 +93,6 @@ public class Category extends AppCompatActivity {
                 if(load){
                     if (slug != null) {
                         Refresh(slug, pg);
-                    } else {
-                        //url = getIntent().getStringExtra("url");
-                        Refresh2(url, pg);
                     }
                 }
 
@@ -107,12 +103,7 @@ public class Category extends AppCompatActivity {
 
         if(slug != null){
             Refresh(slug, "");
-        }else{
-            url = getIntent().getStringExtra("url");
-            Refresh2(getIntent().getStringExtra("url"), page);
         }
-
-
     }
 
     @Override
@@ -231,6 +222,7 @@ public class Category extends AppCompatActivity {
                     Log.d("Category", "check" + " " + model.size());
                 }catch (Exception e){
                     e.printStackTrace();
+                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
         }, new Response.ErrorListener() {
@@ -242,92 +234,6 @@ public class Category extends AppCompatActivity {
             }
         });
 
-        requestQueue.add(jsonObjectRequest);
-    }
-
-    private void Refresh2(final String url, String page){
-        Log.d("Category", "Refresh" + " " + Integer.toString(model.size()));
-        if(page.equals("1")){
-            model.clear();
-            mAdapter.notifyDataSetChanged();
-        }
-        swipeRefreshLayout.setRefreshing(true);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, VolleySingleton.URL + url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
-                try{
-                    swipeRefreshLayout.setRefreshing(false);
-                    JSONObject json;
-                    JSONArray jsonArray = jsonObject.getJSONArray("Data");
-                    for(int i=0; i<jsonArray.length(); i++){
-                        json = jsonArray.getJSONObject(i);
-                        ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
-                        cat.setType(json.getString("Type"));
-                        if(cat.getType().equals("advert") || cat.getType().equals("true")){
-                            cat.setImage(json.getString("Image"));
-                            try{
-                                String[] tmp = {};
-                                for(int k = 0; k <json.getJSONArray("Images").length(); k++){
-                                    tmp[k] = json.getJSONArray("Images").getString(k);
-                                }
-                                cat.setImages(tmp);
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-                        }
-                        if(!cat.getType().equals("advert")){
-                            cat.setTitle(json.getString("CompanyName"));
-                            cat.setSlug(json.getString("Slug"));
-                            cat.setAddress(json.getString("Address"));
-                            cat.setSpecialisation(json.getString("Specialisation"));
-                            try{
-                                if(!json.getString("Reviews").isEmpty())
-                                    cat.setRating(json.getString("Reviews"));
-                            }catch (JSONException je){
-                                je.printStackTrace();
-                            }
-                            try{
-                                cat.setDescription(json.getString("Description"));
-                            }catch (JSONException je){
-                                je.printStackTrace();
-                            }
-                            try{
-                                cat.setPhone(json.getString("Hotline"));
-                            }catch (NullPointerException e){
-                                e.printStackTrace();
-                            }
-                            try{
-                                cat.setWork_days(json.getString("Dhr"));
-                            }catch (NullPointerException e){
-                                e.printStackTrace();
-                            }
-                            try{
-                                cat.setDescription(json.getString("About"));
-                            }catch (NullPointerException e){
-                                e.printStackTrace();
-                            }
-                            try{
-                                cat.setWeb(json.getString("Website"));
-                            }catch (NullPointerException e){
-                                e.printStackTrace();
-                            }
-
-                        }
-                        model.add(cat);
-                        mAdapter.notifyDataSetChanged();
-                    }
-
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                swipeRefreshLayout.setRefreshing(true);
-                volleyError.printStackTrace();
-            }
-        });
         requestQueue.add(jsonObjectRequest);
     }
 

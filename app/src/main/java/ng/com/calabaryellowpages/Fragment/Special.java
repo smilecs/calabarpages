@@ -1,4 +1,4 @@
-package ng.com.calabaryellowpages;
+package ng.com.calabaryellowpages.Fragment;
 
 
 import android.os.Bundle;
@@ -19,11 +19,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import ng.com.calabaryellowpages.Adapters.Adapter;
+import ng.com.calabaryellowpages.R;
 import ng.com.calabaryellowpages.util.EndlessRecyclerViewScrollListener;
 import ng.com.calabaryellowpages.util.VolleySingleton;
 
@@ -48,11 +50,8 @@ public class Special extends Fragment {
     String slug, page, url;
     SwipeRefreshLayout swipeRefreshLayout;
     private EndlessRecyclerViewScrollListener scrollListener;
-    ProgressBar bar;
-
     // TODO: Rename and change types of parameters
     private String mParam1;
-    private String mParam2;
 
 
     public Special() {
@@ -90,7 +89,6 @@ public class Special extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.content_category, container, false);
-        bar = (ProgressBar) v.findViewById(R.id.progress);
         ref = (Button) v.findViewById(R.id.button);
         rv = (RecyclerView) v.findViewById(R.id.recycler);
         swipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.swipeRefresh);
@@ -144,7 +142,6 @@ public class Special extends Fragment {
             @Override
             public void onResponse(JSONObject jsonObject) {
                 try{
-                    bar.setVisibility(View.GONE);
                     swipeRefreshLayout.setRefreshing(false);
                     Log.d("url", VolleySingleton.URL + url);
                     JSONObject json;
@@ -196,6 +193,12 @@ public class Special extends Fragment {
                             }catch (NullPointerException e){
                                 e.printStackTrace();
                             }
+                            try{
+                                if(!json.getString("Reviews").isEmpty())
+                                    cat.setRating(json.getString("Reviews"));
+                            }catch (JSONException je){
+                                je.printStackTrace();
+                            }
 
                         }
                         model.add(cat);
@@ -204,7 +207,6 @@ public class Special extends Fragment {
 
                 }catch (Exception e){
                     e.printStackTrace();
-                    bar.setVisibility(View.GONE);
                     ref.setVisibility(View.VISIBLE);
                 }
             }
@@ -213,7 +215,6 @@ public class Special extends Fragment {
             public void onErrorResponse(VolleyError volleyError) {
                 swipeRefreshLayout.setRefreshing(false);
                 volleyError.printStackTrace();
-                bar.setVisibility(View.GONE);
                 ref.setVisibility(View.VISIBLE);
             }
         });

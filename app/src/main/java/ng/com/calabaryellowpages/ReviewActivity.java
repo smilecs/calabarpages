@@ -83,7 +83,7 @@ public class ReviewActivity extends AppCompatActivity implements ReviewFragment.
             public void onClick(View view) {
                 Log.d("value", String.valueOf(preferences.getBoolean("isnotlogged", true)));
                 if(!preferences.getBoolean("hasValue", false)){
-                    Intent intent = new Intent(view.getContext(), FacebookActivity.class);
+                    Intent intent = new Intent(view.getContext(), LoginActivity.class);
                     intent.putExtra("review", true);
                     startActivityForResult(intent, 1001);
                     finish();
