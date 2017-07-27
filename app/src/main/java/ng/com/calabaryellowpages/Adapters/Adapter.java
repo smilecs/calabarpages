@@ -48,7 +48,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         ImageView phoneIcon;
         Button callButton;
         RelativeLayout homeicon, unit, phonIcon, work;
-        RatingBar ratingBar;
 
         public ViewHolder(final View itemView, int type) {
             super(itemView);
@@ -72,7 +71,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 special = (TextView) itemView.findViewById(R.id.specialisation);
                 phoneIcon = (ImageView) itemView.findViewById(R.id.phone_icon);
                 work_days = (TextView) itemView.findViewById(R.id.workingDays);
-                ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
                 total = (TextView) itemView.findViewById(R.id.textView4);
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
