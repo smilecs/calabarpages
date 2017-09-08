@@ -232,7 +232,7 @@ public class TabbedActivity extends AppCompatActivity {
 
     private void Refresh(){
         Log.d("TabbedActivity", "refresh");
-        JsonArrayRequest json = new JsonArrayRequest(VolleySingleton.URL + "api/getcat", new Response.Listener<JSONArray>() {
+        JsonArrayRequest json = new JsonArrayRequest(VolleySingleton.URL + "api/categories", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray jsonArray) {
                 if(jsonArray.length() > preferences.getInt("Number", 0)){
@@ -243,16 +243,18 @@ public class TabbedActivity extends AppCompatActivity {
                         ng.com.calabaryellowpages.Model.Category mode = new ng.com.calabaryellowpages.Model.Category();
                         try{
                             JSONObject tmpData = jsonArray.getJSONObject(i);
-                            mode.setSlug(tmpData.getString("Slug"));
-                            mode.setTitle(tmpData.getString("Category"));
-                            final ng.com.calabaryellowpages.Model.Category md = mode;
-                            Thread bk = new Thread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    db.addCategory(md);
-                                }
-                            });
-                            bk.start();
+                            if(!tmpData.getString("Category").isEmpty()){
+                                mode.setSlug(tmpData.getString("Slug"));
+                                mode.setTitle(tmpData.getString("Category"));
+                                final ng.com.calabaryellowpages.Model.Category md = mode;
+                                Thread bk = new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        db.addCategory(md);
+                                    }
+                                });
+                                bk.start();
+                            }
                         }catch (Exception e){
                             e.printStackTrace();
                         }
