@@ -116,10 +116,10 @@ public class Search extends AppCompatActivity {
                         Log.d("Category", jsons.toString());
                         ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
                         cat.setType(json.getString("Plus"));
-                        if(cat.getType().equals("advert") || cat.getType().equals("true")){
-                            cat.setImage(json.getString("Image"));
-                        }
                         if(!cat.getType().equals("advert")){
+                            if(cat.getType().equals("true")){
+                                cat.setImage(json.getString("Image"));
+                            }
                             cat.setTitle(json.getString("CompanyName"));
                             cat.setSlug(json.getString("Slug"));
                             cat.setAddress(json.getString("Address"));

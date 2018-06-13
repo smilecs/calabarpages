@@ -147,9 +147,7 @@ public class Category extends AppCompatActivity {
 
 
     private void Refresh(String query, String page){
-        Log.d("Category", "Refresh" + " " + Integer.toString(model.size()));
         if(page.equals("1")){
-            Log.d("Category", "clean");
             model.clear();
             mAdapter.notifyDataSetChanged();
             scrollListener.resetState();
@@ -165,10 +163,8 @@ public class Category extends AppCompatActivity {
                     JSONArray jsonArray = jsonObject.getJSONArray("Posts");
                     load = jsonObject.getJSONObject("Page").getBoolean("Next");
                     for(int i=0; i<jsonArray.length(); i++){
-                        Log.d("category", jsonArray.toString());
                         JSONObject jsons = jsonArray.getJSONObject(i);
                         json = jsons.getJSONObject("Listing");
-                        Log.d("Category", jsons.toString());
                         ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
                         cat.setListing(jsonArray.getJSONObject(i).getString("Type"));
                         cat.setType(json.getString("Plus"));
@@ -186,7 +182,7 @@ public class Category extends AppCompatActivity {
                                     e.printStackTrace();
                                 }
                         }
-                        if(!cat.getType().equals("advert")){
+                        if(!cat.getListing().equals("advert")){
                             cat.setTitle(json.getString("CompanyName"));
                             cat.setSlug(json.getString("Slug"));
                             cat.setAddress(json.getString("Address"));
@@ -212,14 +208,12 @@ public class Category extends AppCompatActivity {
                             }catch (NullPointerException e){
                                 e.printStackTrace();
                             }
-
+                            model.add(cat);
                         }
-                        model.add(cat);
-                        mAdapter.notifyDataSetChanged();
+
 
                     }
-
-                    Log.d("Category", "check" + " " + model.size());
+                    mAdapter.notifyDataSetChanged();
                 }catch (Exception e){
                     e.printStackTrace();
                     swipeRefreshLayout.setRefreshing(false);

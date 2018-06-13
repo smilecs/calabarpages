@@ -118,9 +118,8 @@ public class Special extends Fragment {
         scrollListener = new EndlessRecyclerViewScrollListener(manager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Log.d("Category", "page no" + Integer.toString(page) + "   " + Integer.toString(totalItemsCount));
                 String pg = Integer.toString(page);
-                if(load){
+                if (load) {
                     if (slug != null) {
                         Refresh(slug, pg);
                     }
@@ -131,82 +130,80 @@ public class Special extends Fragment {
         return v;
     }
 
-    private void Refresh(final String url, String page){
+    private void Refresh(final String url, String page) {
         ref.setVisibility(View.GONE);
         swipeRefreshLayout.setRefreshing(true);
-        if(page.equals("1")){
+        if (page.equals("1")) {
             model.clear();
             mAdapter.notifyDataSetChanged();
         }
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, VolleySingleton.URL + url + "?p=" + page , null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.GET, VolleySingleton.URL + url + "?p=" + page, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                try{
+                try {
                     swipeRefreshLayout.setRefreshing(false);
                     Log.d("url", VolleySingleton.URL + url);
                     JSONObject json;
                     JSONArray jsonArray = jsonObject.getJSONArray("Posts");
                     load = jsonObject.getJSONObject("Page").getBoolean("Next");
-                    for(int i=0; i<jsonArray.length(); i++){
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         json = jsonArray.getJSONObject(i);
                         json = json.getJSONObject("Listing");
                         //Log.d("data", json.toString());
                         ng.com.calabaryellowpages.Model.Category cat = new ng.com.calabaryellowpages.Model.Category();
                         cat.setListing(jsonArray.getJSONObject(i).getString("Type"));
+                        Log.d("LIsting", cat.getListing());
                         cat.setType(json.getString("Plus"));
-                        if(cat.getType().equals("true")){
+                        if (cat.getType().equals("true")) {
                             cat.setImage(json.getString("Image"));
-                            try{
+                            try {
                                 String[] tmp = new String[json.getJSONArray("Images").length()];
-                                Log.d("Special", json.getJSONArray("Images").toString());
-                                for(int k = 0; k < json.getJSONArray("Images").length(); k++){
+                                for (int k = 0; k < json.getJSONArray("Images").length(); k++) {
                                     tmp[k] = json.getJSONArray("Images").getString(k);
                                     Log.d("special", tmp[k]);
                                 }
                                 cat.setImages(tmp);
-                            }catch (Exception e){
-                                e.printStackTrace();
+                            } catch (Exception e) {
+
                             }
                         }
-                        if(!cat.getType().equals("advert")){
+                        if (!cat.getListing().equals("advert")) {
                             cat.setTitle(json.getString("CompanyName"));
                             cat.setSlug(json.getString("Slug"));
                             cat.setAddress(json.getString("Address"));
                             cat.setSpecialisation(json.getString("Specialisation"));
-                            try{
+                            try {
                                 cat.setPhone(json.getString("Hotline"));
-                            }catch (NullPointerException e){
-                                e.printStackTrace();
+                            } catch (NullPointerException e) {
+
                             }
-                            try{
+                            try {
                                 cat.setWork_days(json.getString("DHr"));
-                            }catch (NullPointerException e){
-                                e.printStackTrace();
+                            } catch (NullPointerException e) {
+
                             }
-                            try{
+                            try {
                                 cat.setDescription(json.getString("About"));
-                            }catch (NullPointerException e){
-                                e.printStackTrace();
+                            } catch (NullPointerException e) {
+
                             }
-                            try{
+                            try {
                                 cat.setWeb(json.getString("Website"));
-                            }catch (NullPointerException e){
-                                e.printStackTrace();
+                            } catch (NullPointerException e) {
+
                             }
-                            try{
-                                if(!json.getString("Reviews").isEmpty())
+                            try {
+                                if (!json.getString("Reviews").isEmpty())
                                     cat.setRating(json.getString("Reviews"));
-                            }catch (JSONException je){
-                                je.printStackTrace();
+                            } catch (JSONException je) {
+
                             }
-
+                            model.add(cat);
                         }
-                        model.add(cat);
-                        mAdapter.notifyDataSetChanged();
                     }
+                    mAdapter.notifyDataSetChanged();
 
-                }catch (Exception e){
-                    e.printStackTrace();
+                } catch (Exception e) {
                     ref.setVisibility(View.VISIBLE);
                 }
             }

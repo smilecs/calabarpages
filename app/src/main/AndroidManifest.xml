@@ -37,7 +37,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".Category"
+            android:name="Category"
             android:label="@string/title_activity_category"
             android:parentActivityName=".TabbedActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -49,7 +49,7 @@
                 android:value=".Search" />
         </activity>
         <activity
-            android:name=".Search"
+            android:name="Search"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -64,10 +64,10 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity
-            android:name=".SingleView"
+            android:name="SingleView"
             android:label="@string/title_activity_pluslist"/>
         <activity
-            android:name=".TabbedActivity"
+            android:name="TabbedActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -97,7 +97,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="LoginActivity"
             android:label="@string/title_activity_facebook"
             android:theme="@style/AppTheme" />
 
@@ -112,10 +112,10 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Splash" />
-        <activity android:name=".intro" />
+        <activity android:name="Splash" />
+        <activity android:name="intro" />
         <activity
-            android:name=".ReviewActivity"
+            android:name="ReviewActivity"
             android:label="@string/title_activity_review"
             android:theme="@style/AppTheme"/>
 

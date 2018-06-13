@@ -120,6 +120,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         Category mode = model.get(position);
         int type = 0;
         try{
+            Log.i("adapter", mode.getListing());
             if(mode.getListing().equals("listing")){
                 if(mode.getType().equals("true")){
                     type =  PLUSLIST;
